@@ -1,0 +1,10 @@
+msg:
+  prefix: "§7[§aVanillaEnhancements§7] "
+  reloading: "§7Reloading modules..."
+  reload_success: "§aSuccessfully reloaded!"
+unstrip_logs:
+  enabled: false
+  damageTools: true
+glow_sac_fishing:
+  enabled: false
+  chance: 0.01
