@@ -63,7 +63,7 @@ public class Config {
     @NotNull
     public static List<ConfigOption> getOptions(VEModule module) {
         List<ConfigOption> options = new ArrayList<>();
-        Class<? extends Annotation> annotation = RegisterOption.class;
+        Class<? extends Annotation> annotation = Option.class;
         Class<?> moduleClass = module.getClass();
         for (Field field : moduleClass.getDeclaredFields()) {
             if(field.isAnnotationPresent(annotation)) {

@@ -9,14 +9,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.RegisterOption;
+import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 public class RottenFleshSmelting extends VEModule {
-    @RegisterOption
+    @Option
     public ConfigOption experience = new ConfigOption("experience", getKey(), 0.1D);
-    @RegisterOption
+    @Option
     public ConfigOption cookingTime = new ConfigOption("cookingTime", getKey(), 5);
 
     @Override

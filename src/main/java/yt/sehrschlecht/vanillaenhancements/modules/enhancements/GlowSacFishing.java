@@ -10,14 +10,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.RegisterOption;
+import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GlowSacFishing extends VEModule {
-    @RegisterOption
+    @Option
     public ConfigOption chance = new ConfigOption("chance", getInstance().getKey(), 0.01D);
 
 
@@ -46,7 +46,7 @@ public class GlowSacFishing extends VEModule {
         return null;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onFish(PlayerFishEvent event) {
         if(event.getCaught() instanceof Item) {
             Item item = (Item) event.getCaught();

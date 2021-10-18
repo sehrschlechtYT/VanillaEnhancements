@@ -33,7 +33,9 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new GlowSacFishing(),
                 new CobblestoneInStoneCutter(),
                 new CraftChainArmor(),
-                new RottenFleshSmelting()
+                new RottenFleshSmelting(),
+                new ZombiesDryToHusks(),
+                new CreativeKeepInventory()
         );
 
         Config.init();

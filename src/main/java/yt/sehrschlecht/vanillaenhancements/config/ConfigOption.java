@@ -36,4 +36,8 @@ public class ConfigOption {
     public int asInt() {
         return Config.optionAsInt(this);
     }
+
+    public String asString() {
+        return Config.optionAsString(this);
+    }
 }

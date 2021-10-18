@@ -11,14 +11,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.RegisterOption;
+import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 import yt.sehrschlecht.vanillaenhancements.utils.BlockUtils;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
 
 public class UnstripLogs extends VEModule {
-    @RegisterOption
+    @Option
     public ConfigOption damageTools = new ConfigOption("damageTools", getKey(), true);
 
     @Override
@@ -46,7 +46,7 @@ public class UnstripLogs extends VEModule {
         return null;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         if(!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if(!event.hasBlock() || !event.hasItem()) return;
