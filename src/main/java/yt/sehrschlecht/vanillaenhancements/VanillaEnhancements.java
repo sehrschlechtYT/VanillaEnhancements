@@ -40,7 +40,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new ZombiesDryToHusks(),
                 new CreativeKeepInventory(),
                 new InvisibleItemFrames(),
-                new ChatCoordinates()
+                new ChatCoordinates(),
+                new PumpkinNametags()
         );
 
         Config.init();
