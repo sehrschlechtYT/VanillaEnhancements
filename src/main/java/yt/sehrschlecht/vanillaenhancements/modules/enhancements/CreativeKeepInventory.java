@@ -55,5 +55,7 @@ public class CreativeKeepInventory extends VEModule {
         }
         event.setKeepInventory(true);
         event.setKeepLevel(true);
+        event.getDrops().clear();
+        event.setDroppedExp(0);
     }
 }

@@ -83,7 +83,7 @@ public class ZombiesDryToHusks extends VEModule {
         zombie.remove();
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onDamage(EntityDamageEvent event) {
         if(!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
         if(!(event.getEntity() instanceof LivingEntity)) return;
@@ -94,5 +94,6 @@ public class ZombiesDryToHusks extends VEModule {
         Zombie zombie = (Zombie) event.getEntity();
         zombie.getWorld().spawnEntity(zombie.getLocation(), EntityType.HUSK);
         zombie.remove();
+        event.setCancelled(true);
     }
 }
