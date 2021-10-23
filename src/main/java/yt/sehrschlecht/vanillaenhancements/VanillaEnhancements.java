@@ -35,7 +35,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new CraftChainArmor(),
                 new RottenFleshSmelting(),
                 new ZombiesDryToHusks(),
-                new CreativeKeepInventory()
+                new CreativeKeepInventory(),
+                new InvisibleItemFrames()
         );
 
         Config.init();
