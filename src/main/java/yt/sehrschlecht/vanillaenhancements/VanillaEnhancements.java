@@ -36,7 +36,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new RottenFleshSmelting(),
                 new ZombiesDryToHusks(),
                 new CreativeKeepInventory(),
-                new InvisibleItemFrames()
+                new InvisibleItemFrames(),
+                new ChatCoordinates()
         );
 
         Config.init();

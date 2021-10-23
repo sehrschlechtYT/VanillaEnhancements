@@ -31,6 +31,11 @@ public class Config {
         save();
     }
 
+    public static void set(ConfigOption option, Object value) {
+        config.set(option.getModuleKey().getKey() + "." + option.getKey(), value);
+        save();
+    }
+
     public static String message(String key) {
         if(!config.contains("msg." + key)) return "Missing translation!";
         return ChatColor.translateAlternateColorCodes('&', config.getString("msg." + key));

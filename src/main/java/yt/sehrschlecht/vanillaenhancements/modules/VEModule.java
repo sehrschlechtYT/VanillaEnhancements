@@ -4,7 +4,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
+
+import java.util.logging.Logger;
 
 public abstract class VEModule implements Listener {
     private static VEModule instance;
@@ -24,5 +27,11 @@ public abstract class VEModule implements Listener {
 
     public static VEModule getInstance() {
         return instance;
+    }
+    public static VanillaEnhancements getPlugin() {
+        return VanillaEnhancements.getPlugin();
+    }
+    public static Logger getLogger() {
+        return getPlugin().getLogger();
     }
 }
