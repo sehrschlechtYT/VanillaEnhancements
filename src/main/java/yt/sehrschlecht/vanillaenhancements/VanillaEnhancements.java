@@ -8,6 +8,8 @@ import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.enhancements.*;
+import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
+import yt.sehrschlecht.vanillaenhancements.utils.ExternalAPIs;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +19,6 @@ import java.util.stream.Collectors;
 public final class VanillaEnhancements extends JavaPlugin {
     private static VanillaEnhancements plugin;
     private static PaperCommandManager commandManager;
-
     public static List<VEModule> modules;
 
     @Override
@@ -27,6 +28,8 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         getLogger().log(Level.INFO, "Thank you for using vanilla enhancements!");
         PaperLib.suggestPaper(this);
+
+        ExternalAPIs.init();
 
         modules = Arrays.asList(
                 new UnstripLogs(),
@@ -49,6 +52,8 @@ public final class VanillaEnhancements extends JavaPlugin {
         commandManager.getCommandCompletions().registerCompletion("modules", c -> ModuleRegistry.getEnabledModules().stream().map(m -> m.getKey().getKey()).collect(Collectors.toList()));
 
         commandManager.registerCommand(new VECommand());
+
+        TickServiceExecutor.startTicking();
     }
 
     public void registerModules() {

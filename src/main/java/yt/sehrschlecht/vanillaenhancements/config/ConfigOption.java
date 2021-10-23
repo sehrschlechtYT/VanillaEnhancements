@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.config;
 
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 
 public class ConfigOption {
@@ -39,5 +40,9 @@ public class ConfigOption {
 
     public String asString() {
         return Config.optionAsString(this);
+    }
+
+    public ChatColor asChatColor() {
+        return ChatColor.valueOf(Config.optionAsString(this));
     }
 }

@@ -20,7 +20,10 @@ import java.util.logging.Level;
 
 public class ChatCoordinates extends VEModule {
     @Option
-    public ConfigOption chatColor = new ConfigOption("chat_color", getKey(), "AQUA");
+    public ConfigOption chatColor = new ConfigOption("main_chat_color", getKey(), "AQUA");
+    @Option
+    public ConfigOption secondChatColor = new ConfigOption("second_chat_color", getKey(), "GRAY");
+
     @Option
     public ConfigOption sendWorld = new ConfigOption("send_world", getKey(), true);
 
@@ -59,7 +62,8 @@ public class ChatCoordinates extends VEModule {
         if(!event.getMessage().contains("~ ~ ~")) return;
         Location location = event.getPlayer().getLocation();
         DecimalFormat format = new DecimalFormat("#");
-        String text = ChatColor.valueOf(chatColor.asString()) + format.format(location.getX()) + " " + format.format(location.getY()) + " " + format.format(location.getZ()) + (sendWorld.asBoolean() ? " §7(" + ChatColor.valueOf(chatColor.asString()) + location.getWorld().getName() + "§7)": "") + "§f";
+        String text = chatColor.asChatColor() + format.format(location.getX()) + " " + format.format(location.getY()) + " " + format.format(location.getZ())
+                + (sendWorld.asBoolean() ? " " + secondChatColor.asChatColor() + "(" + chatColor.asChatColor() + location.getWorld().getName() + secondChatColor.asChatColor() + ")": "") + "§f";
         event.setMessage(event.getMessage().replace("~ ~ ~", text));
     }
 }

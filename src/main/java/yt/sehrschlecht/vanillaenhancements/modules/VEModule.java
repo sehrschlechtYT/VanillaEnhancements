@@ -25,13 +25,16 @@ public abstract class VEModule implements Listener {
     @Nullable
     public abstract TickService getTickService();
 
-    public static VEModule getInstance() {
+    public VEModule getInstance() {
         return instance;
     }
-    public static VanillaEnhancements getPlugin() {
+    public VanillaEnhancements getPlugin() {
         return VanillaEnhancements.getPlugin();
     }
-    public static Logger getLogger() {
+    public Logger getLogger() {
         return getPlugin().getLogger();
+    }
+    public boolean shouldEnable() {
+        return true;
     }
 }

@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +23,13 @@ public class ModuleRegistry {
         registeredModules.add(module);
         if(!Config.isModuleEnabled(module)) return false;
         try {
+            if(!module.shouldEnable()) return false;
             module.onEnable();
             enabledModules.add(module);
             Bukkit.getPluginManager().registerEvents(module, VanillaEnhancements.getPlugin());
+            if(module.getTickService() != null) {
+                TickServiceExecutor.addTickService(module.getTickService());
+            }
             return true;
         } catch (Throwable throwable) {
             logger.log(Level.SEVERE, "The module " + module.getName() + " couldn't be loaded due to an error.");
