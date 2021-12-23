@@ -37,7 +37,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new CreativeKeepInventory(),
                 new InvisibleItemFrames(),
                 new ChatCoordinates(),
-                new PumpkinNametags()
+                new PumpkinNametags(),
+                new OldRecipes()
         );
 
         Config.init();
