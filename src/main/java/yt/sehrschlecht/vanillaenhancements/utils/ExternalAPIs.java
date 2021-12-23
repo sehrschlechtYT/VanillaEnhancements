@@ -4,14 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 
 public class ExternalAPIs {
-    private static boolean holographicDisplaysEnabled;
 
+    //Currently not used
     public static void init() {
         PluginManager pluginManager = Bukkit.getPluginManager();
-        holographicDisplaysEnabled = pluginManager.isPluginEnabled("HolographicDisplays");
-    }
 
-    public static boolean isHolographicDisplaysEnabled() {
-        return holographicDisplaysEnabled;
     }
 }

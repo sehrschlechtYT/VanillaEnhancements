@@ -5,5 +5,3 @@ api-version: 1.17
 prefix: VanillaEnhancements
 authors: [ sehrschlechtYT ]
 description: Provides enhancements for the Minecraft Vanilla gameplay.
-softdepend:
-  - HolographicDisplays
