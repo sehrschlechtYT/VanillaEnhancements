@@ -18,22 +18,29 @@ public abstract class VEModule implements Listener {
 
     @NotNull
     public abstract String getName();
+
     @NotNull
     public abstract NamespacedKey getKey();
+
     public abstract void onEnable();
+
     public abstract void onDisable();
+
     @Nullable
     public abstract TickService getTickService();
 
     public VEModule getInstance() {
         return instance;
     }
+
     public VanillaEnhancements getPlugin() {
         return VanillaEnhancements.getPlugin();
     }
+
     public Logger getLogger() {
         return getPlugin().getLogger();
     }
+
     public boolean shouldEnable() {
         return true;
     }

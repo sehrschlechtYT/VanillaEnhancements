@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
-//WIP
+//WIP ToDo
 public class CommandblockHolograms extends VEModule {
     private Map<Location, Hologram> holograms = new HashMap<>();
     @Option

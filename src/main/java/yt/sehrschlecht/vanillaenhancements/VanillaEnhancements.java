@@ -1,9 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements;
 
-import co.aikar.commands.PaperCommandManager;
 import io.papermc.lib.PaperLib;
 import org.bukkit.plugin.java.JavaPlugin;
-import yt.sehrschlecht.vanillaenhancements.commands.VECommand;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
@@ -14,11 +12,9 @@ import yt.sehrschlecht.vanillaenhancements.utils.ExternalAPIs;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public final class VanillaEnhancements extends JavaPlugin {
     private static VanillaEnhancements plugin;
-    private static PaperCommandManager commandManager;
     public static List<VEModule> modules;
 
     @Override
@@ -48,12 +44,6 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         registerModules();
 
-        commandManager = new PaperCommandManager(this);
-
-        commandManager.getCommandCompletions().registerCompletion("modules", c -> ModuleRegistry.getEnabledModules().stream().map(m -> m.getKey().getKey()).collect(Collectors.toList()));
-
-        commandManager.registerCommand(new VECommand());
-
         TickServiceExecutor.startTicking();
     }
 
@@ -70,10 +60,6 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public static VanillaEnhancements getPlugin() {
         return plugin;
-    }
-
-    public static PaperCommandManager getCommandManager() {
-        return commandManager;
     }
 
     public static String getPrefix() {
