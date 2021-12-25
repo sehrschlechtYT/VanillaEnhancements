@@ -38,7 +38,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new InvisibleItemFrames(),
                 new ChatCoordinates(),
                 new PumpkinNametags(),
-                new OldRecipes()
+                new OldRecipes(),
+                new CraftChainArmorWithChains()
         );
 
         Config.init();

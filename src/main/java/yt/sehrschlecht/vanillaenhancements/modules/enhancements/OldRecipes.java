@@ -15,9 +15,7 @@ import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 public class OldRecipes extends VEModule {
     @Option public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption("enchanted_golden_apple_recipe", getKey(), false);
-    @Option public ConfigOption useIngotsForEnchantedGoldenApple = new ConfigOption("enchanted_golden_apple_use_ingots", getKey(), false);
     @Option public ConfigOption oldGoldenAppleRecipe = new ConfigOption("old_golden_apple_recipe", getKey(), false);
-    @Option public ConfigOption oldChainmailArmorRecipe = new ConfigOption("old_chainmail_armor_recipe", getKey(), false);
     @Option public ConfigOption horseArmorRecipes = new ConfigOption("horse_armor_recipes", getKey(), false);
 
     private RecipeChoice.MaterialChoice woolChoice;
@@ -46,12 +44,6 @@ public class OldRecipes extends VEModule {
         if(oldGoldenAppleRecipe.asBoolean()) {
             initOldGoldenAppleRecipe();
         }
-        if(oldChainmailArmorRecipe.asBoolean()) {
-            initChainmailHelmetRecipe();
-            initChainmailChestplateRecipe();
-            initChainmailLeggingsRecipe();
-            initChainmailBootsRecipe();
-        }
         if(horseArmorRecipes.asBoolean()) {
             initLeatherHorseArmorRecipe();
             initIronHorseArmorRecipe();
@@ -63,7 +55,7 @@ public class OldRecipes extends VEModule {
     private void initEnchantedGoldenAppleRecipe() {
         ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "enchanted_golden_apple"), new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
         recipe.shape("GGG", "GAG", "GGG");
-        recipe.setIngredient('G', useIngotsForEnchantedGoldenApple.asBoolean() ? Material.GOLD_INGOT : Material.GOLD_BLOCK);
+        recipe.setIngredient('G', Material.GOLD_BLOCK);
         recipe.setIngredient('A', Material.GOLDEN_APPLE);
         Bukkit.addRecipe(recipe);
     }
@@ -73,34 +65,6 @@ public class OldRecipes extends VEModule {
         recipe.shape("GGG", "GAG", "GGG");
         recipe.setIngredient('G', Material.GOLD_NUGGET);
         recipe.setIngredient('A', Material.GOLDEN_APPLE);
-        Bukkit.addRecipe(recipe);
-    }
-
-    private void initChainmailHelmetRecipe() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "chainmail_helmet"), new ItemStack(Material.CHAINMAIL_HELMET));
-        recipe.shape("FFF", "F F");
-        recipe.setIngredient('F', Material.FIRE);
-        Bukkit.addRecipe(recipe);
-    }
-
-    private void initChainmailChestplateRecipe() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "chainmail_chestplate"), new ItemStack(Material.CHAINMAIL_CHESTPLATE));
-        recipe.shape("F F", "FFF", "FFF");
-        recipe.setIngredient('F', Material.FIRE);
-        Bukkit.addRecipe(recipe);
-    }
-
-    private void initChainmailLeggingsRecipe() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "chainmail_leggings"), new ItemStack(Material.CHAINMAIL_LEGGINGS));
-        recipe.shape("FFF", "F F", "F F");
-        recipe.setIngredient('F', Material.FIRE);
-        Bukkit.addRecipe(recipe);
-    }
-
-    private void initChainmailBootsRecipe() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "chainmail_boots"), new ItemStack(Material.CHAINMAIL_BOOTS));
-        recipe.shape("F F", "F F");
-        recipe.setIngredient('F', Material.FIRE);
         Bukkit.addRecipe(recipe);
     }
 
