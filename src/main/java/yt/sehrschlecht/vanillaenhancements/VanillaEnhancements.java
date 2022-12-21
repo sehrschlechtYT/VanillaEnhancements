@@ -50,7 +50,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 //new ChatCoordinates(),
                 new PumpkinNametags(),
                 new OldRecipes(),
-                new SmeltConcreteToConcretePowder()
+                new SmeltConcreteToConcretePowder(),
+                new RemoveNametags()
         );
 
         createConfig();

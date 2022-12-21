@@ -1,13 +1,12 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
@@ -37,13 +36,9 @@ public class UnstripLogs extends VEModule {
         event.setCancelled(true);
         Material newBlock = Material.valueOf(clickedBlock.getType().name().replace("STRIPPED_", ""));
         clickedBlock.setType(newBlock);
-        event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_AXE_STRIP, 1, 1);
-        if(damageTools.asBoolean()) {
-            ItemStack stack = event.getItem();
-            if(stack instanceof Damageable) {
-                Damageable damageable = (Damageable) stack;
-                damageable.setDamage(damageable.getDamage() + 1);
-            }
+        clickedBlock.getWorld().playSound(clickedBlock.getLocation(), Sound.ITEM_AXE_STRIP, 1, 1);
+        if(!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && damageTools.asBoolean()) {
+            ItemUtils.damageItem(event.getItem());
         }
     }
 }
