@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -74,7 +76,12 @@ public class Config {
     }
 
     public void save() {
-        VanillaEnhancements.getPlugin().saveConfig();
+        try {
+            document.save(new File(VanillaEnhancements.getPlugin().getDataFolder(), "config.yml"));
+        } catch (IOException e) {
+            VanillaEnhancements.getPlugin().getLogger().severe("An error occurred while saving the config:");
+            e.printStackTrace();
+        }
     }
 
     @NotNull
