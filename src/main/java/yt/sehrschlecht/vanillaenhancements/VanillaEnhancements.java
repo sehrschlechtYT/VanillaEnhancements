@@ -6,7 +6,6 @@ import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
-import io.papermc.lib.PaperLib;
 import org.bukkit.plugin.java.JavaPlugin;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
 
 public final class VanillaEnhancements extends JavaPlugin {
     private static VanillaEnhancements plugin;
@@ -32,9 +30,6 @@ public final class VanillaEnhancements extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-
-        getLogger().log(Level.INFO, "Thank you for using vanilla enhancements!");
-        PaperLib.suggestPaper(this);
 
         ExternalAPIs.init();
 

@@ -10,7 +10,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
@@ -27,21 +26,19 @@ public class PumpkinNametags extends VEModule {
         return "pumpkin_hide_nametags";
     }
 
-    @Override
-    public @Nullable TickService getTickService() {
-        return new TickService(5, () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                Team team = scoreboard.getTeam(player.getName());
-                if(team == null) continue;
-                if(player.getEquipment().getItem(EquipmentSlot.HEAD) != null && player.getEquipment().getItem(EquipmentSlot.HEAD).getType().equals(Material.CARVED_PUMPKIN)) {
-                    if(!team.hasEntry(player.getName())) {
-                        team.addEntry(player.getName());
-                    }
-                } else if(team.hasEntry(player.getName())) {
-                    team.removeEntry(player.getName());
+    @TickService(period = 5, executeNow = true)
+    public void updateNametags() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Team team = scoreboard.getTeam(player.getName());
+            if(team == null) continue;
+            if(player.getEquipment().getItem(EquipmentSlot.HEAD) != null && player.getEquipment().getItem(EquipmentSlot.HEAD).getType().equals(Material.CARVED_PUMPKIN)) {
+                if(!team.hasEntry(player.getName())) {
+                    team.addEntry(player.getName());
                 }
+            } else if(team.hasEntry(player.getName())) {
+                team.removeEntry(player.getName());
             }
-        }, getModuleKey());
+        }
     }
 
     @EventHandler

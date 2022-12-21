@@ -1,32 +1,34 @@
 package yt.sehrschlecht.vanillaenhancements.ticking;
 
 import org.bukkit.Bukkit;
+import yt.sehrschlecht.schlechteutils.data.Pair;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Method;
+import java.util.*;
 
 public class TickServiceExecutor {
-    private static Map<TickService, Long> tickServices = new HashMap<>();
+    private static List<Pair<TickService, Method>> tickServices = new ArrayList<>();
 
     public static void startTicking() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
-            for (Map.Entry<TickService, Long> entry : tickServices.entrySet()) {
-                TickService service = entry.getKey();
-                if(VanillaEnhancements.getPlugin().getModuleRegistry().isEnabled(service.getKey())) {
-                    long period = entry.getValue();
-                    period--;
-                    if(period == 0) {
-                        service.getRunnable().run();
-                        period = service.getPeriod();
-                    }
-                    tickServices.replace(service, period);
+        for (Pair<TickService, Method> pair : tickServices) {
+            TickService tickService = pair.getFirst();
+            Method method = pair.getSecond();
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
+                try {
+                    VEModule instance = VanillaEnhancements.getPlugin().getModuleRegistry().getInstance(method.getDeclaringClass());
+                    if(instance == null) return;
+                    method.invoke(instance);
+                } catch (Exception e) {
+                    VanillaEnhancements.getPlugin().getLogger().severe("An error occurred while executing a tick service:");
+                    e.printStackTrace();
                 }
-            }
-        }, 0L, 1L);
+            }, tickService.executeNow() ? 0 : tickService.period(), tickService.period());
+        }
     }
 
-    public static void addTickService(TickService service) {
-        tickServices.put(service, service.getPeriod());
+    public static void addTickService(TickService service, Method method) {
+        tickServices.add(new Pair<>(service, method));
     }
 }

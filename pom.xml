@@ -70,6 +70,10 @@
             <id>codemc-repo</id>
             <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -80,20 +84,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.papermc</groupId>
-            <artifactId>paperlib</artifactId>
-            <version>1.0.6</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>23.1.0</version>
         </dependency>
         <dependency>
-            <groupId>yt.sehrschlecht</groupId>
-            <artifactId>schlechte-utils</artifactId>
-            <version>1.0.2</version>
+            <groupId>com.github.sehrschlechtYT</groupId>
+            <artifactId>SchlechteUtils</artifactId>
+            <version>1.0.3</version>
         </dependency>
     </dependencies>
 </project>

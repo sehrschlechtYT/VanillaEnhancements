@@ -6,8 +6,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +29,10 @@ public class ModuleRegistry {
             module.onEnable();
             enabledModules.add(module);
             Bukkit.getPluginManager().registerEvents(module, VanillaEnhancements.getPlugin());
-            if(module.getTickService() != null) {
-                TickServiceExecutor.addTickService(module.getTickService());
+            for (Method method : module.getClass().getMethods()) {
+                if(method.isAnnotationPresent(TickService.class)) {
+                    TickServiceExecutor.addTickService(method.getAnnotation(TickService.class), method);
+                }
             }
             return true;
         } catch (Throwable throwable) {
@@ -51,6 +55,12 @@ public class ModuleRegistry {
     @Nullable
     public VEModule getModule(NamespacedKey key) {
         Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getModuleKey().equals(key)).findFirst();
+        return moduleOptional.orElse(null);
+    }
+
+    @Nullable
+    public VEModule getInstance(Class<?> clazz) {
+        Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getClass().equals(clazz)).findFirst();
         return moduleOptional.orElse(null);
     }
 

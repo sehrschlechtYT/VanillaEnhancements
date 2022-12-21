@@ -3,9 +3,7 @@ package yt.sehrschlecht.vanillaenhancements.modules;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.logging.Logger;
@@ -35,11 +33,6 @@ public abstract class VEModule implements Listener {
 
     public void onDisable() {
 
-    }
-
-    @Nullable
-    public TickService getTickService() {
-        return null;
     }
 
     public VEModule getInstance() {
