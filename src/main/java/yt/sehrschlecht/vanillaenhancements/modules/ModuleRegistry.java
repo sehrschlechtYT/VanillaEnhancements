@@ -15,13 +15,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ModuleRegistry {
-    private static List<VEModule> enabledModules = new ArrayList<>();
-    private static List<VEModule> registeredModules = new ArrayList<>();
-    private static Logger logger = VanillaEnhancements.getPlugin().getLogger();
+    private List<VEModule> enabledModules = new ArrayList<>();
+    private List<VEModule> registeredModules = new ArrayList<>();
+    private Logger logger = VanillaEnhancements.getPlugin().getLogger();
 
-    public static boolean registerModule(VEModule module) {
+    public boolean registerModule(VEModule module) {
         registeredModules.add(module);
-        if(!Config.isModuleEnabled(module)) return false;
+        if(!Config.getInstance().isModuleEnabled(module)) return false;
         try {
             if(!module.shouldEnable()) return false;
             module.onEnable();
@@ -32,33 +32,34 @@ public class ModuleRegistry {
             }
             return true;
         } catch (Throwable throwable) {
-            logger.log(Level.SEVERE, "The module " + module.getName() + " couldn't be loaded due to an error.");
+            logger.log(Level.SEVERE, "The module " + module.getName() + " couldn't be loaded due to an error:");
+            logger.log(Level.SEVERE, throwable.getMessage());
             return false;
         }
     }
 
-    public static void unregisterAllModules() {
+    public void unregisterAllModules() {
         enabledModules.clear();
         registeredModules.clear();
     }
 
-    public static boolean isEnabled(NamespacedKey moduleKey) {
+    public boolean isEnabled(NamespacedKey moduleKey) {
         if(getModule(moduleKey) == null) return false;
         return enabledModules.contains(getModule(moduleKey));
     }
 
     @Nullable
-    public static VEModule getModule(NamespacedKey key) {
+    public VEModule getModule(NamespacedKey key) {
         Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getModuleKey().equals(key)).findFirst();
         return moduleOptional.orElse(null);
     }
 
     @NotNull
-    public static List<VEModule> getEnabledModules() {
+    public List<VEModule> getEnabledModules() {
         return enabledModules;
     }
 
-    public static List<VEModule> getRegisteredModules() {
+    public List<VEModule> getRegisteredModules() {
         return registeredModules;
     }
 }

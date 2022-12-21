@@ -25,7 +25,9 @@ import java.util.logging.Level;
 public final class VanillaEnhancements extends JavaPlugin {
     private static VanillaEnhancements plugin;
     private static YamlDocument configuration;
+
     private List<VEModule> inbuiltModules;
+    private ModuleRegistry moduleRegistry;
 
     @Override
     public void onEnable() {
@@ -79,8 +81,9 @@ public final class VanillaEnhancements extends JavaPlugin {
 
 
     public void registerModules() {
+        moduleRegistry = new ModuleRegistry();
         for (VEModule module : inbuiltModules) {
-            ModuleRegistry.registerModule(module);
+            moduleRegistry.registerModule(module);
         }
     }
 
@@ -99,5 +102,9 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public List<VEModule> getInbuiltModules() {
         return inbuiltModules;
+    }
+
+    public ModuleRegistry getModuleRegistry() {
+        return moduleRegistry;
     }
 }

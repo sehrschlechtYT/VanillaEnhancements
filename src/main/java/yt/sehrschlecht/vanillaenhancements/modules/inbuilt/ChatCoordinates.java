@@ -24,8 +24,8 @@ public class ChatCoordinates extends VEModule {
     public ConfigOption sendWorld = new ConfigOption("send_world", getModuleKey(), true);
 
     @Override
-    public @NotNull String getName() {
-        return "Chat coordinates";
+    public @NotNull String getKey() {
+        return "chat_coordinates";
     }
 
     @Override
