@@ -11,6 +11,10 @@ import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class OldRecipes extends VEModule {
     @Option public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption("enchanted_golden_apple_recipe", getModuleKey(), false);
     @Option public ConfigOption oldGoldenAppleRecipe = new ConfigOption("old_golden_apple_recipe", getModuleKey(), false);

@@ -10,6 +10,10 @@ import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class CreativeKeepInventory extends VEModule {
     @Option
     public ConfigOption requirePermission = new ConfigOption("require_permission", getModuleKey(), false);

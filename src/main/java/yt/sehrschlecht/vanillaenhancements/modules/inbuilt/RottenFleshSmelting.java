@@ -9,6 +9,10 @@ import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class RottenFleshSmelting extends VEModule {
     @Option
     public ConfigOption experience = new ConfigOption("experience", getModuleKey(), 0.1D);

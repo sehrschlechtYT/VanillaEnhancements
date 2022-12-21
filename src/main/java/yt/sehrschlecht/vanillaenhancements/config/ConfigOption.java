@@ -3,6 +3,10 @@ package yt.sehrschlecht.vanillaenhancements.config;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class ConfigOption {
     private final String key;
     private final NamespacedKey moduleKey;

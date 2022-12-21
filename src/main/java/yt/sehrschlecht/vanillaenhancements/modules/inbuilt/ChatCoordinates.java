@@ -14,6 +14,10 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.logging.Level;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class ChatCoordinates extends VEModule {
     @Option
     public ConfigOption chatColor = new ConfigOption("main_chat_color", getModuleKey(), ChatColor.AQUA.name());

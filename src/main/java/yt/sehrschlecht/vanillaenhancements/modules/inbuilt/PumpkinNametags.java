@@ -13,6 +13,10 @@ import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class PumpkinNametags extends VEModule {
     private Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 

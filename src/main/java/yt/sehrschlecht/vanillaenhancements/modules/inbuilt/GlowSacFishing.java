@@ -12,6 +12,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class GlowSacFishing extends VEModule {
     @Option
     public ConfigOption chance = new ConfigOption("chance", getInstance().getModuleKey(), 0.01D);

@@ -13,6 +13,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.utils.BlockUtils;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class UnstripLogs extends VEModule {
     @Option
     public ConfigOption damageTools = new ConfigOption("damageTools", getModuleKey(), true);

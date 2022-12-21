@@ -9,6 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class CraftChainArmor extends VEModule {
 
     @Override

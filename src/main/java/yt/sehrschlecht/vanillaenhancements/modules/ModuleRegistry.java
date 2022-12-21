@@ -16,6 +16,10 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class ModuleRegistry {
     private List<VEModule> enabledModules = new ArrayList<>();
     private List<VEModule> registeredModules = new ArrayList<>();

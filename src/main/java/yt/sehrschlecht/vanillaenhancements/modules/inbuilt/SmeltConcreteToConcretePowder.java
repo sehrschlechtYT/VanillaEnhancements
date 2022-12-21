@@ -10,6 +10,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.Locale;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class SmeltConcreteToConcretePowder extends VEModule {
     @Override
     public @NotNull String getName() {

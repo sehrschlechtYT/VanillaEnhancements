@@ -20,6 +20,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public final class VanillaEnhancements extends JavaPlugin {
     private static VanillaEnhancements plugin;
     private static YamlDocument configuration;

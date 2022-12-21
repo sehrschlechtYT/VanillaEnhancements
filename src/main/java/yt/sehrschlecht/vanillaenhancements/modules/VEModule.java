@@ -8,6 +8,10 @@ import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.logging.Logger;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public abstract class VEModule implements Listener {
     private static VEModule instance;
 

@@ -7,6 +7,10 @@ import org.bukkit.inventory.StonecuttingRecipe;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class CobblestoneInStoneCutter extends VEModule {
     @Override
     public @NotNull String getName() {

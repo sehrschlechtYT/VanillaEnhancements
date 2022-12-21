@@ -18,6 +18,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.Arrays;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class ZombiesDryToHusks extends VEModule {
     @Option
     public ConfigOption dryZombiesInNether = new ConfigOption("dry_zombies_in_nether", getModuleKey(), true);

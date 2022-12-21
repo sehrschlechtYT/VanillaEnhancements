@@ -8,6 +8,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import java.lang.reflect.Method;
 import java.util.*;
 
+/**
+ * @author sehrschlechtYT | https://github.com/sehrschlechtYT
+ * @since 1.0
+ */
 public class TickServiceExecutor {
     private static List<Pair<TickService, Method>> tickServices = new ArrayList<>();
 
