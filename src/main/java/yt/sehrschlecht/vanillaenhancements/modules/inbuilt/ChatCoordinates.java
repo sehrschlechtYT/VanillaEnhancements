@@ -50,5 +50,6 @@ public class ChatCoordinates extends VEModule {
         String text = chatColor.asChatColor() + format.format(location.getX()) + " " + format.format(location.getY()) + " " + format.format(location.getZ())
                 + (sendWorld.asBoolean() ? " " + secondChatColor.asChatColor() + "(" + chatColor.asChatColor() + location.getWorld().getName() + secondChatColor.asChatColor() + ")": "") + "§f";
         event.setMessage(event.getMessage().replace("~ ~ ~", text));
+        //ToDo doesn't work
     }
 }

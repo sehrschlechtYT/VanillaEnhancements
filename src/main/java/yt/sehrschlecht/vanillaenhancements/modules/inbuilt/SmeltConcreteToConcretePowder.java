@@ -6,6 +6,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.Locale;
@@ -15,6 +17,11 @@ import java.util.Locale;
  * @since 1.0
  */
 public class SmeltConcreteToConcretePowder extends VEModule {
+    @Option
+    public ConfigOption experience = new ConfigOption("experience", getModuleKey(), 0);
+    @Option
+    public ConfigOption cookingTime = new ConfigOption("cooking_time", getModuleKey(), 200);
+
     @Override
     public @NotNull String getName() {
         return "Smelt concrete to concrete powder";
@@ -46,7 +53,13 @@ public class SmeltConcreteToConcretePowder extends VEModule {
     }
 
     private void registerRecipe(Material concrete, Material powder) {
-        FurnaceRecipe recipe = new FurnaceRecipe(new NamespacedKey(getPlugin(), "smelt_" + concrete.toString().toLowerCase(Locale.ENGLISH)), new ItemStack(powder), concrete, 0, 200);
+        FurnaceRecipe recipe = new FurnaceRecipe(
+                new NamespacedKey(getPlugin(), "smelt_" + concrete.toString().toLowerCase(Locale.ENGLISH)),
+                new ItemStack(powder),
+                concrete,
+                experience.asInt(),
+                cookingTime.asInt()
+        );
         Bukkit.addRecipe(recipe);
     }
 }
