@@ -32,6 +32,7 @@ public class PumpkinNametags extends VEModule {
 
     @TickService(period = 5, executeNow = true)
     public void updateNametags() {
+        //ToDo testing required
         for (Player player : Bukkit.getOnlinePlayers()) {
             Team team = scoreboard.getTeam(player.getName());
             if(team == null) continue;

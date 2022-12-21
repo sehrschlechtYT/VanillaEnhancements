@@ -26,9 +26,9 @@ public class ModuleRegistry {
 
     public boolean registerModule(VEModule module) {
         registeredModules.add(module);
+        module.initialize();
         if(!Config.getInstance().isModuleEnabled(module)) return false;
         try {
-            module.initialize();
             if(!module.shouldEnable()) return false;
             module.onEnable();
             enabledModules.add(module);

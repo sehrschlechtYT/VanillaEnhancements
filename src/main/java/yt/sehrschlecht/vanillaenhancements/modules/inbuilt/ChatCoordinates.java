@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -49,7 +50,12 @@ public class ChatCoordinates extends VEModule {
         DecimalFormat format = new DecimalFormat("#");
         String text = chatColor.asChatColor() + format.format(location.getX()) + " " + format.format(location.getY()) + " " + format.format(location.getZ())
                 + (sendWorld.asBoolean() ? " " + secondChatColor.asChatColor() + "(" + chatColor.asChatColor() + location.getWorld().getName() + secondChatColor.asChatColor() + ")": "") + "§f";
-        event.setMessage(event.getMessage().replace("~ ~ ~", text));
-        //ToDo doesn't work
+        event.setCancelled(true);
+        //ToDo message is sent twice
+        //event.setMessage(event.getMessage().replace("~ ~ ~", text)); - doesn't work due to 1.19 chat signing (https://github.com/SpigotMC/BungeeCord/issues/3336)
+        //event.getPlayer().chat(event.getMessage().replace("~ ~ ~", text)); - doesn't work because player get's kicked for illegal characters
+        Bukkit.broadcastMessage(
+                event.getFormat().formatted(event.getPlayer().getDisplayName(), event.getMessage().replace("~ ~ ~", text).strip())
+        );
     }
 }
