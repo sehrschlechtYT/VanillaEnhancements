@@ -14,9 +14,9 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 public class OldRecipes extends VEModule {
-    @Option public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption("enchanted_golden_apple_recipe", getKey(), false);
-    @Option public ConfigOption oldGoldenAppleRecipe = new ConfigOption("old_golden_apple_recipe", getKey(), false);
-    @Option public ConfigOption horseArmorRecipes = new ConfigOption("horse_armor_recipes", getKey(), false);
+    @Option public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption("enchanted_golden_apple_recipe", getModuleKey(), false);
+    @Option public ConfigOption oldGoldenAppleRecipe = new ConfigOption("old_golden_apple_recipe", getModuleKey(), false);
+    @Option public ConfigOption horseArmorRecipes = new ConfigOption("horse_armor_recipes", getModuleKey(), false);
 
     private RecipeChoice.MaterialChoice woolChoice;
 
@@ -26,7 +26,7 @@ public class OldRecipes extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(getPlugin(), "old_recipes");
     }
 

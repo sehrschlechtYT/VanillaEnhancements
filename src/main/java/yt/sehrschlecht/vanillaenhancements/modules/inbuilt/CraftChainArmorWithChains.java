@@ -17,7 +17,7 @@ public class CraftChainArmorWithChains extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(getPlugin(), "craft_chain_armor_with_chains");
     }
 

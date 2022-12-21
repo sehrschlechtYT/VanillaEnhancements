@@ -16,9 +16,9 @@ import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 public class CreativeKeepInventory extends VEModule {
     @Option
-    public ConfigOption requirePermission = new ConfigOption("require_permission", getKey(), false);
+    public ConfigOption requirePermission = new ConfigOption("require_permission", getModuleKey(), false);
     @Option
-    public ConfigOption permission = new ConfigOption("permission", getKey(), "ve.keep_inventory_in_creative");
+    public ConfigOption permission = new ConfigOption("permission", getModuleKey(), "ve.keep_inventory_in_creative");
 
     @Override
     public @NotNull String getName() {
@@ -26,7 +26,7 @@ public class CreativeKeepInventory extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(VanillaEnhancements.getPlugin(), "creative_keep_inventory");
     }
 

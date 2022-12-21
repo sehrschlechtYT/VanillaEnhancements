@@ -2,12 +2,10 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
@@ -20,12 +18,12 @@ import java.util.logging.Level;
 
 public class ChatCoordinates extends VEModule {
     @Option
-    public ConfigOption chatColor = new ConfigOption("main_chat_color", getKey(), "AQUA");
+    public ConfigOption chatColor = new ConfigOption("main_chat_color", getModuleKey(), ChatColor.AQUA.name());
     @Option
-    public ConfigOption secondChatColor = new ConfigOption("second_chat_color", getKey(), "GRAY");
+    public ConfigOption secondChatColor = new ConfigOption("second_chat_color", getModuleKey(), ChatColor.GRAY.name());
 
     @Option
-    public ConfigOption sendWorld = new ConfigOption("send_world", getKey(), true);
+    public ConfigOption sendWorld = new ConfigOption("send_world", getModuleKey(), true);
 
     @Override
     public @NotNull String getName() {
@@ -33,8 +31,8 @@ public class ChatCoordinates extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
-        return new NamespacedKey(VanillaEnhancements.getPlugin(), "chat_coordinates");
+    public @NotNull String getKey() {
+        return "chat_coordinates";
     }
 
     @Override
@@ -43,7 +41,7 @@ public class ChatCoordinates extends VEModule {
             ChatColor.valueOf(chatColor.asString().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException exception) {
             getLogger().log(Level.SEVERE, "[" + getName() + "] Invalid chat color provided! Resetting to " + chatColor.getDefaultValue().toString() + ".");
-            Config.set(chatColor, chatColor.getDefaultValue());
+            Config.getInstance().set(chatColor, chatColor.getDefaultValue());
         }
     }
 

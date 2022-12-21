@@ -18,8 +18,8 @@ public class CraftChainArmor extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
-        return new NamespacedKey(VanillaEnhancements.getPlugin(), "chain_armor_crafting");
+    public @NotNull String getKey() {
+        return "chain_armor_crafting";
     }
 
     @Override

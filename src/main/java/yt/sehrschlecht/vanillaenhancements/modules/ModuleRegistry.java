@@ -49,7 +49,7 @@ public class ModuleRegistry {
 
     @Nullable
     public static VEModule getModule(NamespacedKey key) {
-        Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getKey().equals(key)).findFirst();
+        Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getModuleKey().equals(key)).findFirst();
         return moduleOptional.orElse(null);
     }
 

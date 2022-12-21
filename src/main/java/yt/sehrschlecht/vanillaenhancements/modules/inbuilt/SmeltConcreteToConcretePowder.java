@@ -19,7 +19,7 @@ public class SmeltConcreteToConcretePowder extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(getPlugin(), "smelt_concrete_to_concrete_powder");
     }
 

@@ -20,7 +20,11 @@ public abstract class VEModule implements Listener {
     public abstract String getName();
 
     @NotNull
-    public abstract NamespacedKey getKey();
+    public NamespacedKey getModuleKey() {
+        return new NamespacedKey(VanillaEnhancements.getPlugin(), getKey());
+    }
+
+    public abstract @NotNull String getKey();
 
     public abstract void onEnable();
 

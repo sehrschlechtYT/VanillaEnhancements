@@ -91,12 +91,6 @@
             <version>23.1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
-            <artifactId>holographicdisplays-api</artifactId>
-            <version>2.4.9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>yt.sehrschlecht</groupId>
             <artifactId>schlechte-utils</artifactId>
             <version>1.0.2</version>

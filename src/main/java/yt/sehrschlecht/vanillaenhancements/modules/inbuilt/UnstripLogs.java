@@ -19,7 +19,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
 
 public class UnstripLogs extends VEModule {
     @Option
-    public ConfigOption damageTools = new ConfigOption("damageTools", getKey(), true);
+    public ConfigOption damageTools = new ConfigOption("damageTools", getModuleKey(), true);
 
     @Override
     public @NotNull String getName() {
@@ -27,7 +27,7 @@ public class UnstripLogs extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(VanillaEnhancements.getPlugin(), "unstrip_logs");
     }
 

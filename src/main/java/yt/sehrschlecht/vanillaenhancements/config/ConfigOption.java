@@ -27,22 +27,30 @@ public class ConfigOption {
     }
 
     public boolean asBoolean() {
-        return Config.optionAsBoolean(this);
+        return Config.getInstance().optionAsBoolean(this);
     }
 
     public double asDouble() {
-        return Config.optionAsDouble(this);
+        return Config.getInstance().optionAsDouble(this);
     }
 
     public int asInt() {
-        return Config.optionAsInt(this);
+        return Config.getInstance().optionAsInt(this);
     }
 
     public String asString() {
-        return Config.optionAsString(this);
+        return Config.getInstance().optionAsString(this);
     }
 
     public ChatColor asChatColor() {
-        return ChatColor.valueOf(Config.optionAsString(this));
+        return ChatColor.valueOf(Config.getInstance().optionAsString(this));
+    }
+
+    public void reset() {
+        set(getDefaultValue());
+    }
+
+    public void set(Object value) {
+        Config.getInstance().set(this, value);
     }
 }

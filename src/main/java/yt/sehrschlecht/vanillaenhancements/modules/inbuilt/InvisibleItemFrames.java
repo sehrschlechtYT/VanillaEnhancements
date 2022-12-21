@@ -21,7 +21,7 @@ import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 public class InvisibleItemFrames extends VEModule {
     @Option
-    public ConfigOption useMilk = new ConfigOption("use_milk_to_make_visible", getKey(), true);
+    public ConfigOption useMilk = new ConfigOption("use_milk_to_make_visible", getModuleKey(), true);
 
     @Override
     public @NotNull String getName() {
@@ -29,7 +29,7 @@ public class InvisibleItemFrames extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(VanillaEnhancements.getPlugin(), "invisible_item_frames");
     }
 

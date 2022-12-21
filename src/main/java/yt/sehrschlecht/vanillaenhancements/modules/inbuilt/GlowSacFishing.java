@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GlowSacFishing extends VEModule {
     @Option
-    public ConfigOption chance = new ConfigOption("chance", getInstance().getKey(), 0.01D);
+    public ConfigOption chance = new ConfigOption("chance", getInstance().getModuleKey(), 0.01D);
 
 
     @Override
@@ -27,7 +27,7 @@ public class GlowSacFishing extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(VanillaEnhancements.getPlugin(), "glow_sac_fishing");
     }
 

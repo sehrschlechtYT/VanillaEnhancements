@@ -15,9 +15,9 @@ import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 public class RottenFleshSmelting extends VEModule {
     @Option
-    public ConfigOption experience = new ConfigOption("experience", getKey(), 0.1D);
+    public ConfigOption experience = new ConfigOption("experience", getModuleKey(), 0.1D);
     @Option
-    public ConfigOption cookingTime = new ConfigOption("cookingTime", getKey(), 5);
+    public ConfigOption cookingTime = new ConfigOption("cookingTime", getModuleKey(), 5);
 
     @Override
     public @NotNull String getName() {
@@ -25,13 +25,13 @@ public class RottenFleshSmelting extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(VanillaEnhancements.getPlugin(), "rotten_flesh_smelting");
     }
 
     @Override
     public void onEnable() {
-        FurnaceRecipe recipe = new FurnaceRecipe(getKey(), new ItemStack(Material.LEATHER), Material.ROTTEN_FLESH, (float) experience.asDouble(), cookingTime.asInt() * 20);
+        FurnaceRecipe recipe = new FurnaceRecipe(getModuleKey(), new ItemStack(Material.LEATHER), Material.ROTTEN_FLESH, (float) experience.asDouble(), cookingTime.asInt() * 20);
         Bukkit.addRecipe(recipe);
     }
 

@@ -25,7 +25,7 @@ public class PumpkinNametags extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(VanillaEnhancements.getPlugin(), "pumpkin_hide_nametags");
     }
 
@@ -53,7 +53,7 @@ public class PumpkinNametags extends VEModule {
                     team.removeEntry(player.getName());
                 }
             }
-        }, getKey());
+        }, getModuleKey());
     }
 
     @EventHandler

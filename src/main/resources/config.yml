@@ -1,3 +1,5 @@
+config-version: 1 #DO NOT CHANGE!
+
 msg:
   prefix: "§7[§aVanillaEnhancements§7] "
   reloading: "§7Reloading modules..."

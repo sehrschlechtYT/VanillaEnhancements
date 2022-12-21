@@ -1,7 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.config;
 
+import dev.dejvokep.boostedyaml.YamlDocument;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
@@ -12,61 +12,69 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Config {
-    private static FileConfiguration config;
+    private YamlDocument document;
+    private static Config instance;
 
+    public Config(YamlDocument document) {
+        instance = this;
+        this.document = document;
+    }
 
-    public static void init() {
-        config = VanillaEnhancements.getPlugin().getConfig();
-        for (VEModule module : VanillaEnhancements.inbuiltModules) {
-            String key = module.getKey().getKey();
-            if(!config.contains(key + ".enabled")) {
-                config.set(key + ".enabled", false);
+    public void init() {
+        for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
+            String key = module.getModuleKey().getKey();
+            if(!document.contains(key + ".enabled")) {
+                document.set(key + ".enabled", false);
             }
             for (ConfigOption option : getOptions(module)) {
-                if(!config.contains(key + "." + option.getKey())) {
-                    config.set(key + "." + option.getKey(), option.getDefaultValue());
+                if(!document.contains(key + "." + option.getKey())) {
+                    document.set(key + "." + option.getKey(), option.getDefaultValue());
                 }
             }
         }
         save();
     }
 
-    public static void set(ConfigOption option, Object value) {
-        config.set(option.getModuleKey().getKey() + "." + option.getKey(), value);
+    public static Config getInstance() {
+        return instance;
+    }
+
+    public void set(ConfigOption option, Object value) {
+        document.set(option.getModuleKey().getKey() + "." + option.getKey(), value);
         save();
     }
 
-    public static String message(String key) {
-        if(!config.contains("msg." + key)) return "Missing translation!";
-        return ChatColor.translateAlternateColorCodes('&', config.getString("msg." + key));
+    public String message(String key) {
+        if(!document.contains("msg." + key)) return "Missing translation!";
+        return ChatColor.translateAlternateColorCodes('&', document.getString("msg." + key));
     }
 
-    public static String optionAsString(ConfigOption option) {
-        return config.getString(option.getModuleKey().getKey() + "." + option.getKey());
+    public String optionAsString(ConfigOption option) {
+        return document.getString(option.getModuleKey().getKey() + "." + option.getKey());
     }
 
-    public static int optionAsInt(ConfigOption option) {
-        return config.getInt(option.getModuleKey().getKey() + "." + option.getKey());
+    public int optionAsInt(ConfigOption option) {
+        return document.getInt(option.getModuleKey().getKey() + "." + option.getKey());
     }
 
-    public static double optionAsDouble(ConfigOption option) {
-        return config.getDouble(option.getModuleKey().getKey() + "." + option.getKey());
+    public double optionAsDouble(ConfigOption option) {
+        return document.getDouble(option.getModuleKey().getKey() + "." + option.getKey());
     }
 
-    public static boolean optionAsBoolean(ConfigOption option) {
-        return config.getBoolean(option.getModuleKey().getKey() + "." + option.getKey());
+    public boolean optionAsBoolean(ConfigOption option) {
+        return document.getBoolean(option.getModuleKey().getKey() + "." + option.getKey());
     }
 
-    public static List<String> optionAsStringList(ConfigOption option) {
-        return config.getStringList(option.getModuleKey().getKey() + "." + option.getKey());
+    public List<String> optionAsStringList(ConfigOption option) {
+        return document.getStringList(option.getModuleKey().getKey() + "." + option.getKey());
     }
 
-    public static void save() {
+    public void save() {
         VanillaEnhancements.getPlugin().saveConfig();
     }
 
     @NotNull
-    public static List<ConfigOption> getOptions(VEModule module) {
+    public List<ConfigOption> getOptions(VEModule module) {
         List<ConfigOption> options = new ArrayList<>();
         Class<? extends Annotation> annotation = Option.class;
         Class<?> moduleClass = module.getClass();
@@ -82,7 +90,7 @@ public class Config {
         return options;
     }
 
-    public static boolean isModuleEnabled(VEModule module) {
-        return config.getBoolean(module.getKey().getKey() + ".enabled");
+    public boolean isModuleEnabled(VEModule module) {
+        return document.getBoolean(module.getModuleKey().getKey() + ".enabled");
     }
 }

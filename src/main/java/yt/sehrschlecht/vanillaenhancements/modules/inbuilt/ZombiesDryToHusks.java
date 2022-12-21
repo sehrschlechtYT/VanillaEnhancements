@@ -21,9 +21,9 @@ import java.util.Arrays;
 
 public class ZombiesDryToHusks extends VEModule {
     @Option
-    public ConfigOption dryZombiesInNether = new ConfigOption("dry_zombies_in_nether", getKey(), true);
+    public ConfigOption dryZombiesInNether = new ConfigOption("dry_zombies_in_nether", getModuleKey(), true);
     @Option
-    public ConfigOption dryZombiesOnHotDeath = new ConfigOption("dry_zombies_on_hot_death", getKey(), true);
+    public ConfigOption dryZombiesOnHotDeath = new ConfigOption("dry_zombies_on_hot_death", getModuleKey(), true);
 
     @Override
     public @NotNull String getName() {
@@ -31,7 +31,7 @@ public class ZombiesDryToHusks extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getKey() {
+    public @NotNull NamespacedKey getModuleKey() {
         return new NamespacedKey(VanillaEnhancements.getPlugin(), "zombies_dry_to_husks");
     }
 
