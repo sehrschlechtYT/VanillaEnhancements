@@ -1,6 +1,8 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -30,9 +32,12 @@ public class UnstripLogs extends VEModule {
     public void onInteract(PlayerInteractEvent event) {
         if(!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if(!event.hasBlock() || !event.hasItem()) return;
-        if(!BlockUtils.checkName(event.getClickedBlock(), "STRIPPED") || !ItemUtils.checkName(event.getItem(), "AXE")) return;
-        Material newBlock = Material.valueOf(event.getClickedBlock().getType().name().replace("STRIPPED_", ""));
-        event.getClickedBlock().setType(newBlock);
+        Block clickedBlock = event.getClickedBlock();
+        if(!BlockUtils.checkName(clickedBlock, "STRIPPED") || !ItemUtils.checkName(event.getItem(), "AXE")) return;
+        event.setCancelled(true);
+        Material newBlock = Material.valueOf(clickedBlock.getType().name().replace("STRIPPED_", ""));
+        clickedBlock.setType(newBlock);
+        event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_AXE_STRIP, 1, 1);
         if(damageTools.asBoolean()) {
             ItemStack stack = event.getItem();
             if(stack instanceof Damageable) {

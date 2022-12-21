@@ -27,6 +27,7 @@ public class GlowSacFishing extends VEModule {
 
     @EventHandler(ignoreCancelled = true)
     public void onFish(PlayerFishEvent event) {
+        if(event.getState() != PlayerFishEvent.State.CAUGHT_FISH) return;
         if(event.getCaught() instanceof Item) {
             Item item = (Item) event.getCaught();
             if(ThreadLocalRandom.current().nextDouble() < chance.asDouble()) {
