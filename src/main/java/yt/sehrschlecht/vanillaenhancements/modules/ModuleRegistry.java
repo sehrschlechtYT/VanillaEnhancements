@@ -28,6 +28,7 @@ public class ModuleRegistry {
         registeredModules.add(module);
         if(!Config.getInstance().isModuleEnabled(module)) return false;
         try {
+            module.initialize();
             if(!module.shouldEnable()) return false;
             module.onEnable();
             enabledModules.add(module);

@@ -1,19 +1,18 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
-import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
+import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-public class RottenFleshSmelting extends VEModule {
+public class RottenFleshSmelting extends RecipeModule {
     @Option
     public ConfigOption experience = new ConfigOption("experience", getModuleKey(), 0.1D);
     @Option
@@ -25,8 +24,13 @@ public class RottenFleshSmelting extends VEModule {
     }
 
     @Override
-    public void onEnable() {
-        FurnaceRecipe recipe = new FurnaceRecipe(getModuleKey(), new ItemStack(Material.LEATHER), Material.ROTTEN_FLESH, (float) experience.asDouble(), cookingTime.asInt() * 20);
-        Bukkit.addRecipe(recipe);
+    public void registerRecipes() {
+        addRecipe(getModuleKey(), new FurnaceRecipe(
+                getModuleKey(),
+                new ItemStack(Material.LEATHER),
+                Material.ROTTEN_FLESH,
+                (float) experience.asDouble(),
+                cookingTime.asInt() * 20)
+        );
     }
 }

@@ -1,6 +1,5 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
@@ -8,15 +7,13 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
-import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-
-import java.util.Locale;
+import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-public class SmeltConcreteToConcretePowder extends VEModule {
+public class SmeltConcreteToConcretePowder extends RecipeModule {
     @Option
     public ConfigOption experience = new ConfigOption("experience", getModuleKey(), 0);
     @Option
@@ -33,7 +30,7 @@ public class SmeltConcreteToConcretePowder extends VEModule {
     }
 
     @Override
-    public void onEnable() {
+    public void registerRecipes() {
         registerRecipe(Material.BLACK_CONCRETE, Material.BLACK_CONCRETE_POWDER);
         registerRecipe(Material.RED_CONCRETE, Material.RED_CONCRETE_POWDER);
         registerRecipe(Material.GREEN_CONCRETE, Material.GREEN_CONCRETE_POWDER);
@@ -53,13 +50,14 @@ public class SmeltConcreteToConcretePowder extends VEModule {
     }
 
     private void registerRecipe(Material concrete, Material powder) {
+        NamespacedKey key = new NamespacedKey(getPlugin(), "smelt_" + concrete.name().toLowerCase());
         FurnaceRecipe recipe = new FurnaceRecipe(
-                new NamespacedKey(getPlugin(), "smelt_" + concrete.toString().toLowerCase(Locale.ENGLISH)),
+                key,
                 new ItemStack(powder),
                 concrete,
                 experience.asInt(),
                 cookingTime.asInt()
         );
-        Bukkit.addRecipe(recipe);
+        addRecipe(key, recipe);
     }
 }

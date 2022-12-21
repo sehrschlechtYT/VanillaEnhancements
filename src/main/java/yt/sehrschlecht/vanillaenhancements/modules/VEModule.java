@@ -31,6 +31,14 @@ public abstract class VEModule implements Listener {
 
     public abstract @NotNull String getKey();
 
+    /**
+     * Called before onEnable() and onDisable()
+     * Used to execute code before the module is enabled/disabled
+     */
+    public void initialize() {
+
+    }
+
     public void onEnable() {
 
     }

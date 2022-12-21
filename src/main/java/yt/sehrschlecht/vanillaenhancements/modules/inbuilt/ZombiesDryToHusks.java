@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
@@ -32,7 +33,7 @@ public class ZombiesDryToHusks extends VEModule {
     public @NotNull String getKey() {
         return "zombies_dry_to_husks";
     }
-
+    //ToDo broken
     @EventHandler(ignoreCancelled = true)
     public void onPortal(EntityPortalEvent event) {
         if(!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
@@ -41,15 +42,33 @@ public class ZombiesDryToHusks extends VEModule {
         if(!dryZombiesInNether.asBoolean()) return;
         //Clone the zombie
         Zombie zombie = (Zombie) event.getEntity();
-        Husk husk = (Husk) zombie.getWorld().spawnEntity(event.getTo(), EntityType.HUSK);
+        replace(zombie, event.getTo());
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onDamage(EntityDamageEvent event) {
+        if(!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
+        if(!(event.getEntity() instanceof LivingEntity)) return;
+        LivingEntity livingEntity = (LivingEntity) event.getEntity();
+        if(!(event.getFinalDamage() >= livingEntity.getHealth())) return;
+        if(!Arrays.asList(EntityDamageEvent.DamageCause.LAVA, EntityDamageEvent.DamageCause.FIRE, EntityDamageEvent.DamageCause.FIRE_TICK, EntityDamageEvent.DamageCause.HOT_FLOOR).contains(event.getCause())) return;
+        if(!dryZombiesOnHotDeath.asBoolean()) return;
+        Zombie zombie = (Zombie) event.getEntity();
+        replace(zombie, zombie.getLocation());
+    }
+
+    private Husk replace(Zombie zombie, Location location) {
+        Husk husk = (Husk) zombie.getWorld().spawnEntity(location, EntityType.HUSK);
         husk.setHealth(zombie.getHealth());
         for (PotionEffect effect : zombie.getActivePotionEffects()) {
             husk.addPotionEffect(effect);
         }
-        for (MemoryKey memoryKey : MemoryKey.values()) {
-            if(zombie.getMemory(memoryKey) != null) {
-                husk.setMemory(memoryKey, zombie.getMemory(memoryKey));
+        try {
+            if(zombie.getMemory(MemoryKey.ANGRY_AT) != null) {
+                husk.setMemory(MemoryKey.ANGRY_AT, zombie.getMemory(MemoryKey.ANGRY_AT));
             }
+        } catch (IllegalStateException ignored) {
+            //ignore if the memory is not registered
         }
         if(zombie.isAdult()) {
             husk.setAdult();
@@ -65,19 +84,6 @@ public class ZombiesDryToHusks extends VEModule {
             }
         }
         zombie.remove();
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onDamage(EntityDamageEvent event) {
-        if(!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
-        if(!(event.getEntity() instanceof LivingEntity)) return;
-        LivingEntity livingEntity = (LivingEntity) event.getEntity();
-        if(!(event.getFinalDamage() >= livingEntity.getHealth())) return;
-        if(!Arrays.asList(EntityDamageEvent.DamageCause.LAVA, EntityDamageEvent.DamageCause.FIRE, EntityDamageEvent.DamageCause.FIRE_TICK, EntityDamageEvent.DamageCause.HOT_FLOOR).contains(event.getCause())) return;
-        if(!dryZombiesOnHotDeath.asBoolean()) return;
-        Zombie zombie = (Zombie) event.getEntity();
-        zombie.getWorld().spawnEntity(zombie.getLocation(), EntityType.HUSK);
-        zombie.remove();
-        event.setCancelled(true);
+        return husk;
     }
 }
