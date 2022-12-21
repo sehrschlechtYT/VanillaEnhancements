@@ -13,9 +13,9 @@ import java.util.*;
  * @since 1.0
  */
 public class TickServiceExecutor {
-    private static List<Pair<TickService, Method>> tickServices = new ArrayList<>();
+    private List<Pair<TickService, Method>> tickServices = new ArrayList<>();
 
-    public static void startTicking() {
+    public void startTicking() {
         for (Pair<TickService, Method> pair : tickServices) {
             TickService tickService = pair.getFirst();
             Method method = pair.getSecond();
@@ -32,7 +32,7 @@ public class TickServiceExecutor {
         }
     }
 
-    public static void addTickService(TickService service, Method method) {
+    public void addTickService(TickService service, Method method) {
         tickServices.add(new Pair<>(service, method));
     }
 }

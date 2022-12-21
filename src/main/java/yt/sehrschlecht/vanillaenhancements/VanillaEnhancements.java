@@ -30,6 +30,7 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     private List<VEModule> inbuiltModules;
     private ModuleRegistry moduleRegistry;
+    private TickServiceExecutor tickServiceExecutor;
 
     @Override
     public void onEnable() {
@@ -56,7 +57,8 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         registerModules();
 
-        TickServiceExecutor.startTicking();
+        tickServiceExecutor = new TickServiceExecutor();
+        tickServiceExecutor.startTicking();
     }
 
     private void createConfig() {
@@ -105,5 +107,9 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public ModuleRegistry getModuleRegistry() {
         return moduleRegistry;
+    }
+
+    public TickServiceExecutor getTickServiceExecutor() {
+        return tickServiceExecutor;
     }
 }

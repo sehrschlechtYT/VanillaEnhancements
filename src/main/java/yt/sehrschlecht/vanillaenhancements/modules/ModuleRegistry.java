@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class ModuleRegistry {
             Bukkit.getPluginManager().registerEvents(module, VanillaEnhancements.getPlugin());
             for (Method method : module.getClass().getMethods()) {
                 if(method.isAnnotationPresent(TickService.class)) {
-                    TickServiceExecutor.addTickService(method.getAnnotation(TickService.class), method);
+                    VanillaEnhancements.getPlugin().getTickServiceExecutor().addTickService(method.getAnnotation(TickService.class), method);
                 }
             }
             return true;
