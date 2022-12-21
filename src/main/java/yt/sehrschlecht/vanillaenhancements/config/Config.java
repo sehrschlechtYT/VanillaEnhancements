@@ -17,7 +17,7 @@ public class Config {
 
     public static void init() {
         config = VanillaEnhancements.getPlugin().getConfig();
-        for (VEModule module : VanillaEnhancements.modules) {
+        for (VEModule module : VanillaEnhancements.inbuiltModules) {
             String key = module.getKey().getKey();
             if(!config.contains(key + ".enabled")) {
                 config.set(key + ".enabled", false);

@@ -1,4 +1,4 @@
-package yt.sehrschlecht.vanillaenhancements.modules.enhancements;
+package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

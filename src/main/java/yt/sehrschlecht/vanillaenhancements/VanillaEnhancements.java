@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.modules.enhancements.*;
+import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 import yt.sehrschlecht.vanillaenhancements.utils.ExternalAPIs;
 
@@ -15,7 +15,7 @@ import java.util.logging.Level;
 
 public final class VanillaEnhancements extends JavaPlugin {
     private static VanillaEnhancements plugin;
-    public static List<VEModule> modules;
+    public static List<VEModule> inbuiltModules;
 
     @Override
     public void onEnable() {
@@ -27,7 +27,7 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         ExternalAPIs.init();
 
-        modules = Arrays.asList(
+        inbuiltModules = Arrays.asList(
                 new UnstripLogs(),
                 new GlowSacFishing(),
                 new CobblestoneInStoneCutter(),
@@ -40,7 +40,9 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new PumpkinNametags(),
                 new OldRecipes(),
                 new CraftChainArmorWithChains(),
-                new SmeltConcreteToConcretePowder()
+                new SmeltConcreteToConcretePowder(),
+                new FeatherFallingLeggings(),
+                new PhoenixSCEnhancement()
         );
 
         Config.init();
@@ -51,7 +53,7 @@ public final class VanillaEnhancements extends JavaPlugin {
     }
 
     public void registerModules() {
-        for (VEModule module : modules) {
+        for (VEModule module : inbuiltModules) {
             ModuleRegistry.registerModule(module);
         }
     }

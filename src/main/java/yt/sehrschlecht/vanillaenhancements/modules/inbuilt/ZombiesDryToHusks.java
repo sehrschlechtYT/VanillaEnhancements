@@ -1,4 +1,4 @@
-package yt.sehrschlecht.vanillaenhancements.modules.enhancements;
+package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
