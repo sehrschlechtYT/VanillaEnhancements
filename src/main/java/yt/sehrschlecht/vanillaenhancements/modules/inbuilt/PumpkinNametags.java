@@ -2,7 +2,6 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -12,7 +11,6 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
@@ -21,22 +19,12 @@ public class PumpkinNametags extends VEModule {
 
     @Override
     public @NotNull String getName() {
-        return "Hide nametags with pumpkins";
+        return "Hide nametag if wearing pumpkin";
     }
 
     @Override
-    public @NotNull NamespacedKey getModuleKey() {
-        return new NamespacedKey(VanillaEnhancements.getPlugin(), "pumpkin_hide_nametags");
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
+    public @NotNull String getKey() {
+        return "pumpkin_hide_nametags";
     }
 
     @Override

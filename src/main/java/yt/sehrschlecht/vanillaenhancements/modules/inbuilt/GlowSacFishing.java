@@ -1,18 +1,14 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,30 +16,9 @@ public class GlowSacFishing extends VEModule {
     @Option
     public ConfigOption chance = new ConfigOption("chance", getInstance().getModuleKey(), 0.01D);
 
-
     @Override
-    public @NotNull String getName() {
-        return "Glow Sac Fishing";
-    }
-
-    @Override
-    public @NotNull NamespacedKey getModuleKey() {
-        return new NamespacedKey(VanillaEnhancements.getPlugin(), "glow_sac_fishing");
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public @Nullable TickService getTickService() {
-        return null;
+    public @NotNull String getKey() {
+        return "glow_sac_fishing";
     }
 
     @EventHandler(ignoreCancelled = true)

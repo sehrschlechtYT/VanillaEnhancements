@@ -6,9 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 import java.util.Locale;
 
@@ -19,8 +17,8 @@ public class SmeltConcreteToConcretePowder extends VEModule {
     }
 
     @Override
-    public @NotNull NamespacedKey getModuleKey() {
-        return new NamespacedKey(getPlugin(), "smelt_concrete_to_concrete_powder");
+    public @NotNull String getKey() {
+        return "smelt_concrete_to_concrete_powder";
     }
 
     @Override
@@ -46,15 +44,5 @@ public class SmeltConcreteToConcretePowder extends VEModule {
     private void registerRecipe(Material concrete, Material powder) {
         FurnaceRecipe recipe = new FurnaceRecipe(new NamespacedKey(getPlugin(), "smelt_" + concrete.toString().toLowerCase(Locale.ENGLISH)), new ItemStack(powder), concrete, 0, 200);
         Bukkit.addRecipe(recipe);
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public @Nullable TickService getTickService() {
-        return null;
     }
 }

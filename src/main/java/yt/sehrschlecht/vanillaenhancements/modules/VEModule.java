@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
+import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.logging.Logger;
 
@@ -17,7 +18,9 @@ public abstract class VEModule implements Listener {
     }
 
     @NotNull
-    public abstract String getName();
+    public String getName() {
+        return ModuleUtils.getNameFromKey(getModuleKey());
+    }
 
     @NotNull
     public NamespacedKey getModuleKey() {
@@ -26,12 +29,18 @@ public abstract class VEModule implements Listener {
 
     public abstract @NotNull String getKey();
 
-    public abstract void onEnable();
+    public void onEnable() {
 
-    public abstract void onDisable();
+    }
+
+    public void onDisable() {
+
+    }
 
     @Nullable
-    public abstract TickService getTickService();
+    public TickService getTickService() {
+        return null;
+    }
 
     public VEModule getInstance() {
         return instance;

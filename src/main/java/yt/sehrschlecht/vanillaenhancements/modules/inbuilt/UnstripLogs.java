@@ -1,19 +1,15 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 import yt.sehrschlecht.vanillaenhancements.utils.BlockUtils;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
 
@@ -22,28 +18,8 @@ public class UnstripLogs extends VEModule {
     public ConfigOption damageTools = new ConfigOption("damageTools", getModuleKey(), true);
 
     @Override
-    public @NotNull String getName() {
-        return "Unstrip Logs";
-    }
-
-    @Override
-    public @NotNull NamespacedKey getModuleKey() {
-        return new NamespacedKey(VanillaEnhancements.getPlugin(), "unstrip_logs");
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public @Nullable TickService getTickService() {
-        return null;
+    public @NotNull String getKey() {
+        return "unstrip_logs";
     }
 
     @EventHandler(ignoreCancelled = true)

@@ -1,8 +1,10 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Husk;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Zombie;
 import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -10,12 +12,9 @@ import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 import java.util.Arrays;
 
@@ -26,28 +25,8 @@ public class ZombiesDryToHusks extends VEModule {
     public ConfigOption dryZombiesOnHotDeath = new ConfigOption("dry_zombies_on_hot_death", getModuleKey(), true);
 
     @Override
-    public @NotNull String getName() {
-        return "Zombies dry to husks";
-    }
-
-    @Override
-    public @NotNull NamespacedKey getModuleKey() {
-        return new NamespacedKey(VanillaEnhancements.getPlugin(), "zombies_dry_to_husks");
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public @Nullable TickService getTickService() {
-        return null;
+    public @NotNull String getKey() {
+        return "zombies_dry_to_husks";
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -56,6 +35,7 @@ public class ZombiesDryToHusks extends VEModule {
         if(event.getTo() == null) return;
         if(!event.getTo().getWorld().getEnvironment().equals(World.Environment.NETHER)) return;
         if(!dryZombiesInNether.asBoolean()) return;
+        //Clone the zombie
         Zombie zombie = (Zombie) event.getEntity();
         Husk husk = (Husk) zombie.getWorld().spawnEntity(event.getTo(), EntityType.HUSK);
         husk.setHealth(zombie.getHealth());

@@ -7,11 +7,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 public class OldRecipes extends VEModule {
     @Option public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption("enchanted_golden_apple_recipe", getModuleKey(), false);
@@ -21,13 +19,8 @@ public class OldRecipes extends VEModule {
     private RecipeChoice.MaterialChoice woolChoice;
 
     @Override
-    public @NotNull String getName() {
-        return "Old recipes";
-    }
-
-    @Override
-    public @NotNull NamespacedKey getModuleKey() {
-        return new NamespacedKey(getPlugin(), "old_recipes");
+    public @NotNull String getKey() {
+        return "old_recipes";
     }
 
     @Override
@@ -98,15 +91,5 @@ public class OldRecipes extends VEModule {
         recipe.setIngredient('L', Material.DIAMOND);
         recipe.setIngredient('W', woolChoice);
         Bukkit.addRecipe(recipe);
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public @Nullable TickService getTickService() {
-        return null;
     }
 }

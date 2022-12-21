@@ -48,7 +48,6 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new ChatCoordinates(),
                 new PumpkinNametags(),
                 new OldRecipes(),
-                new CraftChainArmorWithChains(),
                 new SmeltConcreteToConcretePowder()
         );
 

@@ -6,16 +6,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 public class CraftChainArmor extends VEModule {
-    @Override
-    public @NotNull String getName() {
-        return "Chain armor crafting";
-    }
 
     @Override
     public @NotNull String getKey() {
@@ -24,47 +18,16 @@ public class CraftChainArmor extends VEModule {
 
     @Override
     public void onEnable() {
-        Bukkit.addRecipe(helmetCrafting());
-        Bukkit.addRecipe(chestplateCrafting());
-        Bukkit.addRecipe(leggingsCrafting());
-        Bukkit.addRecipe(bootsCrafting());
+        addChainRecipe("chain_helmet", Material.CHAINMAIL_HELMET, "CCC", "C C");
+        addChainRecipe("chain_chestplate", Material.CHAINMAIL_CHESTPLATE, "C C", "CCC", "CCC");
+        addChainRecipe("chain_leggings", Material.CHAINMAIL_LEGGINGS, "CCC", "C C", "C C");
+        addChainRecipe("chain_boots", Material.CHAINMAIL_BOOTS, "C C", "C C");
     }
 
-    private ShapedRecipe helmetCrafting() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(VanillaEnhancements.getPlugin(), "chain_helmet"), new ItemStack(Material.CHAINMAIL_HELMET));
-        recipe.shape("CCC", "C C");
+    private void addChainRecipe(String key, Material result, String... shape) {
+        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(VanillaEnhancements.getPlugin(), key), new ItemStack(result));
+        recipe.shape(shape);
         recipe.setIngredient('C', Material.CHAIN);
-        return recipe;
-    }
-
-    private ShapedRecipe chestplateCrafting() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(VanillaEnhancements.getPlugin(), "chain_chestplate"), new ItemStack(Material.CHAINMAIL_CHESTPLATE));
-        recipe.shape("C C", "CCC", "CCC");
-        recipe.setIngredient('C', Material.CHAIN);
-        return recipe;
-    }
-
-    private ShapedRecipe leggingsCrafting() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(VanillaEnhancements.getPlugin(), "chain_leggings"), new ItemStack(Material.CHAINMAIL_LEGGINGS));
-        recipe.shape("CCC", "C C", "C C");
-        recipe.setIngredient('C', Material.CHAIN);
-        return recipe;
-    }
-
-    private ShapedRecipe bootsCrafting() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(VanillaEnhancements.getPlugin(), "chain_boots"), new ItemStack(Material.CHAINMAIL_BOOTS));
-        recipe.shape("C C", "C C");
-        recipe.setIngredient('C', Material.CHAIN);
-        return recipe;
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public @Nullable TickService getTickService() {
-        return null;
+        Bukkit.addRecipe(recipe);
     }
 }

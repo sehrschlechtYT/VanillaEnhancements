@@ -5,12 +5,10 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
@@ -31,11 +29,6 @@ public class ChatCoordinates extends VEModule {
     }
 
     @Override
-    public @NotNull String getKey() {
-        return "chat_coordinates";
-    }
-
-    @Override
     public void onEnable() {
         try {
             ChatColor.valueOf(chatColor.asString().toUpperCase(Locale.ROOT));
@@ -43,16 +36,6 @@ public class ChatCoordinates extends VEModule {
             getLogger().log(Level.SEVERE, "[" + getName() + "] Invalid chat color provided! Resetting to " + chatColor.getDefaultValue().toString() + ".");
             Config.getInstance().set(chatColor, chatColor.getDefaultValue());
         }
-    }
-
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public @Nullable TickService getTickService() {
-        return null;
     }
 
     @EventHandler
