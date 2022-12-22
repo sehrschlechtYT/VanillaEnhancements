@@ -39,6 +39,8 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         ExternalAPIs.init();
 
+        tickServiceExecutor = new TickServiceExecutor();
+
         inbuiltModules = Arrays.asList(
                 new UnstripLogs(),
                 new GlowSacFishing(),
@@ -52,14 +54,15 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new PumpkinNametags(),
                 new OldRecipes(),
                 new SmeltConcreteToConcretePowder(),
-                new RemoveNametags()
+                new RemoveNametags(),
+                new CraftSlabsToBlocks(),
+                new CraftStairsToBlocks()
         );
 
         createConfig();
 
         registerModules();
 
-        tickServiceExecutor = new TickServiceExecutor();
         tickServiceExecutor.startTicking();
     }
 

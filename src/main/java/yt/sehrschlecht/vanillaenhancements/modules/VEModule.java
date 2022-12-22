@@ -29,7 +29,7 @@ public abstract class VEModule implements Listener {
         return new NamespacedKey(VanillaEnhancements.getPlugin(), getKey());
     }
 
-    public abstract @NotNull String getKey();
+    public abstract @NotNull String getKey(); //ToDo maybe use SimpleClassName as key
 
     /**
      * Called before onEnable() and onDisable()
