@@ -56,7 +56,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new SmeltConcreteToConcretePowder(),
                 new RemoveNametags(),
                 new CraftSlabsToBlocks(),
-                new CraftStairsToBlocks()
+                new CraftStairsToBlocks(),
+                new CraftBlocksToTwoSlabs()
         );
 
         createConfig();
