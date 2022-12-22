@@ -11,6 +11,7 @@ import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
+import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes.*;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 import yt.sehrschlecht.vanillaenhancements.utils.ExternalAPIs;
 

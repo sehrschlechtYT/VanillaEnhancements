@@ -1,4 +1,4 @@
-package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
+package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.FurnaceRecipe;
