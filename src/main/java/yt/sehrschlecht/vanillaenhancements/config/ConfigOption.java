@@ -20,7 +20,7 @@ public class ConfigOption {
 
     public NamespacedKey getModuleKey() {
         return moduleKey;
-    }
+    } //ToDo get via class & ModuleRegistry#getInstance
 
     public String getKey() {
         return key;
