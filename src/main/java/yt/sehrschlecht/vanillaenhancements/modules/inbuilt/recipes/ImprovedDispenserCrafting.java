@@ -22,8 +22,8 @@ public class ImprovedDispenserCrafting extends RecipeModule {
 
     @Override
     public void registerRecipes() {
-        createDropperAndBowRecipe();
-        createDropperAndStringsAndSticksRecipe();
+        if(dropperAndBow.asBoolean()) createDropperAndBowRecipe();
+        if(dropperAndStringsAndSticks.asBoolean()) createDropperAndStringsAndSticksRecipe();
     }
 
     public void createDropperAndBowRecipe() {
