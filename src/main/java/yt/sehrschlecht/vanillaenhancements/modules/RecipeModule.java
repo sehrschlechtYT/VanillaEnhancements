@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
+import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +39,24 @@ public abstract class RecipeModule extends VEModule {
     public void onDisable() {
         super.onDisable();
         recipes.forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
+        Bukkit.resetRecipes();
     }
 
     protected void reloadRecipes() {
-        addedRecipes.forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
+        Debug.RECIPES.log("Reloading recipes of module {}...", getModuleKey());
+        addedRecipes.forEach(recipe -> {
+            if(Bukkit.getRecipe(recipe.key()) == null) {
+                Debug.RECIPES.log("Recipe {} was never added.", recipe.key());
+            }
+            boolean removed = Bukkit.removeRecipe(recipe.key());
+            Debug.RECIPES.log("Removed recipe {} {}.", recipe.key(), removed ? "successfully" : "unsuccessfully");
+        });
+        recipes.clear();
         registerRecipes();
-        recipes.forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
+        recipes.forEach(recipe -> {
+            Bukkit.addRecipe(recipe.recipe());
+            Debug.RECIPES.log("Added recipe {}.", recipe.key());
+        });
         addedRecipes = recipes;
     }
 
