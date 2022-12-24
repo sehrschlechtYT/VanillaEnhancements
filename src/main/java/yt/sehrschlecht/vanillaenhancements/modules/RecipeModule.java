@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
+import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +48,11 @@ public abstract class RecipeModule extends VEModule {
         recipes.add(new VERecipe(key, recipe, discoverItem));
     }
 
-    @TickService(period = 60, executeNow = true)
+    @Tick(period = 60, executeNow = true)
     public void checkRecipes() {
-        System.out.println("Checking recipes...");
         for (Player player : Bukkit.getOnlinePlayers()) {
             for (ItemStack stack : player.getInventory().getContents()) {
+                if(stack == null) continue;
                 if(!stack.getType().isItem()) continue;
                 discoverRecipes(player, stack.getType());
             }

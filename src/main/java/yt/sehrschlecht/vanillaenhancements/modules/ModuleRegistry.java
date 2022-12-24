@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
+import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -33,16 +33,21 @@ public class ModuleRegistry {
             module.onEnable();
             enabledModules.add(module);
             Bukkit.getPluginManager().registerEvents(module, VanillaEnhancements.getPlugin());
-            for (Method method : module.getClass().getMethods()) {
-                if(method.isAnnotationPresent(TickService.class)) {
-                    VanillaEnhancements.getPlugin().getTickServiceExecutor().addTickService(method.getAnnotation(TickService.class), method);
-                }
-            }
+            registerTickServices(module);
             return true;
         } catch (Throwable throwable) {
             logger.log(Level.SEVERE, "The module " + module.getName() + " couldn't be loaded due to an error:");
             logger.log(Level.SEVERE, throwable.getMessage());
             return false;
+        }
+    }
+
+    private void registerTickServices(VEModule module) {
+        Class<? extends VEModule> clazz = module.getClass();
+        for (Method method : clazz.getMethods()) {
+            if(method.isAnnotationPresent(Tick.class)) {
+                VanillaEnhancements.getPlugin().getTickServiceExecutor().addTickService(module, method.getAnnotation(Tick.class), method);
+            }
         }
     }
 
@@ -63,8 +68,9 @@ public class ModuleRegistry {
     }
 
     @Nullable
-    public VEModule getInstance(Class<?> clazz) {
-        Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getClass().equals(clazz)).findFirst();
+    @Deprecated(forRemoval = true)
+    public VEModule getInstance(String canonicalName) {
+        Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getClass().getCanonicalName().equals(canonicalName)).findFirst();
         return moduleOptional.orElse(null);
     }
 

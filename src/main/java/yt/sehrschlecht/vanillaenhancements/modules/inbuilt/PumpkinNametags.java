@@ -11,7 +11,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
+import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -30,7 +30,7 @@ public class PumpkinNametags extends VEModule {
         return "pumpkin_hide_nametags";
     }
 
-    @TickService(period = 5, executeNow = true)
+    @Tick(period = 5, executeNow = true)
     public void updateNametags() {
         //ToDo testing required
         for (Player player : Bukkit.getOnlinePlayers()) {
