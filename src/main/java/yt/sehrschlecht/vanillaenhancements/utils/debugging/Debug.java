@@ -18,6 +18,7 @@ public class Debug {
     public final static Component CONFIG_OPTIONS = new Component(ComponentType.CONFIG_OPTIONS);
     public final static Component MODULES = new Component(ComponentType.MODULES);
     public final static Component TICK_SERVICES = new Component(ComponentType.TICK_SERVICES);
+    public final static Component RECIPES = new Component(ComponentType.RECIPES);
     public final static Component OTHER = new Component(ComponentType.OTHER);
 
     private final List<ComponentType> enabledComponents;
@@ -81,6 +82,7 @@ public class Debug {
         CONFIG_OPTIONS("[Config Options]"),
         MODULES("[Modules]"),
         TICK_SERVICES("[TickServices]"),
+        RECIPES("[Recipes]"),
         OTHER("[Other]");
 
         private final String prefix;

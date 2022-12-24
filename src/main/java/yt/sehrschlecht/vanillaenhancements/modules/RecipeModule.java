@@ -2,11 +2,9 @@ package yt.sehrschlecht.vanillaenhancements.modules;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.recipes.VERecipe;
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
 
 import java.util.ArrayList;
@@ -28,14 +26,14 @@ public abstract class RecipeModule extends VEModule {
     @Override
     public void onEnable() {
         super.onEnable();
-        recipes.forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
+        recipes.forEach(VERecipe::register);
         shouldCheckRecipes = getConfig().getDocument().getBoolean("recipes.discover");
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
-        recipes.forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
+        recipes.forEach(VERecipe::unregister);
     }
 
     public abstract void registerRecipes();
@@ -46,8 +44,8 @@ public abstract class RecipeModule extends VEModule {
      * @param key The key of the recipe
      * @param recipe The recipe
      */
-    public void addRecipe(NamespacedKey key, Recipe recipe, @Nullable Material discoverItem) {
-        recipes.add(new VERecipe(key, recipe, discoverItem));
+    public void addRecipe(VERecipe recipe) {
+        recipes.add(recipe);
     }
 
     @Tick(period = 60, executeNow = true)
@@ -64,11 +62,11 @@ public abstract class RecipeModule extends VEModule {
 
     private void discoverRecipes(Player player, Material collectedItem) {
         recipes.stream()
-                .filter(recipe -> recipe.discoverItem() != null)
-                .filter(recipe -> collectedItem == recipe.discoverItem())
+                .filter(recipe -> recipe.getDiscoverItem() != null)
+                .filter(recipe -> collectedItem == recipe.getDiscoverItem())
                 .forEach(recipe -> {
-                    if(!player.hasDiscoveredRecipe(recipe.key())) {
-                        player.discoverRecipe(recipe.key());
+                    if(!player.hasDiscoveredRecipe(recipe.getKey())) {
+                        player.discoverRecipe(recipe.getKey());
                     }
                 });
     }
