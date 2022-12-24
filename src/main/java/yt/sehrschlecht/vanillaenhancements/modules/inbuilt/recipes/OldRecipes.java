@@ -52,7 +52,7 @@ public class OldRecipes extends RecipeModule {
         ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "enchanted_golden_apple"), new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
         recipe.shape("GGG", "GAG", "GGG");
         recipe.setIngredient('G', Material.GOLD_BLOCK);
-        recipe.setIngredient('A', Material.GOLDEN_APPLE);
+        recipe.setIngredient('A', Material.APPLE);
         addRecipe(new NamespacedKey(getPlugin(), "enchanted_golden_apple"), recipe, Material.APPLE);
     }
 
@@ -60,7 +60,7 @@ public class OldRecipes extends RecipeModule {
         ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(getPlugin(), "old_golden_apple"), new ItemStack(Material.GOLDEN_APPLE));
         recipe.shape("GGG", "GAG", "GGG");
         recipe.setIngredient('G', Material.GOLD_NUGGET);
-        recipe.setIngredient('A', Material.GOLDEN_APPLE);
+        recipe.setIngredient('A', Material.APPLE);
         addRecipe(new NamespacedKey(getPlugin(), "old_golden_apple"), recipe, Material.APPLE);
     }
 
