@@ -83,6 +83,12 @@ public class ModuleRegistry {
         return moduleOptional.orElse(null);
     }
 
+    @Nullable
+    public VEModule getInstance(Class<? extends VEModule> clazz) {
+        Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getClass().equals(clazz)).findFirst();
+        return moduleOptional.orElse(null);
+    }
+
     @NotNull
     public List<VEModule> getEnabledModules() {
         return enabledModules;

@@ -104,9 +104,12 @@ public class Config {
         for (Field field : moduleClass.getDeclaredFields()) {
             Debug.CONFIG_OPTIONS.log("Checking field {}...", field.getName());
             if(field.getType().isAssignableFrom(ConfigOption.class)) {
-                Debug.CONFIG_OPTIONS.log("Found option {}!", field.getName());
                 try {
+                    ConfigOption option = (ConfigOption) field.get(module);
+                    option.setModuleKey(module.getModuleKey());
+                    option.setKey(field.getName());
                     options.add((ConfigOption) field.get(module));
+                    Debug.CONFIG_OPTIONS.log("Found option {} with default value {}.", field.getName(), option.getDefaultValue());
                 } catch (Exception e) {
                     VanillaEnhancements.getPlugin().getLogger().severe(
                             "An error occurred while getting option %s from module %s:".formatted(field.getName(), module.getModuleKey().getKey())

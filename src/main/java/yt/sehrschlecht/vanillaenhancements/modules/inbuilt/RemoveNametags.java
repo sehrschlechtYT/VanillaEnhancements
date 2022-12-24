@@ -19,8 +19,8 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
  * @since 1.0
  */
 public class RemoveNametags extends VEModule {
-    public ConfigOption damageItem = new ConfigOption("damageItem", getModuleKey(), true);
-    public ConfigOption dropNametag = new ConfigOption("dropNametag", getModuleKey(), true);
+    public ConfigOption damageItem = new ConfigOption(true);
+    public ConfigOption dropNametag = new ConfigOption(true);
 
     @Override
     public @NotNull String getKey() {

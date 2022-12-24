@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
@@ -19,10 +18,10 @@ import java.util.logging.Level;
  * @since 1.0
  */
 public class ChatCoordinates extends VEModule {
-    public ConfigOption chatColor = new ConfigOption("main_chat_color", getModuleKey(), ChatColor.AQUA.name());
-    public ConfigOption secondChatColor = new ConfigOption("second_chat_color", getModuleKey(), ChatColor.GRAY.name());
+    public ConfigOption chatColor = new ConfigOption(ChatColor.AQUA.name());
+    public ConfigOption secondChatColor = new ConfigOption(ChatColor.GRAY.name());
 
-    public ConfigOption sendWorld = new ConfigOption("send_world", getModuleKey(), true);
+    public ConfigOption sendWorld = new ConfigOption(true);
 
     @Override
     public @NotNull String getKey() {
@@ -36,7 +35,7 @@ public class ChatCoordinates extends VEModule {
             ChatColor.valueOf(chatColor.asString().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException exception) {
             getLogger().log(Level.SEVERE, "[" + getName() + "] Invalid chat color provided! Resetting to " + chatColor.getDefaultValue().toString() + ".");
-            Config.getInstance().set(chatColor, chatColor.getDefaultValue());
+            chatColor.reset();
         }
     }
 

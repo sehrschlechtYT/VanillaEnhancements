@@ -12,8 +12,8 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class RottenFleshSmelting extends RecipeModule {
-    public ConfigOption experience = new ConfigOption("experience", getModuleKey(), 0.1D);
-    public ConfigOption cookingTime = new ConfigOption("cookingTime", getModuleKey(), 5);
+    public ConfigOption experience = new ConfigOption(0.1D);
+    public ConfigOption cookingTime = new ConfigOption(5);
 
     @Override
     public @NotNull String getKey() {

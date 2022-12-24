@@ -9,26 +9,12 @@ import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
  * @since 1.0
  */
 public class ConfigOption {
-    private final String key;
-    private final NamespacedKey moduleKey;
-    private final Object defaultValue;
+    private String key;
+    private NamespacedKey moduleKey;
+    public final Object defaultValue;
 
-    public ConfigOption(String key, NamespacedKey moduleKey, Object defaultValue) {
-        this.key = key;
-        this.moduleKey = moduleKey;
+    public ConfigOption(Object defaultValue) {
         this.defaultValue = defaultValue;
-    }
-
-    public NamespacedKey getModuleKey() {
-        return moduleKey;
-    } //ToDo get via class & ModuleRegistry#getInstance
-
-    public String getKey() {
-        return key;
-    }
-
-    public Object getDefaultValue() {
-        return defaultValue;
     }
 
     public boolean asBoolean() {
@@ -58,5 +44,25 @@ public class ConfigOption {
 
     public void set(Object value) {
         Config.getInstance().set(this, value);
+    }
+
+    public Object getDefaultValue() {
+        return defaultValue;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public NamespacedKey getModuleKey() {
+        return moduleKey;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setModuleKey(NamespacedKey moduleKey) {
+        this.moduleKey = moduleKey;
     }
 }

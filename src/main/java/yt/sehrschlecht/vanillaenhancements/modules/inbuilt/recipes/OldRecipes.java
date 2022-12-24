@@ -14,9 +14,9 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class OldRecipes extends RecipeModule {
-    public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption("enchanted_golden_apple_recipe", getModuleKey(), false);
-    public ConfigOption oldGoldenAppleRecipe = new ConfigOption("old_golden_apple_recipe", getModuleKey(), false);
-    public ConfigOption horseArmorRecipes = new ConfigOption("horse_armor_recipes", getModuleKey(), false);
+    public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption(false);
+    public ConfigOption oldGoldenAppleRecipe = new ConfigOption(false);
+    public ConfigOption horseArmorRecipes = new ConfigOption(false);
 
     private RecipeChoice.MaterialChoice woolChoice;
 

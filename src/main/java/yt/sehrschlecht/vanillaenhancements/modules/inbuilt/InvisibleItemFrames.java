@@ -19,7 +19,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
  * @since 1.0
  */
 public class InvisibleItemFrames extends VEModule {
-    public ConfigOption useMilk = new ConfigOption("use_milk_to_make_visible", getModuleKey(), true);
+    public ConfigOption useMilkToMakeVisible = new ConfigOption(true);
 
     @Override
     public @NotNull String getKey() {
@@ -48,7 +48,7 @@ public class InvisibleItemFrames extends VEModule {
                 }
                 break;
             case MILK_BUCKET:
-                if(!useMilk.asBoolean()) break;
+                if(!useMilkToMakeVisible.asBoolean()) break;
                 if(!itemFrame.isVisible()) {
                     itemFrame.setVisible(true);
                     if(!player.getGameMode().equals(GameMode.CREATIVE)) {

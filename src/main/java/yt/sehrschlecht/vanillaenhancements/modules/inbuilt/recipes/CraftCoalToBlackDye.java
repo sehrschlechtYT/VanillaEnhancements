@@ -13,12 +13,12 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class CraftCoalToBlackDye extends RecipeModule {
-    public ConfigOption charcoalToBlackDye = new ConfigOption("charCoalToBlackDye", getModuleKey(), true);
-    public ConfigOption coalToBlackDye = new ConfigOption("coalToBlackDye", getModuleKey(), true);
+    public ConfigOption charCoalToBlackDye = new ConfigOption(true);
+    public ConfigOption coalToBlackDye = new ConfigOption(true);
 
     @Override
     public void registerRecipes() {
-        if(charcoalToBlackDye.asBoolean()) registerCharcoalRecipe();
+        if(charCoalToBlackDye.asBoolean()) registerCharcoalRecipe();
         if(coalToBlackDye.asBoolean()) registerCoalRecipe();
     }
 

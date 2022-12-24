@@ -13,10 +13,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class DyeSand extends RecipeModule {
-    public ConfigOption dyeSandRed = new ConfigOption("dyeSandRed", getModuleKey(), true);
-    public ConfigOption dyeSandstoneRed = new ConfigOption("dyeSandstoneRed", getModuleKey(), true);
-    public ConfigOption dyeRedSandWhite = new ConfigOption("dyeRedSandWhite", getModuleKey(), true);
-    public ConfigOption dyeRedSandstoneWhite = new ConfigOption("dyeRedSandstoneWhite", getModuleKey(), true);
+    public ConfigOption dyeSandRed = new ConfigOption(true);
+    public ConfigOption dyeSandstoneRed = new ConfigOption(true);
+    public ConfigOption dyeRedSandWhite = new ConfigOption(true);
+    public ConfigOption dyeRedSandstoneWhite = new ConfigOption(true);
 
     @Override
     public void registerRecipes() {
