@@ -27,6 +27,10 @@ public class Debug {
         VanillaEnhancements.getPlugin().getLogger().log(Level.INFO, message);
     }
 
+    private void warn(String message) {
+        VanillaEnhancements.getPlugin().getLogger().log(Level.WARNING, message);
+    }
+
     public void log(String message, ComponentType componentType) {
         if(VanillaEnhancements.getPlugin() == null || VanillaEnhancements.getPlugin().getDebug() == null) {
             System.err.println("Warning: Debug.log() was called before VanillaEnhancements was initialized!");
@@ -38,6 +42,7 @@ public class Debug {
 
     public void log(String message, ComponentType componentType, Object... args) {
         for(Object arg : args) {
+            if(arg == null) continue;
             message = message.replaceFirst("\\{}", arg.toString());
         }
         log(message, componentType);
@@ -47,14 +52,14 @@ public class Debug {
         enabledComponents = new ArrayList<>();
         File file = new File(VanillaEnhancements.getPlugin().getDataFolder(), ".debug");
         if (file.exists()) {
-            logMessage("""
-                    ----------------------------------------
-                    Warning: Debugging is enabled!
-                    This may spam your console and log file!
-                    If you have not enabled debugging, please open a new issue on GitHub:
-                    https://github.com/sehrschlechtYT/VanillaEnhancements/issues
-                    ----------------------------------------
-            """);
+            warn("----------------------------------------");
+            warn("");
+            warn("Warning: Debugging is enabled!");
+            warn("This may spam your console and log file!");
+            warn("If you have not enabled debugging, please open a new issue on GitHub:");
+            warn("https://github.com/sehrschlechtYT/VanillaEnhancements/issues");
+            warn("");
+            warn("----------------------------------------");
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -94,10 +99,6 @@ public class Debug {
 
         public Component(ComponentType type) {
             this.type = type;
-        }
-
-        public void log(String message) {
-            VanillaEnhancements.getPlugin().getDebug().log(message, type);
         }
 
         public void log(String message, Object... args) {
