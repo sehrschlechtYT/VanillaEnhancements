@@ -53,7 +53,7 @@ public class OldRecipes extends RecipeModule {
         recipe.shape("GGG", "GAG", "GGG");
         recipe.setIngredient('G', Material.GOLD_BLOCK);
         recipe.setIngredient('A', Material.GOLDEN_APPLE);
-        addRecipe(new NamespacedKey(getPlugin(), "enchanted_golden_apple"), recipe);
+        addRecipe(new NamespacedKey(getPlugin(), "enchanted_golden_apple"), recipe, Material.APPLE);
     }
 
     private void initOldGoldenAppleRecipe() {
@@ -61,7 +61,7 @@ public class OldRecipes extends RecipeModule {
         recipe.shape("GGG", "GAG", "GGG");
         recipe.setIngredient('G', Material.GOLD_NUGGET);
         recipe.setIngredient('A', Material.GOLDEN_APPLE);
-        addRecipe(new NamespacedKey(getPlugin(), "old_golden_apple"), recipe);
+        addRecipe(new NamespacedKey(getPlugin(), "old_golden_apple"), recipe, Material.APPLE);
     }
 
     private void initLeatherHorseArmorRecipe() {
@@ -69,7 +69,7 @@ public class OldRecipes extends RecipeModule {
         recipe.shape("  L", "LWL", "LLL");
         recipe.setIngredient('L', Material.LEATHER);
         recipe.setIngredient('W', woolChoice);
-        addRecipe(new NamespacedKey(getPlugin(), "leather_horse_armor"), recipe);
+        addRecipe(new NamespacedKey(getPlugin(), "leather_horse_armor"), recipe, Material.LEATHER);
     }
 
     private void initIronHorseArmorRecipe() {
@@ -77,7 +77,7 @@ public class OldRecipes extends RecipeModule {
         recipe.shape("  L", "LWL", "LLL");
         recipe.setIngredient('L', Material.IRON_INGOT);
         recipe.setIngredient('W', woolChoice);
-        addRecipe(new NamespacedKey(getPlugin(), "iron_horse_armor"), recipe);
+        addRecipe(new NamespacedKey(getPlugin(), "iron_horse_armor"), recipe, Material.IRON_INGOT);
     }
 
     private void initGoldenHorseArmorRecipe() {
@@ -85,7 +85,7 @@ public class OldRecipes extends RecipeModule {
         recipe.shape("  L", "LWL", "LLL");
         recipe.setIngredient('L', Material.GOLD_INGOT);
         recipe.setIngredient('W', woolChoice);
-        addRecipe(new NamespacedKey(getPlugin(), "gold_horse_armor"), recipe);
+        addRecipe(new NamespacedKey(getPlugin(), "gold_horse_armor"), recipe, Material.GOLD_INGOT);
     }
 
     private void initDiamondHorseArmorRecipe() {
@@ -93,6 +93,6 @@ public class OldRecipes extends RecipeModule {
         recipe.shape("  L", "LWL", "LLL");
         recipe.setIngredient('L', Material.DIAMOND);
         recipe.setIngredient('W', woolChoice);
-        addRecipe(new NamespacedKey(getPlugin(), "diamond_horse_armor"), recipe);
+        addRecipe(new NamespacedKey(getPlugin(), "diamond_horse_armor"), recipe, Material.DIAMOND);
     }
 }

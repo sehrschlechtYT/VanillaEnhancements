@@ -58,6 +58,6 @@ public class SmeltConcreteToConcretePowder extends RecipeModule {
                 experience.asInt(),
                 cookingTime.asInt()
         );
-        addRecipe(key, recipe);
+        addRecipe(key, recipe, concrete);
     }
 }

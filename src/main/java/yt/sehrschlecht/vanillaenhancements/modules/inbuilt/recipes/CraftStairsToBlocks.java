@@ -25,7 +25,7 @@ public class CraftStairsToBlocks extends RecipeModule {
             NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "stairs_blocks_" + block.name());
             ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(block, 3));
             recipe.addIngredient(4, stairs);
-            addRecipe(recipeKey, recipe);
+            addRecipe(recipeKey, recipe, stairs);
         });
     }
 

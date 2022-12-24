@@ -24,7 +24,7 @@ public class CraftBlocksToTwoSlabs extends RecipeModule {
             NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "block_to_slabs_" + block.name());
             ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(slab, 2));
             recipe.addIngredient(block);
-            addRecipe(recipeKey, recipe);
+            addRecipe(recipeKey, recipe, block);
         });
     }
 

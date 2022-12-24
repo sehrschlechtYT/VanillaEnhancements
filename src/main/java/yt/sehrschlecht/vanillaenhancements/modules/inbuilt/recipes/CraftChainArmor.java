@@ -32,6 +32,6 @@ public class CraftChainArmor extends RecipeModule {
         ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(result));
         recipe.shape(shape);
         recipe.setIngredient('C', Material.CHAIN);
-        addRecipe(recipeKey, recipe);
+        addRecipe(recipeKey, recipe, Material.CHAIN);
     }
 }

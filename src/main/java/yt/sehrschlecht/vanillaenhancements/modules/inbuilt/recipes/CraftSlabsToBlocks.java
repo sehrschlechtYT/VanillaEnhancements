@@ -25,7 +25,7 @@ public class CraftSlabsToBlocks extends RecipeModule {
             ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(block));
             recipe.shape("A", "A");
             recipe.setIngredient('A', slab);
-            addRecipe(recipeKey, recipe);
+            addRecipe(recipeKey, recipe, slab);
         });
     }
 

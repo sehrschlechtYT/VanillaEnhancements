@@ -31,7 +31,7 @@ public class ImprovedDispenserCrafting extends RecipeModule {
         ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(Material.DISPENSER));
         recipe.addIngredient(Material.DROPPER);
         recipe.addIngredient(Material.BOW);
-        addRecipe(recipeKey, recipe);
+        addRecipe(recipeKey, recipe, Material.DROPPER);
     }
 
     public void createDropperAndStringsAndSticksRecipe() {
@@ -41,7 +41,7 @@ public class ImprovedDispenserCrafting extends RecipeModule {
         recipe.setIngredient('S', Material.STICK);
         recipe.setIngredient('F', Material.STRING);
         recipe.setIngredient('D', Material.DROPPER);
-        addRecipe(recipeKey, recipe);
+        addRecipe(recipeKey, recipe, Material.DROPPER);
     }
 
     @Override

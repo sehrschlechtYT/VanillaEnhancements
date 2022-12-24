@@ -23,6 +23,6 @@ public class CobblestoneInStoneCutter extends RecipeModule {
 
     @Override
     public void registerRecipes() {
-        addRecipe(getModuleKey(), new StonecuttingRecipe(getModuleKey(), new ItemStack(Material.COBBLESTONE), Material.STONE));
+        addRecipe(getModuleKey(), new StonecuttingRecipe(getModuleKey(), new ItemStack(Material.COBBLESTONE), Material.STONE), Material.STONE);
     }
 }

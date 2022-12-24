@@ -25,12 +25,16 @@ public class RottenFleshSmelting extends RecipeModule {
 
     @Override
     public void registerRecipes() {
-        addRecipe(getModuleKey(), new FurnaceRecipe(
+        addRecipe(
+            getModuleKey(),
+            new FurnaceRecipe(
                 getModuleKey(),
                 new ItemStack(Material.LEATHER),
                 Material.ROTTEN_FLESH,
                 (float) experience.asDouble(),
-                cookingTime.asInt() * 20)
+                cookingTime.asInt() * 20
+            ),
+            Material.ROTTEN_FLESH
         );
     }
 }

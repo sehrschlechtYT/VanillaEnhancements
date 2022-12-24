@@ -29,14 +29,14 @@ public class CraftCoalToBlackDye extends RecipeModule {
         NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "charcoal_to_black_dye");
         ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(Material.BLACK_DYE));
         recipe.addIngredient(Material.CHARCOAL);
-        addRecipe(recipeKey, recipe);
+        addRecipe(recipeKey, recipe, Material.CHARCOAL);
     }
 
     private void registerCoalRecipe() {
         NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "coal_to_black_dye");
         ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(Material.BLACK_DYE));
         recipe.addIngredient(Material.COAL);
-        addRecipe(recipeKey, recipe);
+        addRecipe(recipeKey, recipe, Material.COAL);
     }
 
     @Override
