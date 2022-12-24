@@ -30,6 +30,7 @@ public abstract class RecipeModule extends VEModule {
     @Override
     public void onEnable() {
         super.onEnable();
+        Debug.RECIPES.log("Adding recipes for module {}...", getModuleKey());;
         addedRecipes = recipes;
         recipes.forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
         shouldCheckRecipes = getConfig().getDocument().getBoolean("recipes.discover");
@@ -38,6 +39,7 @@ public abstract class RecipeModule extends VEModule {
     @Override
     public void onDisable() {
         super.onDisable();
+        Debug.RECIPES.log("Removing all recipes of module {}...", getModuleKey());
         recipes.forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
         Bukkit.resetRecipes();
     }
@@ -75,10 +77,12 @@ public abstract class RecipeModule extends VEModule {
      * @param recipe The recipe
      */
     public void addRecipe(NamespacedKey key, Recipe recipe, @Nullable Material discoverItem) {
+        Debug.RECIPES.log("Adding recipe {} to module {}...", key, getModuleKey());
         recipes.add(new VERecipe(key, recipe, discoverItem));
     }
 
     public void removeRecipe(NamespacedKey key) {
+        Debug.RECIPES.log("Removing recipe {} from module {}...", key, getModuleKey());
         recipes.removeIf(recipe -> recipe.key().equals(key));
     }
 
@@ -101,6 +105,7 @@ public abstract class RecipeModule extends VEModule {
                 .forEach(recipe -> {
                     if(!player.hasDiscoveredRecipe(recipe.key())) {
                         player.discoverRecipe(recipe.key());
+                        Debug.RECIPES.log("Discovered recipe {} for player {}.", recipe.key(), player.getName());
                     }
                 });
     }
