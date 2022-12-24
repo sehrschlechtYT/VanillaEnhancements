@@ -35,6 +35,7 @@ public class ChatCoordinates extends VEModule {
 
     @Override
     public void onEnable() {
+        super.onEnable();
         try {
             ChatColor.valueOf(chatColor.asString().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException exception) {

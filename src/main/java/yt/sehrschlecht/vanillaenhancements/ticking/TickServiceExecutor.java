@@ -21,6 +21,7 @@ public class TickServiceExecutor {
             long period = tickService.getPeriod();
             boolean executeNow = tickService.shouldExecuteNow();
             Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
+                if(!instance.isEnabled()) return;
                 try {
                     method.invoke(instance);
                 } catch (Exception e) {

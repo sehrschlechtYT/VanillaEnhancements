@@ -104,4 +104,8 @@ public class Config {
     public boolean isModuleEnabled(VEModule module) {
         return document.getBoolean(module.getModuleKey().getKey() + ".enabled");
     }
+
+    public YamlDocument getDocument() {
+        return document;
+    }
 }

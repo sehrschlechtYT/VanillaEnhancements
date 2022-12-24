@@ -4,6 +4,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
  */
 public abstract class VEModule implements Listener {
     private static VEModule instance;
+    private boolean enabled = false;
 
     public VEModule() {
         instance = this;
@@ -40,11 +42,11 @@ public abstract class VEModule implements Listener {
     }
 
     public void onEnable() {
-
+        this.enabled = true;
     }
 
     public void onDisable() {
-
+        this.enabled = false;
     }
 
     public VEModule getInstance() {
@@ -59,7 +61,15 @@ public abstract class VEModule implements Listener {
         return getPlugin().getLogger();
     }
 
+    public Config getConfig() {
+        return Config.getInstance();
+    }
+
     public boolean shouldEnable() {
         return true;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 }
