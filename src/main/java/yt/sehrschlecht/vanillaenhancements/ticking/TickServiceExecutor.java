@@ -16,9 +16,9 @@ public class TickServiceExecutor {
 
     public void startTicking() {
         for (TickService tickService : tickServices) {
-            VEModule instance = tickService.getModuleInstance();
-            Method method = tickService.getMethod();
-            long period = tickService.getPeriod();
+            VEModule instance = tickService.moduleInstance();
+            Method method = tickService.method();
+            long period = tickService.period();
             boolean executeNow = tickService.shouldExecuteNow();
             Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
                 if(!instance.isEnabled()) return;
