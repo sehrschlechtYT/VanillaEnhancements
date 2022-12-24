@@ -5,7 +5,6 @@ import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -13,9 +12,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class RottenFleshSmelting extends RecipeModule {
-    @Option
     public ConfigOption experience = new ConfigOption("experience", getModuleKey(), 0.1D);
-    @Option
     public ConfigOption cookingTime = new ConfigOption("cookingTime", getModuleKey(), 5);
 
     @Override

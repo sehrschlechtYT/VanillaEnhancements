@@ -9,7 +9,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.utils.BlockUtils;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
@@ -19,7 +18,6 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
  * @since 1.0
  */
 public class UnstripLogs extends VEModule {
-    @Option
     public ConfigOption damageTools = new ConfigOption("damageTools", getModuleKey(), true);
 
     @Override

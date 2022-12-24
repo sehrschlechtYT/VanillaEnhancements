@@ -14,7 +14,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.Arrays;
@@ -24,9 +23,7 @@ import java.util.Arrays;
  * @since 1.0
  */
 public class ZombiesDryToHusks extends VEModule {
-    @Option
     public ConfigOption dryZombiesInNether = new ConfigOption("dry_zombies_in_nether", getModuleKey(), true);
-    @Option
     public ConfigOption dryZombiesOnHotDeath = new ConfigOption("dry_zombies_on_hot_death", getModuleKey(), true);
 
     @Override

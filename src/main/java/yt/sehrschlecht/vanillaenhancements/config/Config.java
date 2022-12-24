@@ -8,7 +8,6 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,14 +86,16 @@ public class Config {
     @NotNull
     public List<ConfigOption> getOptions(VEModule module) {
         List<ConfigOption> options = new ArrayList<>();
-        Class<? extends Annotation> annotation = Option.class;
         Class<?> moduleClass = module.getClass();
         for (Field field : moduleClass.getDeclaredFields()) {
-            if(field.isAnnotationPresent(annotation)) {
+            if(field.getType().isAssignableFrom(ConfigOption.class)) {
                 try {
                     options.add((ConfigOption) field.get(module));
                 } catch (Exception e) {
-
+                    VanillaEnhancements.getPlugin().getLogger().severe(
+                            "An error occurred while getting option %s from module %s:".formatted(field.getName(), module.getModuleKey().getKey())
+                    );
+                    e.printStackTrace();
                 }
             }
         }

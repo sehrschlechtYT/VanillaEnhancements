@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 /**
@@ -15,9 +14,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
  * @since 1.0
  */
 public class CreativeKeepInventory extends VEModule {
-    @Option
     public ConfigOption requirePermission = new ConfigOption("require_permission", getModuleKey(), false);
-    @Option
     public ConfigOption permission = new ConfigOption("permission", getModuleKey(), "ve.keep_inventory_in_creative");
 
     @Override

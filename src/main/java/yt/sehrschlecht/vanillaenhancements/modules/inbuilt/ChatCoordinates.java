@@ -8,7 +8,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.text.DecimalFormat;
@@ -20,12 +19,9 @@ import java.util.logging.Level;
  * @since 1.0
  */
 public class ChatCoordinates extends VEModule {
-    @Option
     public ConfigOption chatColor = new ConfigOption("main_chat_color", getModuleKey(), ChatColor.AQUA.name());
-    @Option
     public ConfigOption secondChatColor = new ConfigOption("second_chat_color", getModuleKey(), ChatColor.GRAY.name());
 
-    @Option
     public ConfigOption sendWorld = new ConfigOption("send_world", getModuleKey(), true);
 
     @Override

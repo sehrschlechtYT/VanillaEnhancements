@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.schlechteutils.items.ItemBuilder;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
 
@@ -20,9 +19,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
  * @since 1.0
  */
 public class RemoveNametags extends VEModule {
-    @Option
     public ConfigOption damageItem = new ConfigOption("damageItem", getModuleKey(), true);
-    @Option
     public ConfigOption dropNametag = new ConfigOption("dropNametag", getModuleKey(), true);
 
     @Override

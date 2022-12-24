@@ -7,7 +7,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -15,9 +14,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class ImprovedDispenserCrafting extends RecipeModule {
-    @Option
     public ConfigOption dropperAndBow = new ConfigOption("dropperAndBow", getModuleKey(), true);
-    @Option
     public ConfigOption dropperAndStringsAndSticks = new ConfigOption("dropperAndStringsAndSticks", getModuleKey(), true);
 
     @Override

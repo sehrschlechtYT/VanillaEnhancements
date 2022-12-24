@@ -7,7 +7,6 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -15,9 +14,9 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class OldRecipes extends RecipeModule {
-    @Option public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption("enchanted_golden_apple_recipe", getModuleKey(), false);
-    @Option public ConfigOption oldGoldenAppleRecipe = new ConfigOption("old_golden_apple_recipe", getModuleKey(), false);
-    @Option public ConfigOption horseArmorRecipes = new ConfigOption("horse_armor_recipes", getModuleKey(), false);
+    public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption("enchanted_golden_apple_recipe", getModuleKey(), false);
+    public ConfigOption oldGoldenAppleRecipe = new ConfigOption("old_golden_apple_recipe", getModuleKey(), false);
+    public ConfigOption horseArmorRecipes = new ConfigOption("horse_armor_recipes", getModuleKey(), false);
 
     private RecipeChoice.MaterialChoice woolChoice;
 

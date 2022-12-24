@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -14,9 +13,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class CraftCoalToBlackDye extends RecipeModule {
-    @Option
     public ConfigOption charcoalToBlackDye = new ConfigOption("charCoalToBlackDye", getModuleKey(), true);
-    @Option
     public ConfigOption coalToBlackDye = new ConfigOption("coalToBlackDye", getModuleKey(), true);
 
     @Override

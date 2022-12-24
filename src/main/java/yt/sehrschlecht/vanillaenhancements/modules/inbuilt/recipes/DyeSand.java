@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -14,13 +13,9 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class DyeSand extends RecipeModule {
-    @Option
     public ConfigOption dyeSandRed = new ConfigOption("dyeSandRed", getModuleKey(), true);
-    @Option
     public ConfigOption dyeSandstoneRed = new ConfigOption("dyeSandstoneRed", getModuleKey(), true);
-    @Option
     public ConfigOption dyeRedSandWhite = new ConfigOption("dyeRedSandWhite", getModuleKey(), true);
-    @Option
     public ConfigOption dyeRedSandstoneWhite = new ConfigOption("dyeRedSandstoneWhite", getModuleKey(), true);
 
     @Override

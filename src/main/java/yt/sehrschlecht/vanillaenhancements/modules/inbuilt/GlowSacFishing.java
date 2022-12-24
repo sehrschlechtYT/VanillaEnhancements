@@ -7,7 +7,6 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -17,7 +16,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * @since 1.0
  */
 public class GlowSacFishing extends VEModule {
-    @Option
     public ConfigOption chance = new ConfigOption("chance", getInstance().getModuleKey(), 0.01D);
 
     @Override

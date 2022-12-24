@@ -12,7 +12,6 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 /**
@@ -20,7 +19,6 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
  * @since 1.0
  */
 public class InvisibleItemFrames extends VEModule {
-    @Option
     public ConfigOption useMilk = new ConfigOption("use_milk_to_make_visible", getModuleKey(), true);
 
     @Override

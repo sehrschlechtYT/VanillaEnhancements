@@ -6,7 +6,6 @@ import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.config.Option;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -14,9 +13,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class SmeltConcreteToConcretePowder extends RecipeModule {
-    @Option
     public ConfigOption experience = new ConfigOption("experience", getModuleKey(), 0);
-    @Option
     public ConfigOption cookingTime = new ConfigOption("cooking_time", getModuleKey(), 200);
 
     @Override
