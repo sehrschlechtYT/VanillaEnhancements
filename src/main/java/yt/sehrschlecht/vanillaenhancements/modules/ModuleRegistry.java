@@ -7,6 +7,8 @@ import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
+import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
+import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -25,15 +27,24 @@ public class ModuleRegistry {
     private Logger logger = VanillaEnhancements.getPlugin().getLogger();
 
     public boolean registerModule(VEModule module) {
+        boolean inbuilt = (module.getModuleKey().getNamespace().equalsIgnoreCase(VanillaEnhancements.getPlugin().getName()));
+        Debug.MODULES.log("Registering {} module {}...", inbuilt ? "inbuilt" : "external", inbuilt ? module.getModuleKey().getKey() : module.getModuleKey());
         registeredModules.add(module);
         module.initialize();
-        if(!Config.getInstance().isModuleEnabled(module)) return false;
+        if(!Config.getInstance().isModuleEnabled(module)) {
+            Debug.MODULES.log("Module {} is disabled in config, skipping...", module.getModuleKey());
+            return false;
+        }
         try {
-            if(!module.shouldEnable()) return false;
+            if(!module.shouldEnable()) {
+                Debug.MODULES.log("Module {} should not be enabled, skipping...", module.getModuleKey());
+                return false;
+            }
             module.onEnable();
             enabledModules.add(module);
             Bukkit.getPluginManager().registerEvents(module, VanillaEnhancements.getPlugin());
             registerTickServices(module);
+            Debug.MODULES.log("Module {} enabled!", module.getModuleKey());
             return true;
         } catch (Throwable throwable) {
             logger.log(Level.SEVERE, "The module " + module.getName() + " couldn't be loaded due to an error:");
@@ -43,15 +54,20 @@ public class ModuleRegistry {
     }
 
     private void registerTickServices(VEModule module) {
+        Debug.TICK_SERVICES.log("Registering tick services for module {}...", module.getModuleKey());
+        TickServiceExecutor executor = VanillaEnhancements.getPlugin().getTickServiceExecutor();
         Class<? extends VEModule> clazz = module.getClass();
         for (Method method : clazz.getMethods()) {
+            Debug.TICK_SERVICES.log("Checking method {}...", method.getName());
             if(method.isAnnotationPresent(Tick.class)) {
-                VanillaEnhancements.getPlugin().getTickServiceExecutor().addTickService(module, method.getAnnotation(Tick.class), method);
+                Debug.TICK_SERVICES.log("Method {} is annotated with @Tick, registering...", method.getName());
+                executor.addTickService(module, method.getAnnotation(Tick.class), method);
             }
         }
     }
 
     public void unregisterAllModules() {
+        Debug.MODULES.log("Unregistering all modules...");
         enabledModules.clear();
         registeredModules.clear();
     }
@@ -64,13 +80,6 @@ public class ModuleRegistry {
     @Nullable
     public VEModule getModule(NamespacedKey key) {
         Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getModuleKey().equals(key)).findFirst();
-        return moduleOptional.orElse(null);
-    }
-
-    @Nullable
-    @Deprecated(forRemoval = true)
-    public VEModule getInstance(String canonicalName) {
-        Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getClass().getCanonicalName().equals(canonicalName)).findFirst();
         return moduleOptional.orElse(null);
     }
 

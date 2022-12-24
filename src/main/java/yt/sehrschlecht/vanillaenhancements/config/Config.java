@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
+import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,18 +24,27 @@ public class Config {
     public Config(YamlDocument document) {
         instance = this;
         this.document = document;
+        Debug.CONFIG.log("Loading config {}...", document.getNameAsString());
     }
 
     public void init() {
+        Debug.CONFIG.log("Initializing config...");
         for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
             String key = module.getModuleKey().getKey();
             if(!document.contains(key + ".enabled")) {
+                Debug.CONFIG.log("Creating key {}.enabled", key);
                 document.set(key + ".enabled", false);
             }
+            boolean found = false;
             for (ConfigOption option : getOptions(module)) {
+                found = true;
                 if(!document.contains(key + "." + option.getKey())) {
+                    Debug.CONFIG.log("Creating key {}.{} with default value {}", key, option.getKey(), option.getDefaultValue());
                     document.set(key + "." + option.getKey(), option.getDefaultValue());
                 }
+            }
+            if(!found) {
+                Debug.CONFIG.log("No options found for module {}.", module.getModuleKey());
             }
         }
         save();
@@ -50,7 +60,10 @@ public class Config {
     }
 
     public String message(String key) {
-        if(!document.contains("msg." + key)) return "Missing translation!";
+        if(!document.contains("msg." + key)) {
+            Debug.CONFIG.log("Tried accessing non-existent message{}!", key);
+            return "Missing translation!";
+        }
         return ChatColor.translateAlternateColorCodes('&', document.getString("msg." + key));
     }
 
@@ -85,10 +98,13 @@ public class Config {
 
     @NotNull
     public List<ConfigOption> getOptions(VEModule module) {
+        Debug.CONFIG_OPTIONS.log("Getting options for module {}...", module.getModuleKey());
         List<ConfigOption> options = new ArrayList<>();
         Class<?> moduleClass = module.getClass();
         for (Field field : moduleClass.getDeclaredFields()) {
+            Debug.CONFIG_OPTIONS.log("Checking field {}...", field.getName());
             if(field.getType().isAssignableFrom(ConfigOption.class)) {
+                Debug.CONFIG_OPTIONS.log("Found option {}!", field.getName());
                 try {
                     options.add((ConfigOption) field.get(module));
                 } catch (Exception e) {

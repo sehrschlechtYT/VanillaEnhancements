@@ -2,6 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.config;
 
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -51,6 +52,7 @@ public class ConfigOption {
     }
 
     public void reset() {
+        Debug.CONFIG.log("Resetting option " + key + " to default value " + defaultValue);
         set(getDefaultValue());
     }
 

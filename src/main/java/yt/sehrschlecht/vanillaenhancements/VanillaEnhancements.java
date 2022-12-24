@@ -14,6 +14,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes.*;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 import yt.sehrschlecht.vanillaenhancements.utils.ExternalAPIs;
+import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,10 +33,13 @@ public final class VanillaEnhancements extends JavaPlugin {
     private List<VEModule> inbuiltModules;
     private ModuleRegistry moduleRegistry;
     private TickServiceExecutor tickServiceExecutor;
+    private Debug debug;
 
     @Override
     public void onEnable() {
         plugin = this;
+
+        debug = new Debug();
 
         ExternalAPIs.init();
 
@@ -120,5 +124,9 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public TickServiceExecutor getTickServiceExecutor() {
         return tickServiceExecutor;
+    }
+
+    public Debug getDebug() {
+        return debug;
     }
 }
