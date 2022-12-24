@@ -14,6 +14,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 public class RottenFleshSmelting extends RecipeModule {
     public ConfigOption experience = new ConfigOption(0.1D);
     public ConfigOption cookingTime = new ConfigOption(5);
+    public ConfigOption resultAmount = new ConfigOption(1);
 
     @Override
     public @NotNull String getKey() {
@@ -26,7 +27,7 @@ public class RottenFleshSmelting extends RecipeModule {
             getModuleKey(),
             new FurnaceRecipe(
                 getModuleKey(),
-                new ItemStack(Material.LEATHER),
+                new ItemStack(Material.LEATHER, resultAmount.asInt()),
                 Material.ROTTEN_FLESH,
                 (float) experience.asDouble(),
                 cookingTime.asInt() * 20

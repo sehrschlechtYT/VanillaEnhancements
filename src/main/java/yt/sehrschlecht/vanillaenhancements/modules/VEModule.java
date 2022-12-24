@@ -41,6 +41,14 @@ public abstract class VEModule implements Listener {
 
     }
 
+    /**
+     * Called when the config is reloaded.
+     * ConfigOptions may have changed.
+     */
+    public void reload() {
+
+    }
+
     public void onEnable() {
         this.enabled = true;
     }

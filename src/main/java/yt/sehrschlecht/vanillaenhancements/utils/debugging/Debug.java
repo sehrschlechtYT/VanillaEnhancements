@@ -1,6 +1,8 @@
 package yt.sehrschlecht.vanillaenhancements.utils.debugging;
 
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,6 +23,7 @@ public class Debug {
     public final static Component OTHER = new Component(ComponentType.OTHER);
 
     private final List<ComponentType> enabledComponents;
+    private boolean enabled = false;
 
 
     private void logMessage(String message) {
@@ -52,6 +55,7 @@ public class Debug {
         enabledComponents = new ArrayList<>();
         File file = new File(VanillaEnhancements.getPlugin().getDataFolder(), ".debug");
         if (file.exists()) {
+            enabled = true;
             warn("----------------------------------------");
             warn("");
             warn("Warning: Debugging is enabled!");
@@ -74,6 +78,14 @@ public class Debug {
             }
             logMessage("Enabled debug components: " + String.join(", ", enabledComponents.stream().map(Enum::name).toList()));
         }
+    }
+
+    public void reload() {
+        Config.getInstance().reload();
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public enum ComponentType {

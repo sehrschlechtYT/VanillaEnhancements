@@ -6,8 +6,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -15,16 +17,20 @@ import java.util.Arrays;
  * @since 1.0
  */
 public class CraftStairsToBlocks extends RecipeModule {
+    public ConfigOption excludedStairs = new ConfigOption(new ArrayList<String>());
+    public ConfigOption requiredStairsAmount = new ConfigOption(4);
+    public ConfigOption blockAmount = new ConfigOption(3);
 
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).filter(m -> m.name().endsWith("_STAIRS")).forEach(stairs -> {
+            if(excludedStairs.asMaterialList().contains(stairs)) return;
             String blockName = getBlockName(stairs);
             if(blockName == null) return;
             Material block = Material.valueOf(blockName);
             NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "stairs_blocks_" + block.name());
-            ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(block, 3));
-            recipe.addIngredient(4, stairs);
+            ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(block, blockAmount.asInt()));
+            recipe.addIngredient(requiredStairsAmount.asInt(), stairs);
             addRecipe(recipeKey, recipe, stairs);
         });
     }

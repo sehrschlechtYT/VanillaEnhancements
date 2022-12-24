@@ -5,3 +5,7 @@ api-version: 1.19
 prefix: VanillaEnhancements
 authors: [ sehrschlechtYT ]
 description: Provides enhancements for the vanilla minecraft gameplay.
+commands:
+  ve-debug:
+    description: Debug command for VanillaEnhancements
+    permission: ve.debug

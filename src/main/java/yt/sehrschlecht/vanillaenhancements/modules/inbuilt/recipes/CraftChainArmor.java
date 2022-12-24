@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -13,6 +14,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @since 1.0
  */
 public class CraftChainArmor extends RecipeModule {
+    public ConfigOption chainHelmet = new ConfigOption(true);
+    public ConfigOption chainChestplate = new ConfigOption(true);
+    public ConfigOption chainLeggings = new ConfigOption(true);
+    public ConfigOption chainBoots = new ConfigOption(true);
 
     @Override
     public @NotNull String getKey() {
@@ -21,10 +26,10 @@ public class CraftChainArmor extends RecipeModule {
 
     @Override
     public void registerRecipes() {
-        addChainRecipe("chain_helmet", Material.CHAINMAIL_HELMET, "CCC", "C C");
-        addChainRecipe("chain_chestplate", Material.CHAINMAIL_CHESTPLATE, "C C", "CCC", "CCC");
-        addChainRecipe("chain_leggings", Material.CHAINMAIL_LEGGINGS, "CCC", "C C", "C C");
-        addChainRecipe("chain_boots", Material.CHAINMAIL_BOOTS, "C C", "C C");
+        if(chainHelmet.asBoolean()) addChainRecipe("chain_helmet", Material.CHAINMAIL_HELMET, "CCC", "C C");
+        if(chainChestplate.asBoolean()) addChainRecipe("chain_chestplate", Material.CHAINMAIL_CHESTPLATE, "C C", "CCC", "CCC");
+        if(chainLeggings.asBoolean()) addChainRecipe("chain_leggings", Material.CHAINMAIL_LEGGINGS, "CCC", "C C", "C C");
+        if(chainBoots.asBoolean()) addChainRecipe("chain_boots", Material.CHAINMAIL_BOOTS, "C C", "C C");
     }
 
     private void addChainRecipe(String key, Material result, String... shape) {

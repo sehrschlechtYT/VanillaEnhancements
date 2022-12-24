@@ -6,18 +6,25 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
+import java.awt.event.TextEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
 public class CraftBlocksToTwoSlabs extends RecipeModule {
+    public ConfigOption excludedBlocks = new ConfigOption(new ArrayList<String>());
+
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).forEach(block -> {
+            if(excludedBlocks.asMaterialList().contains(block)) return;
             String blockName = getSlabName(block);
             if(blockName == null) return;
             Material slab = Material.valueOf(blockName);

@@ -18,6 +18,7 @@ import java.util.List;
  */
 public abstract class RecipeModule extends VEModule {
     protected final List<VERecipe> recipes = new ArrayList<>();
+    protected List<VERecipe> addedRecipes = new ArrayList<>();
     protected boolean shouldCheckRecipes = true;
 
     @Override
@@ -28,6 +29,7 @@ public abstract class RecipeModule extends VEModule {
     @Override
     public void onEnable() {
         super.onEnable();
+        addedRecipes = recipes;
         recipes.forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
         shouldCheckRecipes = getConfig().getDocument().getBoolean("recipes.discover");
     }
@@ -36,6 +38,19 @@ public abstract class RecipeModule extends VEModule {
     public void onDisable() {
         super.onDisable();
         recipes.forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
+    }
+
+    protected void reloadRecipes() {
+        addedRecipes.forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
+        registerRecipes();
+        recipes.forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
+        addedRecipes = recipes;
+    }
+
+    @Override
+    public void reload() {
+        super.reload();
+        reloadRecipes();
     }
 
     public abstract void registerRecipes();
@@ -48,6 +63,10 @@ public abstract class RecipeModule extends VEModule {
      */
     public void addRecipe(NamespacedKey key, Recipe recipe, @Nullable Material discoverItem) {
         recipes.add(new VERecipe(key, recipe, discoverItem));
+    }
+
+    public void removeRecipe(NamespacedKey key) {
+        recipes.removeIf(recipe -> recipe.key().equals(key));
     }
 
     @Tick(period = 60, executeNow = true)

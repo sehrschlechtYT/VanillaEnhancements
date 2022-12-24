@@ -15,6 +15,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes.*;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 import yt.sehrschlecht.vanillaenhancements.utils.ExternalAPIs;
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
+import yt.sehrschlecht.vanillaenhancements.utils.debugging.DebugCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,6 +73,9 @@ public final class VanillaEnhancements extends JavaPlugin {
         registerModules();
 
         tickServiceExecutor.startTicking();
+
+        getCommand("ve-debug").setExecutor(new DebugCommand());
+        getCommand("ve-debug").setTabCompleter(new DebugCommand());
     }
 
     private void createConfig() {

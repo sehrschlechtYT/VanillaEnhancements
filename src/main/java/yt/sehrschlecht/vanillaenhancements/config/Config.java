@@ -50,12 +50,26 @@ public class Config {
         save();
     }
 
+    public void reload() {
+        VanillaEnhancements.getPlugin().getLogger().info("Reloading config...");
+        try {
+            document.reload();
+        } catch (IOException e) {
+            VanillaEnhancements.getPlugin().getLogger().severe("Could not reload config!");
+            e.printStackTrace();
+        }
+        Debug.CONFIG_OPTIONS.log("Reloading config options...");
+        init();
+        Debug.MODULES.log("Sending reload signals to modules...");
+        VanillaEnhancements.getPlugin().getModuleRegistry().getEnabledModules().forEach(VEModule::reload);
+    }
+
     public static Config getInstance() {
         return instance;
     }
 
     public void set(ConfigOption option, Object value) {
-        document.set(option.getModuleKey().getKey() + "." + option.getKey(), value);
+        document.set(option.toPath(), value);
         save();
     }
 
@@ -68,23 +82,23 @@ public class Config {
     }
 
     public String optionAsString(ConfigOption option) {
-        return document.getString(option.getModuleKey().getKey() + "." + option.getKey());
+        return document.getString(option.toPath());
     }
 
     public int optionAsInt(ConfigOption option) {
-        return document.getInt(option.getModuleKey().getKey() + "." + option.getKey());
+        return document.getInt(option.toPath());
     }
 
     public double optionAsDouble(ConfigOption option) {
-        return document.getDouble(option.getModuleKey().getKey() + "." + option.getKey());
+        return document.getDouble(option.toPath());
     }
 
     public boolean optionAsBoolean(ConfigOption option) {
-        return document.getBoolean(option.getModuleKey().getKey() + "." + option.getKey());
+        return document.getBoolean(option.toPath());
     }
 
     public List<String> optionAsStringList(ConfigOption option) {
-        return document.getStringList(option.getModuleKey().getKey() + "." + option.getKey());
+        return document.getStringList(option.toPath());
     }
 
     public void save() {

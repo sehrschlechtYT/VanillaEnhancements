@@ -1,8 +1,12 @@
 package yt.sehrschlecht.vanillaenhancements.config;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
+
+import java.util.List;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -37,6 +41,25 @@ public class ConfigOption {
         return ChatColor.valueOf(Config.getInstance().optionAsString(this));
     }
 
+    public List<String> asStringList() {
+        return Config.getInstance().optionAsStringList(this);
+    }
+
+    public List<Material> asMaterialList() {
+        return asStringList().stream().map(
+                string -> {
+                    try {
+                        return Material.valueOf(string);
+                    } catch (IllegalArgumentException e) {
+                        VanillaEnhancements.getPlugin().getLogger().severe("Invalid material: " + string);
+                        VanillaEnhancements.getPlugin().getLogger().severe("Resetting the config setting " + toPath() + "!");
+                        reset();
+                        return null;
+                    }
+                }
+        ).toList();
+    }
+
     public void reset() {
         Debug.CONFIG.log("Resetting option " + key + " to default value " + defaultValue);
         set(getDefaultValue());
@@ -56,6 +79,10 @@ public class ConfigOption {
 
     public NamespacedKey getModuleKey() {
         return moduleKey;
+    }
+
+    public String toPath() {
+        return getModuleKey().getKey() + "." + getKey();
     }
 
     public void setKey(String key) {
