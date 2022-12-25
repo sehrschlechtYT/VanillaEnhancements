@@ -4,9 +4,8 @@ recipes:
   discover: true #If true, players will discover the recipes of some modules. Has a slight performance impact on a server with many players.
 
 msg:
-  prefix: "§7[§aVanillaEnhancements§7] "
-  reloading: "§7Reloading modules..."
-  reload_success: "§aSuccessfully reloaded!"
+  prefix: "&7[&cVE&7] "
+
 unstrip_logs:
   enabled: false
   damageTools: true
