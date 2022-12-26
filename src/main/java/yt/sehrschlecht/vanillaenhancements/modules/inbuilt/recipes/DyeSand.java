@@ -37,7 +37,7 @@ public class DyeSand extends RecipeModule {
 
     private void addDyeSandRedRecipe() {
         NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "dye_sand_red");
-        ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.RED_SAND));
+        ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.RED_SAND, 8));
         recipe.shape("SSS", "SDS", "SSS");
         recipe.setIngredient('S', Material.SAND);
         recipe.setIngredient('D', Material.RED_DYE);
@@ -46,7 +46,7 @@ public class DyeSand extends RecipeModule {
 
     private void addDyeSandstoneRedRecipe() {
         NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "dye_sandstone_red");
-        ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.RED_SANDSTONE));
+        ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.RED_SANDSTONE, 8));
         recipe.shape("SSS", "SDS", "SSS");
         recipe.setIngredient('S', Material.SANDSTONE);
         recipe.setIngredient('D', Material.RED_DYE);
@@ -55,7 +55,7 @@ public class DyeSand extends RecipeModule {
 
     private void addDyeRedSandWhiteRecipe() {
         NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "dye_red_sand_white");
-        ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.SAND));
+        ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.SAND, 8));
         recipe.shape("SSS", "SDS", "SSS");
         recipe.setIngredient('S', Material.RED_SAND);
         recipe.setIngredient('D', Material.WHITE_DYE);
@@ -64,7 +64,7 @@ public class DyeSand extends RecipeModule {
 
     private void addDyeRedSandstoneWhiteRecipe() {
         NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "dye_red_sandstone_white");
-        ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.SANDSTONE));
+        ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.SANDSTONE, 8));
         recipe.shape("SSS", "SDS", "SSS");
         recipe.setIngredient('S', Material.RED_SANDSTONE);
         recipe.setIngredient('D', Material.WHITE_DYE);

@@ -69,6 +69,7 @@ public class CraftStairsToBlocks extends RecipeModule {
             case "DEEPSLATE_BRICK_STAIRS" -> "DEEPSLATE_BRICKS";
             case "DEEPSLATE_TILE_STAIRS" -> "DEEPSLATE_TILES";
             case "POLISHED_BLACKSTONE_BRICK_STAIRS" -> "POLISHED_BLACKSTONE_BRICKS";
+            case "QUARTZ_STAIRS" -> "QUARTZ_BLOCK";
             default -> {
                 try {
                     String blockName = stairs.name().replace("_STAIRS", "");
