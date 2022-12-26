@@ -48,14 +48,14 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         inbuiltModules = Arrays.asList(
                 new UnstripLogs(),
-                new GlowSacFishing(),
+                //new GlowSacFishing(), - isn't working & bad practice since loot tables are not used
                 new CobblestoneInStoneCutter(),
                 new CraftChainArmor(),
                 new RottenFleshSmelting(),
                 new ZombiesDryToHusks(),
                 new CreativeKeepInventory(),
                 new InvisibleItemFrames(),
-                //new ChatCoordinates(),
+                //new ChatCoordinates(), - doesn't work in 1.19
                 new PumpkinNametags(),
                 new OldRecipes(),
                 new SmeltConcreteToConcretePowder(),

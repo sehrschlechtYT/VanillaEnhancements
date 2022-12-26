@@ -18,7 +18,7 @@ import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
  * @since 1.0
  */
 public class PumpkinNametags extends VEModule {
-    private Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+    private final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
     @Override
     public @NotNull String getName() {
@@ -36,7 +36,7 @@ public class PumpkinNametags extends VEModule {
         for (Player player : Bukkit.getOnlinePlayers()) {
             Team team = scoreboard.getTeam(player.getName());
             if(team == null) continue;
-            if(player.getEquipment().getItem(EquipmentSlot.HEAD) != null && player.getEquipment().getItem(EquipmentSlot.HEAD).getType().equals(Material.CARVED_PUMPKIN)) {
+            if(player.getEquipment().getItem(EquipmentSlot.HEAD).getType().equals(Material.CARVED_PUMPKIN)) {
                 if(!team.hasEntry(player.getName())) {
                     team.addEntry(player.getName());
                 }

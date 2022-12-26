@@ -19,7 +19,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
  * @since 1.0
  */
 public class RemoveNametags extends VEModule {
-    public ConfigOption damageItem = new ConfigOption(true);
+    public ConfigOption damageShears = new ConfigOption(true);
     public ConfigOption dropNametag = new ConfigOption(true);
 
     @Override
@@ -41,7 +41,7 @@ public class RemoveNametags extends VEModule {
         }
         entity.setCustomNameVisible(false);
         entity.setCustomName(null);
-        if(!player.getGameMode().equals(GameMode.CREATIVE) && damageItem.asBoolean()) {
+        if(!player.getGameMode().equals(GameMode.CREATIVE) && damageShears.asBoolean()) {
             ItemUtils.damageItem(player.getEquipment().getItemInMainHand());
         }
         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
