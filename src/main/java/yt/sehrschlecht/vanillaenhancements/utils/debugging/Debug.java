@@ -94,7 +94,7 @@ public class Debug {
         List<VEModule> modules = VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules();
         logMessage("Generating documentation for " + modules.size() + " modules...");
         new VEDocsGenerator(modules).generate();
-        logMessage("Done!");
+        logMessage("Successfully generated documentation! Output: /plugins/VanillaEnhancements/docs");
     }
 
     public boolean isEnabled() {
