@@ -80,6 +80,26 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 }
                 sender.sendMessage("-------------------------------------------------");
                 return true;
+            } else if(args[0].equalsIgnoreCase("tickservices")) {
+                sender.sendMessage("-------------------------------------------------");
+                sender.sendMessage("§l§nTick Services:");
+                if(VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServices().isEmpty()) {
+                    sender.sendMessage("§cNo tick services registered!");
+                } else {
+                    for (TickService tickService : VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServices()) {
+                        boolean enabled = tickService.moduleInstance().isEnabled();
+                        TextComponent component = new TextComponent("§7- " + (enabled ? "§a" : "§c") + tickService.method().getName());
+                        String serviceKey = tickService.method().getDeclaringClass().getName() + "#" + tickService.method().getName();
+                        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ve-debug tickservice " + serviceKey));
+                        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                                new TextComponent("§7Key: §e" + serviceKey + "\n"),
+                                new TextComponent("§9Click for more information")
+                        }));
+                        sender.spigot().sendMessage(component);
+                    }
+                    sender.sendMessage("-------------------------------------------------");
+                }
+                return true;
             }
         } else if(args.length == 2) {
             if(args[0].equalsIgnoreCase("module")) {
@@ -179,7 +199,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
         }
-        sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]>");
+        sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]/tickservices>");
         return true;
     }
 
@@ -205,7 +225,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(!debug().isEnabled()) return null;
         if(args.length == 1) {
-            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "plugin");
+            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "plugin", "tickservices");
         } else if(args.length == 2) {
             if(args[0].equalsIgnoreCase("module")) {
                 return complete(args, 1, VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules().stream().map(VEModule::getModuleKey).map(Object::toString).toArray(String[]::new));
