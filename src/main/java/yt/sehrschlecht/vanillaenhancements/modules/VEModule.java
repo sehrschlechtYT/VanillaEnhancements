@@ -14,11 +14,9 @@ import java.util.logging.Logger;
  * @since 1.0
  */
 public abstract class VEModule implements Listener {
-    private static VEModule instance;
-    private boolean enabled = false;
 
     public VEModule() {
-        instance = this;
+
     }
 
     @NotNull
@@ -50,15 +48,11 @@ public abstract class VEModule implements Listener {
     }
 
     public void onEnable() {
-        this.enabled = true;
+
     }
 
     public void onDisable() {
-        this.enabled = false;
-    }
 
-    public VEModule getInstance() {
-        return instance;
     }
 
     public VanillaEnhancements getPlugin() {
@@ -78,6 +72,6 @@ public abstract class VEModule implements Listener {
     }
 
     public boolean isEnabled() {
-        return enabled;
+        return Config.getInstance().isModuleEnabled(this);
     }
 }

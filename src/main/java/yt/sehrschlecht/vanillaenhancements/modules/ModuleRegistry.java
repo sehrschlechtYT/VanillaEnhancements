@@ -31,7 +31,7 @@ public class ModuleRegistry {
         Debug.MODULES.log("Registering {} module {}...", inbuilt ? "inbuilt" : "external", inbuilt ? module.getModuleKey().getKey() : module.getModuleKey());
         registeredModules.add(module);
         module.initialize();
-        if(!Config.getInstance().isModuleEnabled(module)) {
+        if(!module.isEnabled()) {
             Debug.MODULES.log("Module {} is disabled in config, skipping...", module.getModuleKey());
             return false;
         }
