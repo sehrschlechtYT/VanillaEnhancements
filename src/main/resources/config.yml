@@ -1,8 +1,5 @@
 config-version: 2 #DO NOT MODIFY THIS SETTING!
 
-recipes:
-  discover: true #If true, players will discover the recipes of some modules. Has a slight performance impact on a server with many players.
-
 msg:
   prefix: "&7[&cVE&7] "
 

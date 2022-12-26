@@ -20,7 +20,6 @@ import java.util.List;
 public abstract class RecipeModule extends VEModule {
     protected final List<VERecipe> recipes = new ArrayList<>();
     protected List<VERecipe> addedRecipes = new ArrayList<>();
-    protected boolean shouldCheckRecipes = true;
 
     @Override
     public void initialize() {
@@ -33,7 +32,6 @@ public abstract class RecipeModule extends VEModule {
         Debug.RECIPES.log("Adding recipes for module {}...", getModuleKey());;
         addedRecipes = recipes;
         recipes.forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
-        shouldCheckRecipes = getConfig().getDocument().getBoolean("recipes.discover");
     }
 
     @Override
@@ -90,7 +88,6 @@ public abstract class RecipeModule extends VEModule {
     public void checkRecipes() { //ToDo add a recipe manager that collects all recipes and checks them -> less performance impact
         //ToDo broken
         if(!isEnabled()) return;
-        if(!shouldCheckRecipes) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             for (ItemStack stack : player.getInventory().getContents()) {
                 if(stack == null) continue;
