@@ -14,8 +14,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.schlechteutils.data.Pair;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
+import yt.sehrschlecht.vanillaenhancements.modules.VERecipe;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
 import java.io.IOException;
@@ -99,6 +101,27 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                     }
                     sender.sendMessage("-------------------------------------------------");
                 }
+                return true;
+            } else if(args[0].equalsIgnoreCase("recipes")) {
+                sender.sendMessage("-------------------------------------------------");
+                sender.sendMessage("§l§nRecipes:");
+                List<Pair<NamespacedKey, VERecipe>> recipes = VanillaEnhancements.getPlugin().getRecipeManager().getRecipes();
+                if(recipes.isEmpty()) {
+                    sender.sendMessage("§cNo recipes registered!");
+                } else {
+                    for (Pair<NamespacedKey, VERecipe> pair : recipes) {
+                        VERecipe recipe = pair.getSecond();
+                        boolean registered = recipe.isRegistered();
+                        TextComponent component = new TextComponent("§7- " + (registered ? "§a" : "§c") + recipe.key().getKey());
+                        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ve-debug recipe " + recipe.key().toString()));
+                        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                                new TextComponent("§7Key: §e" + recipe.key().toString() + "\n"),
+                                new TextComponent("§9Click for more information")
+                        }));
+                        sender.spigot().sendMessage(component);
+                    }
+                }
+                sender.sendMessage("-------------------------------------------------");
                 return true;
             }
         } else if(args.length == 2) {
@@ -197,9 +220,45 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§7Enabled: " + (plugin.isEnabled() ? "§a" : "§c") + plugin.isEnabled());
                 sender.sendMessage("-------------------------------------------------");
                 return true;
+            } else if(args[0].equalsIgnoreCase("recipe")) {
+                String recipeKey = args[1];
+                NamespacedKey key = NamespacedKey.fromString(recipeKey);
+                if(key == null) {
+                    sender.sendMessage("§cInvalid recipe key!");
+                    return true;
+                }
+                Pair<NamespacedKey, VERecipe> entry = VanillaEnhancements.getPlugin().getRecipeManager().getRecipes().stream()
+                        .filter(pair -> pair.getSecond().key().equals(key))
+                        .findFirst().orElse(null);
+                if(entry == null) {
+                    sender.sendMessage("§cRecipe not found!");
+                    return true;
+                }
+                VERecipe recipe = entry.getSecond();
+                boolean registered = recipe.isRegistered();
+                VEModule module = VanillaEnhancements.getPlugin().getModuleRegistry().getModule(entry.getFirst());
+                sender.sendMessage("-------------------------------------------------");
+                sender.sendMessage("§7Recipe: §e" + recipe.key().toString());
+                sender.sendMessage("§7Registered: " + (registered ? "§a" : "§c") + registered);
+                sender.sendMessage("§7DiscoverItem: §e" + (recipe.discoverItem() == null ? "Not set" : recipe.discoverItem().toString()));
+                sender.sendMessage("§7Result: §e" + recipe.recipe().getResult().getType().name() + " x" + recipe.recipe().getResult().getAmount());
+                if(module == null) {
+                    sender.sendMessage("§7Module: §cNot found!");
+                } else {
+                    TextComponent moduleComponent = new TextComponent("§7Module: §e" + module.getName());
+                    moduleComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
+                            "/ve-debug module " + module.getModuleKey().toString()
+                    ));
+                    moduleComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                            new TextComponent("§9Click for more information")
+                    }));
+                    sender.spigot().sendMessage(moduleComponent);
+                }
+                sender.sendMessage("-------------------------------------------------");
+                return true;
             }
         }
-        sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]/tickservices>");
+        sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]/tickservices/recipe [Key]/recipes>");
         return true;
     }
 
@@ -225,7 +284,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(!debug().isEnabled()) return null;
         if(args.length == 1) {
-            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "plugin", "tickservices");
+            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "plugin", "tickservices", "recipes", "recipe");
         } else if(args.length == 2) {
             if(args[0].equalsIgnoreCase("module")) {
                 return complete(args, 1, VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules().stream().map(VEModule::getModuleKey).map(Object::toString).toArray(String[]::new));
@@ -236,6 +295,12 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                         .toArray(String[]::new));
             } else if(args[0].equalsIgnoreCase("plugin")) {
                 return complete(args, 1, Arrays.stream(Bukkit.getPluginManager().getPlugins()).map(Plugin::getName).toArray(String[]::new));
+            } else if(args[0].equalsIgnoreCase("recipe")) {
+                return complete(args, 1, VanillaEnhancements.getPlugin().getRecipeManager().getRecipes().stream()
+                        .map(Pair::getSecond)
+                        .map(VERecipe::key)
+                        .map(NamespacedKey::toString)
+                        .toArray(String[]::new));
             }
         }
         return null;

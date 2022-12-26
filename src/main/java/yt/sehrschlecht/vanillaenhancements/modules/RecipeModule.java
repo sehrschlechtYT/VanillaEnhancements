@@ -3,11 +3,10 @@ package yt.sehrschlecht.vanillaenhancements.modules;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
+import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import yt.sehrschlecht.vanillaenhancements.recipes.RecipeManager;
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.List;
  * @since 1.0
  */
 public abstract class RecipeModule extends VEModule {
-    protected final List<VERecipe> recipes = new ArrayList<>();
     protected List<VERecipe> addedRecipes = new ArrayList<>();
 
     @Override
@@ -30,15 +28,15 @@ public abstract class RecipeModule extends VEModule {
     public void onEnable() {
         super.onEnable();
         Debug.RECIPES.log("Adding recipes for module {}...", getModuleKey());;
-        addedRecipes = recipes;
-        recipes.forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
+        addedRecipes = VanillaEnhancements.getPlugin().getRecipeManager().getRecipes(this);
+        getRecipeManager().getRecipes(this).forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
         Debug.RECIPES.log("Removing all recipes of module {}...", getModuleKey());
-        recipes.forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
+        getRecipeManager().getRecipes(this).forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
         Bukkit.resetRecipes();
     }
 
@@ -51,13 +49,17 @@ public abstract class RecipeModule extends VEModule {
             boolean removed = Bukkit.removeRecipe(recipe.key());
             Debug.RECIPES.log("Removed recipe {} {}.", recipe.key(), removed ? "successfully" : "unsuccessfully");
         });
-        recipes.clear();
+        getRecipeManager().clearRecipes(this);
         registerRecipes();
-        recipes.forEach(recipe -> {
+        getRecipeManager().getRecipes(this).forEach(recipe -> {
             Bukkit.addRecipe(recipe.recipe());
             Debug.RECIPES.log("Added recipe {}.", recipe.key());
         });
-        addedRecipes = recipes;
+        addedRecipes = getRecipeManager().getRecipes(this);
+    }
+
+    protected RecipeManager getRecipeManager() {
+        return getPlugin().getRecipeManager();
     }
 
     @Override
@@ -75,37 +77,12 @@ public abstract class RecipeModule extends VEModule {
      * @param recipe The recipe
      */
     public void addRecipe(NamespacedKey key, Recipe recipe, @Nullable Material discoverItem) {
-        Debug.RECIPES.log("Adding recipe {} to module {}...", key, getModuleKey());
-        recipes.add(new VERecipe(key, recipe, discoverItem));
+        getRecipeManager().addRecipe(getModuleKey(), new VERecipe(key, recipe, discoverItem));
     }
 
     public void removeRecipe(NamespacedKey key) {
-        Debug.RECIPES.log("Removing recipe {} from module {}...", key, getModuleKey());
-        recipes.removeIf(recipe -> recipe.key().equals(key));
+        getRecipeManager().removeRecipe(getModuleKey(), key);
     }
 
-    @Tick(period = 60, executeNow = true)
-    public void checkRecipes() { //ToDo add a recipe manager that collects all recipes and checks them -> less performance impact
-        //ToDo broken
-        if(!isEnabled()) return;
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            for (ItemStack stack : player.getInventory().getContents()) {
-                if(stack == null) continue;
-                if(!stack.getType().isItem()) continue;
-                discoverRecipes(player, stack.getType());
-            }
-        }
-    }
 
-    private void discoverRecipes(Player player, Material collectedItem) {
-        recipes.stream()
-                .filter(recipe -> recipe.discoverItem() != null)
-                .filter(recipe -> collectedItem == recipe.discoverItem())
-                .forEach(recipe -> {
-                    if(!player.hasDiscoveredRecipe(recipe.key())) {
-                        player.discoverRecipe(recipe.key());
-                        Debug.RECIPES.log("Discovered recipe {} for player {}.", recipe.key(), player.getName());
-                    }
-                });
-    }
 }

@@ -23,6 +23,7 @@ public class Debug {
     public final static Component MODULES = new Component(ComponentType.MODULES);
     public final static Component TICK_SERVICES = new Component(ComponentType.TICK_SERVICES);
     public final static Component RECIPES = new Component(ComponentType.RECIPES);
+    public final static Component RECIPE_DISCOVERING = new Component(ComponentType.RECIPE_DISCOVERING);
     public final static Component OTHER = new Component(ComponentType.OTHER);
 
     private final List<ComponentType> enabledComponents;
@@ -111,6 +112,7 @@ public class Debug {
         MODULES("[Modules]"),
         TICK_SERVICES("[TickServices]"),
         RECIPES("[Recipes]"),
+        RECIPE_DISCOVERING("[Recipe Discovering]"),
         OTHER("[Other]");
 
         private final String prefix;

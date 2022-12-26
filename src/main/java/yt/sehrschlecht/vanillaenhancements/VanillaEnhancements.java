@@ -12,6 +12,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes.*;
+import yt.sehrschlecht.vanillaenhancements.recipes.RecipeManager;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 import yt.sehrschlecht.vanillaenhancements.utils.ExternalAPIs;
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
@@ -35,6 +36,7 @@ public final class VanillaEnhancements extends JavaPlugin {
     private ModuleRegistry moduleRegistry;
     private TickServiceExecutor tickServiceExecutor;
     private Debug debug;
+    private RecipeManager recipeManager;
 
     @Override
     public void onEnable() {
@@ -44,6 +46,7 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         ExternalAPIs.init();
 
+        recipeManager = new RecipeManager();
         tickServiceExecutor = new TickServiceExecutor();
 
         inbuiltModules = Arrays.asList(
@@ -77,6 +80,7 @@ public final class VanillaEnhancements extends JavaPlugin {
         registerModules();
 
         tickServiceExecutor.startTicking();
+        recipeManager.discoverRecipes();
 
         getCommand("ve-debug").setExecutor(new DebugCommand());
         getCommand("ve-debug").setTabCompleter(new DebugCommand());
@@ -132,6 +136,10 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public TickServiceExecutor getTickServiceExecutor() {
         return tickServiceExecutor;
+    }
+
+    public RecipeManager getRecipeManager() {
+        return recipeManager;
     }
 
     public Debug getDebug() {
