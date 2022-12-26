@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -15,13 +15,15 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class CraftCoalToBlackDye extends RecipeModule {
-    public ConfigOption charCoalToBlackDye = new ConfigOption(true, description);
-    public ConfigOption coalToBlackDye = new ConfigOption(true, description);
+    public BooleanOption charCoalToBlackDye = new BooleanOption(true,
+            "Controls if the charcoal to black dye crafting recipe will be registered");
+    public BooleanOption coalToBlackDye = new BooleanOption(true,
+            "Controls if the coal to black dye crafting recipe will be registered");
 
     @Override
     public void registerRecipes() {
-        if(charCoalToBlackDye.asBoolean()) registerCharcoalRecipe();
-        if(coalToBlackDye.asBoolean()) registerCoalRecipe();
+        if(charCoalToBlackDye.get()) registerCharcoalRecipe();
+        if(coalToBlackDye.get()) registerCoalRecipe();
     }
 
     private void registerCharcoalRecipe() {

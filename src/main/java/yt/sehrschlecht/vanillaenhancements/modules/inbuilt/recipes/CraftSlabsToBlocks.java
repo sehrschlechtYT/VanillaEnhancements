@@ -7,11 +7,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -19,12 +19,13 @@ import java.util.Arrays;
  */
 @Since(1.0)
 public class CraftSlabsToBlocks extends RecipeModule {
-    public ConfigOption excludedSlabs = new ConfigOption(new ArrayList<String>(), description);
+    public MaterialListOption excludedSlabs = new MaterialListOption(Collections.emptyList(),
+            "Exclude recipes for slabs from being registered");
 
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).filter(m -> m.name().endsWith("_SLAB")).forEach(slab -> {
-            if(excludedSlabs.asMaterialList().contains(slab)) return;
+            if(excludedSlabs.get().contains(slab)) return;
             String blockName = getBlockName(slab);
             if(blockName == null) return;
             Material block = Material.valueOf(blockName);

@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -16,13 +16,15 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class ImprovedDispenserCrafting extends RecipeModule {
-    public ConfigOption dropperAndBow = new ConfigOption(true, description);
-    public ConfigOption dropperAndStringsAndSticks = new ConfigOption(true, description);
+    public BooleanOption dropperAndBow = new BooleanOption(true,
+            "Controls if the dropper + bow crafting recipe will be registered");
+    public BooleanOption dropperAndStringsAndSticks = new BooleanOption(true,
+            "Controls if the dropper + strings + sticks crafting recipe will be registered");
 
     @Override
     public void registerRecipes() {
-        if(dropperAndBow.asBoolean()) createDropperAndBowRecipe();
-        if(dropperAndStringsAndSticks.asBoolean()) createDropperAndStringsAndSticksRecipe();
+        if(dropperAndBow.get()) createDropperAndBowRecipe();
+        if(dropperAndStringsAndSticks.get()) createDropperAndStringsAndSticksRecipe();
     }
 
     public void createDropperAndBowRecipe() {

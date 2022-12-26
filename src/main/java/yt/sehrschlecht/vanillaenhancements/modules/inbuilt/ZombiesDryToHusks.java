@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.Arrays;
@@ -25,20 +25,23 @@ import java.util.Arrays;
  */
 @Since(1.0)
 public class ZombiesDryToHusks extends VEModule {
-    public ConfigOption dryZombiesInNether = new ConfigOption(true, description);
-    public ConfigOption dryZombiesOnHotDeath = new ConfigOption(true, description);
+    public BooleanOption dryZombiesInNether = new BooleanOption(true,
+            "Controls if zombies will be converted to husks when entering a nether portal.");
+    public BooleanOption dryZombiesOnHotDeath = new BooleanOption(true,
+            "Controls if zombies will be converted to husks when dying of fire, lava or magma block damage.");
 
     @Override
     public @NotNull String getKey() {
         return "zombies_dry_to_husks";
     }
+
     //ToDo broken
     @EventHandler(ignoreCancelled = true)
     public void onPortal(EntityPortalEvent event) {
         if(!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
         if(event.getTo() == null) return;
         if(!event.getTo().getWorld().getEnvironment().equals(World.Environment.NETHER)) return;
-        if(!dryZombiesInNether.asBoolean()) return;
+        if(!dryZombiesInNether.get()) return;
         //Clone the zombie
         Zombie zombie = (Zombie) event.getEntity();
         replace(zombie, event.getTo());
@@ -51,7 +54,7 @@ public class ZombiesDryToHusks extends VEModule {
         LivingEntity livingEntity = (LivingEntity) event.getEntity();
         if(!(event.getFinalDamage() >= livingEntity.getHealth())) return;
         if(!Arrays.asList(EntityDamageEvent.DamageCause.LAVA, EntityDamageEvent.DamageCause.FIRE, EntityDamageEvent.DamageCause.FIRE_TICK, EntityDamageEvent.DamageCause.HOT_FLOOR).contains(event.getCause())) return;
-        if(!dryZombiesOnHotDeath.asBoolean()) return;
+        if(!dryZombiesOnHotDeath.get()) return;
         Zombie zombie = (Zombie) event.getEntity();
         replace(zombie, zombie.getLocation());
     }

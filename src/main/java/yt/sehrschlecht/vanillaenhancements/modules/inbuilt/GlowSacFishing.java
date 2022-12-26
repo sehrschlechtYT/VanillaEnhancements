@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.DoubleOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 @Since(1.0)
 public class GlowSacFishing extends VEModule {
-    public ConfigOption chance = new ConfigOption(0.01D, description);
+    public DoubleOption chance = new DoubleOption(0.01D, "The chance for a glow inc sac to drop when fishing", 0D, 1D);
 
     @Override
     public @NotNull String getKey() {
@@ -31,7 +31,7 @@ public class GlowSacFishing extends VEModule {
         //ToDo doesn't work
         if(event.getCaught() instanceof Item) {
             Item item = (Item) event.getCaught();
-            if(ThreadLocalRandom.current().nextDouble() < chance.asDouble()) {
+            if(ThreadLocalRandom.current().nextDouble() < chance.get()) {
                 item.setItemStack(new ItemStack(Material.GLOW_INK_SAC));
             }
         }

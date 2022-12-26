@@ -1,18 +1,8 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import com.google.gson.annotations.Since;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-
-import java.text.DecimalFormat;
-import java.util.Locale;
-import java.util.logging.Level;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -20,17 +10,17 @@ import java.util.logging.Level;
  */
 @Since(1.0)
 public class ChatCoordinates extends VEModule {
-    public ConfigOption chatColor = new ConfigOption(ChatColor.AQUA.name(), description);
+    /*public ConfigOption chatColor = new ConfigOption(ChatColor.AQUA.name(), description);
     public ConfigOption secondChatColor = new ConfigOption(ChatColor.GRAY.name(), description);
 
-    public ConfigOption sendWorld = new ConfigOption(true, description);
+    public ConfigOption sendWorld = new ConfigOption(true, description);*/
 
     @Override
     public @NotNull String getKey() {
         return "chat_coordinates";
     }
 
-    @Override
+    /*@Override
     public void onEnable() {
         super.onEnable();
         try {
@@ -39,9 +29,9 @@ public class ChatCoordinates extends VEModule {
             getLogger().log(Level.SEVERE, "[" + getName() + "] Invalid chat color provided! Resetting to " + chatColor.getDefaultValue().toString() + ".");
             chatColor.reset();
         }
-    }
+    }*/
 
-    @EventHandler
+    /*@EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         if(!event.getMessage().contains("~ ~ ~")) return;
         Location location = event.getPlayer().getLocation();
@@ -55,5 +45,5 @@ public class ChatCoordinates extends VEModule {
         Bukkit.broadcastMessage(
                 event.getFormat().formatted(event.getPlayer().getDisplayName(), event.getMessage().replace("~ ~ ~", text).strip())
         );
-    }
+    }*/
 }

@@ -5,7 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.FloatOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -14,9 +15,12 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class RottenFleshSmelting extends RecipeModule {
-    public ConfigOption experience = new ConfigOption(0.1D, description);
-    public ConfigOption cookingTime = new ConfigOption(200, description);
-    public ConfigOption resultAmount = new ConfigOption(1, description);
+    public FloatOption experience = new FloatOption(0.1f,
+            "The experience given by the recipe", 0f, null);
+    public IntegerOption cookingTime = new IntegerOption(200,
+            "The cooking time of the recipe in ticks", 0, null);
+    public IntegerOption resultAmount = new IntegerOption(1,
+            "The amount of leather that is produced", 1, 64);
 
     @Override
     public @NotNull String getKey() {
@@ -29,10 +33,10 @@ public class RottenFleshSmelting extends RecipeModule {
             getModuleKey(),
             new FurnaceRecipe(
                 getModuleKey(),
-                new ItemStack(Material.LEATHER, resultAmount.asInt()),
+                new ItemStack(Material.LEATHER, resultAmount.get()),
                 Material.ROTTEN_FLESH,
-                (float) experience.asDouble(),
-                cookingTime.asInt()
+                experience.get(),
+                cookingTime.get()
             ),
             Material.ROTTEN_FLESH
         );

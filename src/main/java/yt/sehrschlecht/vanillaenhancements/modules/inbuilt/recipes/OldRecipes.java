@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -16,9 +16,12 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class OldRecipes extends RecipeModule {
-    public ConfigOption enchantedGoldenAppleRecipe = new ConfigOption(false, description);
-    public ConfigOption oldGoldenAppleRecipe = new ConfigOption(false, description);
-    public ConfigOption horseArmorRecipes = new ConfigOption(false, description);
+    public BooleanOption enchantedGoldenAppleRecipe = new BooleanOption(false,
+            "Controls if the enchanted golden apple crafting recipe will be registered");
+    public BooleanOption oldGoldenAppleRecipe = new BooleanOption(false,
+            "Controls if the old golden apple crafting recipe will be registered");
+    public BooleanOption horseArmorRecipes = new BooleanOption(false,
+            "Controls if the horse armor crafting recipes will be registered");
 
     private RecipeChoice.MaterialChoice woolChoice;
 
@@ -30,13 +33,13 @@ public class OldRecipes extends RecipeModule {
                 Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL, Material.BLACK_WOOL
         );
 
-        if(enchantedGoldenAppleRecipe.asBoolean()) {
+        if(enchantedGoldenAppleRecipe.get()) {
             initEnchantedGoldenAppleRecipe();
         }
-        if(oldGoldenAppleRecipe.asBoolean()) {
+        if(oldGoldenAppleRecipe.get()) {
             initOldGoldenAppleRecipe();
         }
-        if(horseArmorRecipes.asBoolean()) {
+        if(horseArmorRecipes.get()) {
             initLeatherHorseArmorRecipe();
             initIronHorseArmorRecipe();
             initGoldenHorseArmorRecipe();

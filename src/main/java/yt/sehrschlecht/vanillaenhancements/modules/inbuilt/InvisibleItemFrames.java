@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 /**
@@ -21,7 +21,8 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
  */
 @Since(1.0)
 public class InvisibleItemFrames extends VEModule {
-    public ConfigOption useMilkToMakeVisible = new ConfigOption(true, description);
+    public BooleanOption useMilkToMakeVisible = new BooleanOption(true,
+            "Controls if players can use milk buckets to make item frames visible again.");
 
     @Override
     public @NotNull String getKey() {
@@ -35,7 +36,7 @@ public class InvisibleItemFrames extends VEModule {
         ItemFrame itemFrame = (ItemFrame) event.getRightClicked();
         Player player = event.getPlayer();
         switch (stack.getType()) {
-            case POTION:
+            case POTION -> {
                 PotionMeta meta = (PotionMeta) stack.getItemMeta();
                 if(meta == null) return;
                 if(meta.getBasePotionData().getType().equals(PotionType.INVISIBILITY)) {
@@ -48,9 +49,9 @@ public class InvisibleItemFrames extends VEModule {
                         event.setCancelled(true);
                     }
                 }
-                break;
-            case MILK_BUCKET:
-                if(!useMilkToMakeVisible.asBoolean()) break;
+            }
+            case MILK_BUCKET -> {
+                if(!useMilkToMakeVisible.get()) break;
                 if(!itemFrame.isVisible()) {
                     itemFrame.setVisible(true);
                     if(!player.getGameMode().equals(GameMode.CREATIVE)) {
@@ -59,7 +60,7 @@ public class InvisibleItemFrames extends VEModule {
                     itemFrame.getWorld().playSound(itemFrame.getLocation(), Sound.ENTITY_GENERIC_DRINK, 1, 1);
                     event.setCancelled(true);
                 }
-                break;
+            }
         }
     }
 }

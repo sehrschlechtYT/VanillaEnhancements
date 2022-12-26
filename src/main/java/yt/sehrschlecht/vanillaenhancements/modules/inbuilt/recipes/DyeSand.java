@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -15,17 +15,22 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class DyeSand extends RecipeModule {
-    public ConfigOption dyeSandRed = new ConfigOption(true, description);
-    public ConfigOption dyeSandstoneRed = new ConfigOption(true, description);
-    public ConfigOption dyeRedSandWhite = new ConfigOption(true, description);
-    public ConfigOption dyeRedSandstoneWhite = new ConfigOption(true, description);
+    public BooleanOption dyeSandRed = new BooleanOption(true,
+            "The amount of blocks that players will receive");
+
+    public BooleanOption dyeSandstoneRed = new BooleanOption(true,
+            "Controls if the craft sandstone to red sandstone crafting recipe will be registered");
+    public BooleanOption dyeRedSandWhite = new BooleanOption(true,
+            "Controls if the craft red sand to sand crafting recipe will be registered");
+    public BooleanOption dyeRedSandstoneWhite = new BooleanOption(true,
+            "Controls if the craft red sandstone to sandstone crafting recipe will be registered");
 
     @Override
     public void registerRecipes() {
-        if(dyeSandRed.asBoolean()) addDyeSandRedRecipe();
-        if(dyeSandstoneRed.asBoolean()) addDyeSandstoneRedRecipe();
-        if(dyeRedSandWhite.asBoolean()) addDyeRedSandWhiteRecipe();
-        if(dyeRedSandstoneWhite.asBoolean()) addDyeRedSandstoneWhiteRecipe();
+        if(dyeSandRed.get()) addDyeSandRedRecipe();
+        if(dyeSandstoneRed.get()) addDyeSandstoneRedRecipe();
+        if(dyeRedSandWhite.get()) addDyeRedSandWhiteRecipe();
+        if(dyeRedSandstoneWhite.get()) addDyeRedSandstoneWhiteRecipe();
     }
 
     private void addDyeSandRedRecipe() {

@@ -7,7 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.StringOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 /**
@@ -16,8 +17,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
  */
 @Since(1.0)
 public class CreativeKeepInventory extends VEModule {
-    public ConfigOption requirePermission = new ConfigOption(false, description);
-    public ConfigOption permission = new ConfigOption("ve.keep_inventory_in_creative", description);
+    public BooleanOption requirePermission = new BooleanOption(false,
+            "Controls if a permission is required to keep inventory.");
+    public StringOption permission = new StringOption("ve.keep_inventory_in_creative",
+            "Controls the permission that is required to keep the inventory. `requirePermission` has to be enabled.");
 
     @Override
     public @NotNull String getName() {
@@ -34,8 +37,8 @@ public class CreativeKeepInventory extends VEModule {
         Player player = event.getEntity();
         if(!player.getGameMode().equals(GameMode.CREATIVE)) return;
         if(Boolean.TRUE.equals(player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY))) return;
-        if(requirePermission.asBoolean()) {
-            if(!player.hasPermission(permission.asString())) return;
+        if(requirePermission.get()) {
+            if(!player.hasPermission(permission.get())) return;
         }
         event.setKeepInventory(true);
         event.setKeepLevel(true);

@@ -77,7 +77,7 @@ public class VEDocsGenerator {
         return "| `" + option.toPath() + "` | "
                 + option.getDescription()
                 + " | `" + option.getDefaultValue()
-                + "` | `" + option.getDefaultValue().getClass().getSimpleName()
+                + "` | `" + option.getClass().getSimpleName().replace("Option", "")
                 + "` | " + option.getPossibleValues() + " |\n";
     }
 

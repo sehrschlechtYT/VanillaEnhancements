@@ -7,11 +7,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -19,20 +20,23 @@ import java.util.Arrays;
  */
 @Since(1.0)
 public class CraftStairsToBlocks extends RecipeModule {
-    public ConfigOption excludedStairs = new ConfigOption(new ArrayList<String>(), description);
-    public ConfigOption requiredStairsAmount = new ConfigOption(4, description);
-    public ConfigOption blockAmount = new ConfigOption(3, description);
+    public MaterialListOption excludedStairs = new MaterialListOption(Collections.emptyList(),
+            "Exclude recipes for stairs from being registered");
+    public IntegerOption requiredStairsAmount = new IntegerOption(4,
+            "The required amount of stairs to craft the blocks", 1, 9);
+    public IntegerOption blockAmount = new IntegerOption(3,
+            "The amount of blocks that players will receive", 1, 64);
 
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).filter(m -> m.name().endsWith("_STAIRS")).forEach(stairs -> {
-            if(excludedStairs.asMaterialList().contains(stairs)) return;
+            if(excludedStairs.get().contains(stairs)) return;
             String blockName = getBlockName(stairs);
             if(blockName == null) return;
             Material block = Material.valueOf(blockName);
             NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "stairs_blocks_" + block.name());
-            ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(block, blockAmount.asInt()));
-            recipe.addIngredient(requiredStairsAmount.asInt(), stairs);
+            ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(block, blockAmount.get()));
+            recipe.addIngredient(requiredStairsAmount.get(), stairs);
             addRecipe(recipeKey, recipe, stairs);
         });
     }

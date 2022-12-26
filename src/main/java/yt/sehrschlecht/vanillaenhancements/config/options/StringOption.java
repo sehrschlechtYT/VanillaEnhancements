@@ -21,6 +21,10 @@ public class StringOption extends ConfigOption<String> {
         this.allowEmpty = allowEmpty;
     }
 
+    public StringOption(String defaultValue, String description) {
+        this(defaultValue, description, false);
+    }
+
     @Override
     public String getFromConfig() {
         return Config.getInstance().getDocument().getString(toPath());

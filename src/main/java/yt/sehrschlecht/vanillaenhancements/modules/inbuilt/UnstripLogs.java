@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.utils.BlockUtils;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
@@ -20,7 +20,8 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
  */
 @Since(1.0)
 public class UnstripLogs extends VEModule {
-    public ConfigOption damageTools = new ConfigOption(true, description);
+    public BooleanOption damageTools = new BooleanOption(true,
+            "Controls if the axe will be damaged.");
 
     @Override
     public @NotNull String getKey() {
@@ -37,7 +38,7 @@ public class UnstripLogs extends VEModule {
         Material newBlock = Material.valueOf(clickedBlock.getType().name().replace("STRIPPED_", ""));
         clickedBlock.setType(newBlock);
         clickedBlock.getWorld().playSound(clickedBlock.getLocation(), Sound.ITEM_AXE_STRIP, 1, 1);
-        if(!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && damageTools.asBoolean()) {
+        if(!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && damageTools.get()) {
             ItemUtils.damageItem(event.getItem());
         }
     }

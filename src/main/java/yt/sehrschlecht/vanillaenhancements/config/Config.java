@@ -40,7 +40,7 @@ public class Config {
                 found = true;
                 if(!document.contains(key + "." + option.getKey())) {
                     Debug.CONFIG.log("Creating key {}.{} with default value {}", key, option.getKey(), option.getDefaultValue());
-                    document.set(key + "." + option.getKey(), option.getDefaultValue());
+                    option.reset();
                 }
             }
             if(!found) {

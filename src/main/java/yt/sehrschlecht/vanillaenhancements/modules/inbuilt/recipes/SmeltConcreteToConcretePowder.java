@@ -6,7 +6,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.FloatOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -15,8 +16,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class SmeltConcreteToConcretePowder extends RecipeModule {
-    public ConfigOption experience = new ConfigOption(0, description);
-    public ConfigOption cookingTime = new ConfigOption(200, description);
+    public FloatOption experience = new FloatOption(0f,
+            "The experience given by the recipe", 0f, null);
+    public IntegerOption cookingTime = new IntegerOption(200,
+            "The cooking time of the recipe in ticks", 1, null);
 
     @Override
     public @NotNull String getName() {
@@ -54,8 +57,8 @@ public class SmeltConcreteToConcretePowder extends RecipeModule {
                 key,
                 new ItemStack(powder),
                 concrete,
-                experience.asInt(),
-                cookingTime.asInt()
+                experience.get(),
+                cookingTime.get()
         );
         addRecipe(key, recipe, concrete);
     }
