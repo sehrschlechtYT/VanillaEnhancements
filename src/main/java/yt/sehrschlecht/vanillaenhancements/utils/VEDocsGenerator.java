@@ -47,17 +47,12 @@ public class VEDocsGenerator {
         StringBuilder builder = new StringBuilder();
         builder.append("# " + module.getName() + "\n\n");
         List<ConfigOption<?>> configOptions = getConfigOptions(module);
-        if (configOptions.size() > 0) {
-            builder.append("## Configuration\n\n");
-            builder.append("| Key | Description | Default Value | Type | Possible values |\n");
-            builder.append("| --- | ----------- | ------------- | ---- | --------------- |\n");
-            builder.append("| `" + module.getModuleKey().getKey() + ".enabled` | Controls if the module is enabled | `false` | `Boolean` | `true/false` |\n");
-            for (ConfigOption<?> option : configOptions) {
-               builder.append(optionToString(option));
-            }
-        } else {
-            builder.append("## Configuration\n\n");
-            builder.append("This module has no configuration options.\n");
+        builder.append("## Configuration\n\n");
+        builder.append("| Key | Description | Default Value | Type | Possible values |\n");
+        builder.append("| --- | ----------- | ------------- | ---- | --------------- |\n");
+        builder.append("| `" + module.getModuleKey().getKey() + ".enabled` | Controls if the module is enabled | `false` | `Boolean` | `true/false` |\n");
+        for (ConfigOption<?> option : configOptions) {
+           builder.append(optionToString(option));
         }
         builder.append("\n");
         builder.append("## Technical Information\n\n");
