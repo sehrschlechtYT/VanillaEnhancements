@@ -15,8 +15,8 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class CraftCoalToBlackDye extends RecipeModule {
-    public ConfigOption charCoalToBlackDye = new ConfigOption(true);
-    public ConfigOption coalToBlackDye = new ConfigOption(true);
+    public ConfigOption charCoalToBlackDye = new ConfigOption(true, description);
+    public ConfigOption coalToBlackDye = new ConfigOption(true, description);
 
     @Override
     public void registerRecipes() {

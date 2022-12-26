@@ -21,7 +21,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
  */
 @Since(1.0)
 public class InvisibleItemFrames extends VEModule {
-    public ConfigOption useMilkToMakeVisible = new ConfigOption(true);
+    public ConfigOption useMilkToMakeVisible = new ConfigOption(true, description);
 
     @Override
     public @NotNull String getKey() {

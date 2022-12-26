@@ -15,8 +15,8 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class SmeltConcreteToConcretePowder extends RecipeModule {
-    public ConfigOption experience = new ConfigOption(0);
-    public ConfigOption cookingTime = new ConfigOption(200);
+    public ConfigOption experience = new ConfigOption(0, description);
+    public ConfigOption cookingTime = new ConfigOption(200, description);
 
     @Override
     public @NotNull String getName() {

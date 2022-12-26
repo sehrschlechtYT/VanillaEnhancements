@@ -7,11 +7,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
-import java.awt.event.TextEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,15 +19,15 @@ import java.util.List;
  */
 @Since(1.0)
 public class CraftBlocksToTwoSlabs extends RecipeModule {
-    public ConfigOption excludedBlocks = new ConfigOption(List.of(
+    public MaterialListOption excludedBlocks = MaterialListOption.fromStrings(List.of(
             "OAK_PLANKS", "SPRUCE_PLANKS", "BIRCH_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS", "MANGROVE_PLANKS", "CRIMSON_PLANKS", "WARPED_PLANKS",
             "POLISHED_BLACKSTONE" //prevent button recipes from being overridden
-    ));
+    ), "Exclude recipes for blocks from being registered");
 
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).forEach(block -> {
-            if(excludedBlocks.asMaterialList().contains(block)) return;
+            if(excludedBlocks.get().contains(block)) return;
             String blockName = getSlabName(block);
             if(blockName == null) return;
             Material slab = Material.valueOf(blockName);

@@ -1,63 +1,26 @@
 package yt.sehrschlecht.vanillaenhancements.config;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
-
-import java.util.List;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-public class ConfigOption {
-    private String key;
-    private NamespacedKey moduleKey;
-    public final Object defaultValue;
+public abstract class ConfigOption<T> {
+    protected String key;
+    protected NamespacedKey moduleKey;
+    protected final T defaultValue;
+    protected final String description;
 
-    public ConfigOption(Object defaultValue) {
+    /**
+     * @param defaultValue The default value of the option.
+     * @param description A markdown formatted description of the option.
+     */
+    public ConfigOption(T defaultValue, String description) {
         this.defaultValue = defaultValue;
-    }
-
-    public boolean asBoolean() {
-        return Config.getInstance().optionAsBoolean(this);
-    }
-
-    public double asDouble() {
-        return Config.getInstance().optionAsDouble(this);
-    }
-
-    public int asInt() {
-        return Config.getInstance().optionAsInt(this);
-    }
-
-    public String asString() {
-        return Config.getInstance().optionAsString(this);
-    }
-
-    public ChatColor asChatColor() {
-        return ChatColor.valueOf(Config.getInstance().optionAsString(this));
-    }
-
-    public List<String> asStringList() {
-        return Config.getInstance().optionAsStringList(this);
-    }
-
-    public List<Material> asMaterialList() {
-        return asStringList().stream().map(
-                string -> {
-                    try {
-                        return Material.valueOf(string);
-                    } catch (IllegalArgumentException e) {
-                        VanillaEnhancements.getPlugin().getLogger().severe("Invalid material: " + string);
-                        VanillaEnhancements.getPlugin().getLogger().severe("Resetting the config setting " + toPath() + "!");
-                        reset();
-                        return null;
-                    }
-                }
-        ).toList();
+        this.description = description;
     }
 
     public void reset() {
@@ -65,17 +28,43 @@ public class ConfigOption {
         set(getDefaultValue());
     }
 
-    public void set(Object value) {
-        Config.getInstance().set(this, value);
-    }
-
-    public Object getDefaultValue() {
+    public T getDefaultValue() {
         return defaultValue;
     }
 
     public String getKey() {
         return key;
     }
+
+    public T get() {
+        T object = getFromConfig();
+        if (object == null) {
+            Debug.CONFIG.log("Option " + toPath() + " is null, resetting to default value " + defaultValue);
+            reset();
+            return defaultValue;
+        }
+        String validationError = validate(object);
+        if(validationError != null){
+            Debug.CONFIG.log("Option " + toPath() + " is invalid, resetting to default value " + defaultValue + " (" + validationError + ")");
+            reset();
+            return defaultValue;
+        }
+        return object;
+    }
+
+    public abstract T getFromConfig();
+
+    public abstract String getPossibleValues();
+
+    public void set(T value) {
+        Config.getInstance().set(this, value);
+    }
+
+    /**
+     * @param value The value to check
+     * @return Null if the value is valid, otherwise the error message
+     */
+    public abstract @Nullable String validate(T value);
 
     public NamespacedKey getModuleKey() {
         return moduleKey;
@@ -91,5 +80,9 @@ public class ConfigOption {
 
     public void setModuleKey(NamespacedKey moduleKey) {
         this.moduleKey = moduleKey;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

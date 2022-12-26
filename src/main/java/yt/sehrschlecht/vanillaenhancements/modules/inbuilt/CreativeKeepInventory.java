@@ -16,8 +16,8 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
  */
 @Since(1.0)
 public class CreativeKeepInventory extends VEModule {
-    public ConfigOption requirePermission = new ConfigOption(false);
-    public ConfigOption permission = new ConfigOption("ve.keep_inventory_in_creative");
+    public ConfigOption requirePermission = new ConfigOption(false, description);
+    public ConfigOption permission = new ConfigOption("ve.keep_inventory_in_creative", description);
 
     @Override
     public @NotNull String getName() {

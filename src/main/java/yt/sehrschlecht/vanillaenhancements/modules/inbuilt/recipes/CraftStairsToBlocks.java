@@ -19,9 +19,9 @@ import java.util.Arrays;
  */
 @Since(1.0)
 public class CraftStairsToBlocks extends RecipeModule {
-    public ConfigOption excludedStairs = new ConfigOption(new ArrayList<String>());
-    public ConfigOption requiredStairsAmount = new ConfigOption(4);
-    public ConfigOption blockAmount = new ConfigOption(3);
+    public ConfigOption excludedStairs = new ConfigOption(new ArrayList<String>(), description);
+    public ConfigOption requiredStairsAmount = new ConfigOption(4, description);
+    public ConfigOption blockAmount = new ConfigOption(3, description);
 
     @Override
     public void registerRecipes() {

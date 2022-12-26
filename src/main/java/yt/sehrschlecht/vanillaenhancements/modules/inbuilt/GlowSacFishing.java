@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 @Since(1.0)
 public class GlowSacFishing extends VEModule {
-    public ConfigOption chance = new ConfigOption(0.01D);
+    public ConfigOption chance = new ConfigOption(0.01D, description);
 
     @Override
     public @NotNull String getKey() {

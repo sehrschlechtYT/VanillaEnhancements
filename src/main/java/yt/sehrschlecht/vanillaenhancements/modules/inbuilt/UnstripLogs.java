@@ -20,7 +20,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
  */
 @Since(1.0)
 public class UnstripLogs extends VEModule {
-    public ConfigOption damageTools = new ConfigOption(true);
+    public ConfigOption damageTools = new ConfigOption(true, description);
 
     @Override
     public @NotNull String getKey() {

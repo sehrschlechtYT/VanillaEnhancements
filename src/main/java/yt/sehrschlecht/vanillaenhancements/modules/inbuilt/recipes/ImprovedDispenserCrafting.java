@@ -16,8 +16,8 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class ImprovedDispenserCrafting extends RecipeModule {
-    public ConfigOption dropperAndBow = new ConfigOption(true);
-    public ConfigOption dropperAndStringsAndSticks = new ConfigOption(true);
+    public ConfigOption dropperAndBow = new ConfigOption(true, description);
+    public ConfigOption dropperAndStringsAndSticks = new ConfigOption(true, description);
 
     @Override
     public void registerRecipes() {

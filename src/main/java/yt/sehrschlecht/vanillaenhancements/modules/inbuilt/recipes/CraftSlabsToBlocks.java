@@ -19,7 +19,7 @@ import java.util.Arrays;
  */
 @Since(1.0)
 public class CraftSlabsToBlocks extends RecipeModule {
-    public ConfigOption excludedSlabs = new ConfigOption(new ArrayList<String>());
+    public ConfigOption excludedSlabs = new ConfigOption(new ArrayList<String>(), description);
 
     @Override
     public void registerRecipes() {

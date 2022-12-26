@@ -20,10 +20,10 @@ import java.util.logging.Level;
  */
 @Since(1.0)
 public class ChatCoordinates extends VEModule {
-    public ConfigOption chatColor = new ConfigOption(ChatColor.AQUA.name());
-    public ConfigOption secondChatColor = new ConfigOption(ChatColor.GRAY.name());
+    public ConfigOption chatColor = new ConfigOption(ChatColor.AQUA.name(), description);
+    public ConfigOption secondChatColor = new ConfigOption(ChatColor.GRAY.name(), description);
 
-    public ConfigOption sendWorld = new ConfigOption(true);
+    public ConfigOption sendWorld = new ConfigOption(true, description);
 
     @Override
     public @NotNull String getKey() {

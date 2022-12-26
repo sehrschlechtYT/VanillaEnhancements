@@ -25,8 +25,8 @@ import java.util.Arrays;
  */
 @Since(1.0)
 public class ZombiesDryToHusks extends VEModule {
-    public ConfigOption dryZombiesInNether = new ConfigOption(true);
-    public ConfigOption dryZombiesOnHotDeath = new ConfigOption(true);
+    public ConfigOption dryZombiesInNether = new ConfigOption(true, description);
+    public ConfigOption dryZombiesOnHotDeath = new ConfigOption(true, description);
 
     @Override
     public @NotNull String getKey() {

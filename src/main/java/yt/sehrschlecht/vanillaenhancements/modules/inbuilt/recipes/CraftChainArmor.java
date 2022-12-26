@@ -16,10 +16,10 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class CraftChainArmor extends RecipeModule {
-    public ConfigOption chainHelmet = new ConfigOption(true);
-    public ConfigOption chainChestplate = new ConfigOption(true);
-    public ConfigOption chainLeggings = new ConfigOption(true);
-    public ConfigOption chainBoots = new ConfigOption(true);
+    public ConfigOption chainHelmet = new ConfigOption(true, description);
+    public ConfigOption chainChestplate = new ConfigOption(true, description);
+    public ConfigOption chainLeggings = new ConfigOption(true, description);
+    public ConfigOption chainBoots = new ConfigOption(true, description);
 
     @Override
     public @NotNull String getKey() {
