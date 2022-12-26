@@ -65,7 +65,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new CraftBlocksToTwoSlabs(),
                 new ImprovedDispenserCrafting(),
                 new CraftCoalToBlackDye(),
-                new DyeSand()
+                new DyeSand(),
+                new MoreShapelessRecipes()
         );
 
         createConfig();

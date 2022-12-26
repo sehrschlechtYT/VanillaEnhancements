@@ -35,10 +35,10 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
             sender.sendMessage("§cDebugging is disabled!");
             return true;
         }
-        sender.sendMessage("§7§oWarning: This command can have unexpected side effects!" +
-                " Restart your server if you want to be sure that everything is working as expected.");
         if(args.length == 1) {
             if(args[0].equalsIgnoreCase("reload")) {
+                sender.sendMessage("§7§oWarning: This command can have unexpected side effects!" +
+                        " Restart your server if you want to be sure that everything is working as expected.");
                 sender.sendMessage("§aReloading the config...");
                 debug().reload();
                 sender.sendMessage("§aSuccessfully reloaded the config!");
