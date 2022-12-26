@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,6 +19,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class RemoveNametags extends VEModule {
     public ConfigOption damageShears = new ConfigOption(true);
     public ConfigOption dropNametag = new ConfigOption(true);

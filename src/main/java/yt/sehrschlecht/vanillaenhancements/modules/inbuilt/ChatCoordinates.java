@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class ChatCoordinates extends VEModule {
     public ConfigOption chatColor = new ConfigOption(ChatColor.AQUA.name());
     public ConfigOption secondChatColor = new ConfigOption(ChatColor.GRAY.name());

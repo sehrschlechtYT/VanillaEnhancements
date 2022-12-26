@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class CraftBlocksToTwoSlabs extends RecipeModule {
     public ConfigOption excludedBlocks = new ConfigOption(List.of(
             "OAK_PLANKS", "SPRUCE_PLANKS", "BIRCH_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS", "MANGROVE_PLANKS", "CRIMSON_PLANKS", "WARPED_PLANKS",

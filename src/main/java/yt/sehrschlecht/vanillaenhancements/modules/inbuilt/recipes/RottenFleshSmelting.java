@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.Material;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
@@ -11,6 +12,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class RottenFleshSmelting extends RecipeModule {
     public ConfigOption experience = new ConfigOption(0.1D);
     public ConfigOption cookingTime = new ConfigOption(200);

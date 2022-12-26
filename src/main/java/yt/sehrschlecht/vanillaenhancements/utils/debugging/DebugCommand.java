@@ -8,7 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -41,6 +43,16 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 debug().reload();
                 sender.sendMessage("§aSuccessfully reloaded the config!");
                 return true;
+            } else if(args[0].equalsIgnoreCase("generate-docs")) {
+                sender.sendMessage("§aGenerating docs...");
+                try {
+                    debug().generateDocs();
+                    sender.sendMessage("§aSuccessfully generated docs!");
+                } catch (IOException e) {
+                    sender.sendMessage("§cFailed to generate docs!");
+                    throw new RuntimeException(e);
+                }
+                return true;
             }
         }
         sender.sendMessage("§cUsage: /debug <reload>");
@@ -69,7 +81,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(!debug().isEnabled()) return null;
         if(args.length == 1) {
-            return List.of("reload").stream().filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).toList();
+            return Stream.of("reload", "generate-docs").filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).toList();
         }
         return null;
     }

@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,12 +14,14 @@ import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
 
+
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class PumpkinNametags extends VEModule {
-    private final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+    private Scoreboard scoreboard;
 
     @Override
     public @NotNull String getName() {
@@ -28,6 +31,11 @@ public class PumpkinNametags extends VEModule {
     @Override
     public @NotNull String getKey() {
         return "pumpkin_hide_nametags";
+    }
+
+    @Override
+    public void initialize() {
+        scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
     }
 
     @Tick(period = 5, executeNow = true)

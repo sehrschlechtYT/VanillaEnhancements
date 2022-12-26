@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
@@ -22,6 +23,7 @@ import java.util.Arrays;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class ZombiesDryToHusks extends VEModule {
     public ConfigOption dryZombiesInNether = new ConfigOption(true);
     public ConfigOption dryZombiesOnHotDeath = new ConfigOption(true);

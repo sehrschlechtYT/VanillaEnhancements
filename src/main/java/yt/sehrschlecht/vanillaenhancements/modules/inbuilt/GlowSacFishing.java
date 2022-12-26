@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
@@ -15,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class GlowSacFishing extends VEModule {
     public ConfigOption chance = new ConfigOption(0.01D);
 

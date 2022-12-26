@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +17,7 @@ import java.util.Arrays;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class CraftStairsToBlocks extends RecipeModule {
     public ConfigOption excludedStairs = new ConfigOption(new ArrayList<String>());
     public ConfigOption requiredStairsAmount = new ConfigOption(4);

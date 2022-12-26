@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
+import com.google.gson.annotations.Since;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
+@Since(1.0)
 public class CreativeKeepInventory extends VEModule {
     public ConfigOption requirePermission = new ConfigOption(false);
     public ConfigOption permission = new ConfigOption("ve.keep_inventory_in_creative");
