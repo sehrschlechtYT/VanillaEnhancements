@@ -29,10 +29,10 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
             return "Any number";
         }
         if(min == null) {
-            return "`<" + max + "`";
+            return "`<=" + max + "`";
         }
         if(max == null) {
-            return "`>" + min + "`";
+            return "`>=" + min + "`";
         }
         return "`" + min + "-" + max + "`";
     }

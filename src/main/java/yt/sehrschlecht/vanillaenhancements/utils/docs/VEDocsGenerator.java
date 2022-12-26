@@ -74,7 +74,7 @@ public class VEDocsGenerator {
         return builder.toString();
     }
 
-    private String optionToString(ConfigOption option) {
+    private String optionToString(ConfigOption<?> option) {
         return "| `" + option.toPath() + "` | "
                 + option.getDescription()
                 + " | `" + option.getDefaultValue()
