@@ -65,6 +65,7 @@ public class CraftSlabsToBlocks extends RecipeModule {
             case "DEEPSLATE_BRICK_SLAB" -> "DEEPSLATE_BRICKS";
             case "DEEPSLATE_TILE_SLAB" -> "DEEPSLATE_TILES";
             case "POLISHED_BLACKSTONE_BRICK_SLAB" -> "POLISHED_BLACKSTONE_BRICKS";
+            case "QUARTZ_SLAB" -> "QUARTZ_BLOCK";
             case "PETRIFIED_OAK_SLAB" -> null;
             default -> {
                 try {
