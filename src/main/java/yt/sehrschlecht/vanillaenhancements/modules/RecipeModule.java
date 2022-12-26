@@ -88,6 +88,7 @@ public abstract class RecipeModule extends VEModule {
 
     @Tick(period = 60, executeNow = true)
     public void checkRecipes() { //ToDo add a recipe manager that collects all recipes and checks them -> less performance impact
+        //ToDo broken
         if(!shouldCheckRecipes) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             for (ItemStack stack : player.getInventory().getContents()) {

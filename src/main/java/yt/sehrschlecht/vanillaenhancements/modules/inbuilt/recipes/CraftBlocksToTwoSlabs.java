@@ -19,7 +19,10 @@ import java.util.List;
  * @since 1.0
  */
 public class CraftBlocksToTwoSlabs extends RecipeModule {
-    public ConfigOption excludedBlocks = new ConfigOption(new ArrayList<String>());
+    public ConfigOption excludedBlocks = new ConfigOption(List.of(
+            "OAK_PLANKS", "SPRUCE_PLANKS", "BIRCH_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS", "MANGROVE_PLANKS", "CRIMSON_PLANKS", "WARPED_PLANKS",
+            "POLISHED_BLACKSTONE" //prevent button recipes from being overridden
+    ));
 
     @Override
     public void registerRecipes() {
@@ -61,6 +64,7 @@ public class CraftBlocksToTwoSlabs extends RecipeModule {
             case "DEEPSLATE_BRICKS" -> "DEEPSLATE_BRICK_SLAB";
             case "DEEPSLATE_TILES" -> "DEEPSLATE_TILE_SLAB";
             case "POLISHED_BLACKSTONE_BRICKS" -> "POLISHED_BLACKSTONE_BRICK_SLAB";
+            case "QUARTZ_BLOCK" -> "QUARTZ_SLAB";
             default -> {
                 try {
                     String blockName = block.name() + "_SLAB";

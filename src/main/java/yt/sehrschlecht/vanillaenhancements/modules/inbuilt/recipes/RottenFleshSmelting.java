@@ -13,7 +13,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 public class RottenFleshSmelting extends RecipeModule {
     public ConfigOption experience = new ConfigOption(0.1D);
-    public ConfigOption cookingTime = new ConfigOption(5);
+    public ConfigOption cookingTime = new ConfigOption(200);
     public ConfigOption resultAmount = new ConfigOption(1);
 
     @Override
@@ -30,7 +30,7 @@ public class RottenFleshSmelting extends RecipeModule {
                 new ItemStack(Material.LEATHER, resultAmount.asInt()),
                 Material.ROTTEN_FLESH,
                 (float) experience.asDouble(),
-                cookingTime.asInt() * 20
+                cookingTime.asInt()
             ),
             Material.ROTTEN_FLESH
         );
