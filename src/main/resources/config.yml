@@ -1,5 +1,7 @@
 config-version: 2 #DO NOT MODIFY THIS SETTING!
 
+recipe-discover-period: 60 #How often (in ticks) should the plugin check for new recipes? May have an impact on performance if set too low.
+
 msg:
   prefix: "&7[&cVE&7] "
 

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import yt.sehrschlecht.schlechteutils.data.Pair;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.VERecipe;
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
@@ -26,6 +27,8 @@ public class RecipeManager {
     }
 
     public void discoverRecipes() {
+        long period = Config.getInstance().getDocument().getLong("recipe-discover-period", 60L);
+        if(period <= 0) period = 60L;
         Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 for (ItemStack stack : player.getInventory().getContents()) {
@@ -34,7 +37,7 @@ public class RecipeManager {
                     discoverRecipes(player, stack.getType());
                 }
             }
-        }, 0L, 20L);
+        }, 0L, period);
     }
 
     private List<VERecipe> getRegisteredRecipes() {
