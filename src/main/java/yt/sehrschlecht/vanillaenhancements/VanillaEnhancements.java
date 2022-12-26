@@ -68,7 +68,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new DyeSand(),
                 new MoreShapelessRecipes(),
                 new MoreBlackstoneRecipes(),
-                new SmeltConcretePowderToGlass()
+                new SmeltConcretePowderToGlass(),
+                new CraftNetheriteGearWithoutDiamonds()
         );
 
         createConfig();
