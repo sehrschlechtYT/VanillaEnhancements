@@ -10,6 +10,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Config {
                 document.set(key + ".enabled", false);
             }
             boolean found = false;
-            for (ConfigOption option : getOptions(module)) {
+            for (ConfigOption<?> option : getOptions(module)) {
                 found = true;
                 if(!document.contains(key + "." + option.getKey())) {
                     Debug.CONFIG.log("Creating key {}.{} with default value {}", key, option.getKey(), option.getDefaultValue());
@@ -96,8 +97,14 @@ public class Config {
         List<ConfigOption<?>> options = new ArrayList<>();
         Class<?> moduleClass = module.getClass();
         for (Field field : moduleClass.getDeclaredFields()) {
+            //check if field is public
+            if(!Modifier.isPublic(field.getModifiers())) {
+                Debug.CONFIG_OPTIONS.log("Field {} is not public, skipping...", field.getName());
+                continue;
+            }
             Debug.CONFIG_OPTIONS.log("Checking field {}...", field.getName());
-            if(field.getType().isAssignableFrom(ConfigOption.class)) {
+            Debug.CONFIG_OPTIONS.log("Type: {}, Assignable: {}", field.getType(), ConfigOption.class.isAssignableFrom(field.getType()));
+            if(ConfigOption.class.isAssignableFrom(field.getType())) {
                 try {
                     ConfigOption<?> option = (ConfigOption<?>) field.get(module);
                     option.setModuleKey(module.getModuleKey());
