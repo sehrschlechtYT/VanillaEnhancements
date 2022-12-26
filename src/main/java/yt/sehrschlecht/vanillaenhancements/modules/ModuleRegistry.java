@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
-import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
@@ -31,6 +30,7 @@ public class ModuleRegistry {
         Debug.MODULES.log("Registering {} module {}...", inbuilt ? "inbuilt" : "external", inbuilt ? module.getModuleKey().getKey() : module.getModuleKey());
         registeredModules.add(module);
         module.initialize();
+        registerTickServices(module);
         if(!module.isEnabled()) {
             Debug.MODULES.log("Module {} is disabled in config, skipping...", module.getModuleKey());
             return false;
@@ -43,7 +43,6 @@ public class ModuleRegistry {
             module.onEnable();
             enabledModules.add(module);
             Bukkit.getPluginManager().registerEvents(module, VanillaEnhancements.getPlugin());
-            registerTickServices(module);
             Debug.MODULES.log("Module {} enabled!", module.getModuleKey());
             return true;
         } catch (Throwable throwable) {
@@ -79,7 +78,7 @@ public class ModuleRegistry {
 
     @Nullable
     public VEModule getModule(NamespacedKey key) {
-        Optional<VEModule> moduleOptional = enabledModules.stream().filter(m -> m.getModuleKey().equals(key)).findFirst();
+        Optional<VEModule> moduleOptional = registeredModules.stream().filter(m -> m.getModuleKey().equals(key)).findFirst();
         return moduleOptional.orElse(null);
     }
 

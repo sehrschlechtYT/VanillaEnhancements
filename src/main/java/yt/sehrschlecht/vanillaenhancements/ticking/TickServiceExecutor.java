@@ -35,4 +35,12 @@ public class TickServiceExecutor {
     public void addTickService(VEModule moduleInstance, Tick tickService, Method method) {
         tickServices.add(new TickService(moduleInstance, tickService, method));
     }
+
+    public List<TickService> getTickServicesForModule(VEModule module) {
+        return tickServices.stream().filter(tickService -> tickService.moduleInstance().equals(module)).toList();
+    }
+
+    public List<TickService> getTickServices() {
+        return tickServices;
+    }
 }

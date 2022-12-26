@@ -94,11 +94,15 @@ public class Debug {
         List<VEModule> modules = VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules();
         logMessage("Generating documentation for " + modules.size() + " modules...");
         new VEDocsGenerator(modules).generate();
-        logMessage("Successfully generated documentation! Output: /plugins/VanillaEnhancements/docs");
+        logMessage("Successfully generated documentation! Output: " + getDocsOutput());
     }
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public String getDocsOutput() {
+        return "/plugins/VanillaEnhancements/docs/";
     }
 
     public enum ComponentType {
