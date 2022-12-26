@@ -13,6 +13,7 @@ import yt.sehrschlecht.schlechteutils.items.ItemBuilder;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
+import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
 /**
  * <a href="https://www.reddit.com/r/minecraftsuggestions/comments/z3majo/crouch_shear_a_name_tagged_mob_to_get_the_name/">Source</a>
@@ -20,6 +21,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
  * @since 1.0
  */
 @Since(1.0)
+@Source("https://www.reddit.com/r/minecraftsuggestions/comments/z3majo/crouch_shear_a_name_tagged_mob_to_get_the_name/")
 public class RemoveNametags extends VEModule {
     public BooleanOption damageShears = new BooleanOption(true,
             "Controls if the shears will be damaged when removing a nametag.");

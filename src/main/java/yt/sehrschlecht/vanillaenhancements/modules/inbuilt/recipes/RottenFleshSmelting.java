@@ -8,12 +8,14 @@ import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.FloatOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
+import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
 @Since(1.0)
+@Source("https://vanillatweaks.net")
 public class RottenFleshSmelting extends RecipeModule {
     public FloatOption experience = new FloatOption(0.1f,
             "The experience given by the recipe", 0f, null);

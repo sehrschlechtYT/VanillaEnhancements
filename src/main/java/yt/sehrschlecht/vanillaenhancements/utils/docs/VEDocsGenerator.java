@@ -1,4 +1,4 @@
-package yt.sehrschlecht.vanillaenhancements.utils;
+package yt.sehrschlecht.vanillaenhancements.utils.docs;
 
 import com.google.common.io.Files;
 import com.google.gson.annotations.Since;
@@ -45,6 +45,12 @@ public class VEDocsGenerator {
 
     private String generateDoc(VEModule module) {
         StringBuilder builder = new StringBuilder();
+        builder.append("---\n");
+        builder.append("title: ").append(module.getName()).append("\n");
+        builder.append("---\n");
+        if(module.getClass().isAnnotationPresent(Source.class)) {
+            builder.append("[Source](").append(module.getClass().getAnnotation(Source.class).value()).append(")\n");
+        }
         builder.append("# " + module.getName() + "\n\n");
         List<ConfigOption<?>> configOptions = getConfigOptions(module);
         builder.append("## Configuration\n\n");

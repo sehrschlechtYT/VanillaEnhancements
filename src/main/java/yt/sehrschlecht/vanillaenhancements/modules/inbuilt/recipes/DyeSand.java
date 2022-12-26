@@ -8,12 +8,14 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
+import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
 @Since(1.0)
+@Source("https://vanillatweaks.net")
 public class DyeSand extends RecipeModule {
     public BooleanOption dyeSandRed = new BooleanOption(true,
             "The amount of blocks that players will receive");

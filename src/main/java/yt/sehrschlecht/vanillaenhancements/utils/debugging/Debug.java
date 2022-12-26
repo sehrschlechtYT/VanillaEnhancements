@@ -3,7 +3,7 @@ package yt.sehrschlecht.vanillaenhancements.utils.debugging;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.utils.VEDocsGenerator;
+import yt.sehrschlecht.vanillaenhancements.utils.docs.VEDocsGenerator;
 
 import java.io.BufferedReader;
 import java.io.File;

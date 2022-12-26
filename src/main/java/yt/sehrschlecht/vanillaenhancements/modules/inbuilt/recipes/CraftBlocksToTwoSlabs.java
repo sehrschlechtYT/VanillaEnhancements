@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
+import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * @since 1.0
  */
 @Since(1.0)
+@Source("https://vanillatweaks.net")
 public class CraftBlocksToTwoSlabs extends RecipeModule {
     public MaterialListOption excludedBlocks = MaterialListOption.fromStrings(List.of(
             "OAK_PLANKS", "SPRUCE_PLANKS", "BIRCH_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS", "MANGROVE_PLANKS", "CRIMSON_PLANKS", "WARPED_PLANKS",

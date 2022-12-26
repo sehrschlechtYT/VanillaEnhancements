@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
+import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,6 +19,7 @@ import java.util.Collections;
  * @since 1.0
  */
 @Since(1.0)
+@Source("https://vanillatweaks.net")
 public class CraftSlabsToBlocks extends RecipeModule {
     public MaterialListOption excludedSlabs = new MaterialListOption(Collections.emptyList(),
             "Exclude recipes for slabs from being registered");
