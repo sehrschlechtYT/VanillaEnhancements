@@ -23,7 +23,7 @@ import java.util.List;
 @Since(1.0)
 public class CraftNetheriteGearWithoutDiamonds extends RecipeModule {
     public BooleanOption removeVanillaRecipes = new BooleanOption(true,
-            "Removes the vanilla grindstone recipes for netherite gear.");
+            "Removes the vanilla smithing table recipes for netherite gear.");
     public BooleanOption craftNetheriteSword = new BooleanOption(true,
             "Controls if the recipe for crafting a netherite sword is enabled.");
     public BooleanOption craftNetheriteShovel = new BooleanOption(true,
