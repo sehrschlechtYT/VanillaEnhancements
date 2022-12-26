@@ -67,6 +67,7 @@ public class CraftBlocksToTwoSlabs extends RecipeModule {
             case "DEEPSLATE_TILES" -> "DEEPSLATE_TILE_SLAB";
             case "POLISHED_BLACKSTONE_BRICKS" -> "POLISHED_BLACKSTONE_BRICK_SLAB";
             case "QUARTZ_BLOCK" -> "QUARTZ_SLAB";
+            case "QUARTZ" -> null;
             default -> {
                 try {
                     String blockName = block.name() + "_SLAB";
