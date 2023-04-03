@@ -46,6 +46,15 @@ public class MaterialListOption extends ConfigOption<List<Material>> {
     }
 
     @Override
+    public void set(List<Material> value) {
+        Config.getInstance().set(this, toStringList(value));
+    }
+
+    public List<String> toStringList(List<Material> list) {
+        return list.stream().map(Material::name).toList();
+    }
+
+    @Override
     public String getPossibleValues() {
         return "[List of materials](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)";
     }
