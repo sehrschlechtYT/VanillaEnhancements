@@ -13,15 +13,29 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
 public class Config {
-    private YamlDocument document;
+    private final YamlDocument document;
     private static Config instance;
+
+    /**
+     * Default messages
+     * If the value is null, the message will be removed when updating the config. This is useful for messages that have been removed.
+     */
+    public static Map<String, String> messages = new HashMap<>(){{
+        put("prefix", "&7[&cVE&7] ");
+        put("commandDisabled", "§cThis command is disabled!");
+        put("knockback.usage", "§cUsage: /knockback <percentage>");
+        put("knockback.invalidInput", "§cThe percentage must be between %min% and %max%!");
+        put("knockback.success", "Set the knockback multiplier to %percentage%%");
+    }};
 
     public Config(YamlDocument document) {
         instance = this;
@@ -31,6 +45,23 @@ public class Config {
 
     public void init() {
         Debug.CONFIG.log("Initializing config...");
+
+        Debug.MESSAGES.log("Initializing messages...");
+        Debug.MESSAGES.log("Found {} default messages.", messages.size());
+
+        for (Map.Entry<String, String> entry : messages.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            Debug.MESSAGES.log("Found message {} with default value \"{}\"", key, value);
+            if(!document.contains("msg." + key)) {
+                Debug.MESSAGES.log("Creating key msg.{} with default value {}", key, value);
+                document.set("msg." + key, value);
+            } else if(value == null) {
+                Debug.MESSAGES.log("Removing message {} because it is null.", key);
+                document.remove("msg." + key);
+            }
+        }
+
         for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
             Debug.CONFIG_MODULES.log("Initializing config for module {}...", module.getModuleKey());
             String key = module.getModuleKey().getKey();
@@ -86,7 +117,7 @@ public class Config {
 
     public String message(String key) {
         if(!document.contains("msg." + key)) {
-            Debug.CONFIG.log("Tried accessing non-existent message{}!", key);
+            Debug.CONFIG.log("Tried accessing non-existent message {}!", key);
             return "Missing translation!";
         }
         return ChatColor.translateAlternateColorCodes('&', document.getString("msg." + key));

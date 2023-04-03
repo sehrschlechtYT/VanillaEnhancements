@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import yt.sehrschlecht.vanillaenhancements.config.Config
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
@@ -54,20 +55,24 @@ class AttackKnockback : VEModule(
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (!enableCommand.get() || !isEnabled) {
-            sender.sendMessage("§cThis command is disabled!")
+            sender.sendMessage(Config.getInstance().message("commandDisabled"))
             return true
         }
         if (args?.size != 1) {
-            sender.sendMessage("§cUsage: /knockback <percentage>")
+            sender.sendMessage(Config.getInstance().message("knockback.usage"))
             return true
         }
         val input = args[0].toIntOrNull()
         if (input == null || input < percentage.min || input > percentage.max) {
-            sender.sendMessage("§cThe percentage must be between ${percentage.min} and ${percentage.max}!")
+            sender.sendMessage(Config.getInstance().message("knockback.invalidInput")
+                .replace("%min%", percentage.min.toString())
+                .replace("%max%", percentage.max.toString())
+            )
             return true
         }
         percentage.set(input)
-        sender.sendMessage("Set the knockback multiplier to $input%")
+        sender.sendMessage(Config.getInstance().message("knockback.success")
+            .replace("%percentage%", input.toString()))
         return true
     }
 

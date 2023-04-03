@@ -21,6 +21,7 @@ public class Debug {
     public final static Component CONFIG = new Component(ComponentType.CONFIG);
     public final static Component CONFIG_OPTIONS = new Component(ComponentType.CONFIG_OPTIONS);
     public final static Component CONFIG_MODULES = new Component(ComponentType.CONFIG_MODULES);
+    public final static Component MESSAGES = new Component(ComponentType.MESSAGES);
     public final static Component MODULES = new Component(ComponentType.MODULES);
     public final static Component TICK_SERVICES = new Component(ComponentType.TICK_SERVICES);
     public final static Component RECIPES = new Component(ComponentType.RECIPES);
@@ -113,6 +114,7 @@ public class Debug {
         CONFIG("[Config]"),
         CONFIG_OPTIONS("[Config Options]"),
         CONFIG_MODULES("[Config Modules]"),
+        MESSAGES("[Messages]"),
         MODULES("[Modules]"),
         TICK_SERVICES("[TickServices]"),
         RECIPES("[Recipes]"),
