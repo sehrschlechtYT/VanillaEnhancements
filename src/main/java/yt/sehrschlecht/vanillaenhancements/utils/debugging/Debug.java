@@ -19,6 +19,7 @@ import java.util.logging.Level;
  */
 public class Debug {
     public final static Component CONFIG = new Component(ComponentType.CONFIG);
+    public final static Component CONFIG_COMMENTS = new Component(ComponentType.CONFIG_COMMENTS);
     public final static Component CONFIG_OPTIONS = new Component(ComponentType.CONFIG_OPTIONS);
     public final static Component CONFIG_MODULES = new Component(ComponentType.CONFIG_MODULES);
     public final static Component MESSAGES = new Component(ComponentType.MESSAGES);
@@ -112,6 +113,7 @@ public class Debug {
 
     public enum ComponentType {
         CONFIG("[Config]"),
+        CONFIG_COMMENTS("[Config Comments]"),
         CONFIG_OPTIONS("[Config Options]"),
         CONFIG_MODULES("[Config Modules]"),
         MESSAGES("[Messages]"),

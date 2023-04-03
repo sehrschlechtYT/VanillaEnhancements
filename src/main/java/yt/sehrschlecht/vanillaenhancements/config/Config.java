@@ -51,10 +51,10 @@ public class Config {
             String key = entry.getKey();
             String value = entry.getValue();
             Debug.MESSAGES.log("Found message {} with default value \"{}\"", key, value);
-            if(!document.contains("msg." + key)) {
+            if (!document.contains("msg." + key)) {
                 Debug.MESSAGES.log("Creating key msg.{} with default value {}", key, value);
                 document.set("msg." + key, value);
-            } else if(value == null) {
+            } else if (value == null) {
                 Debug.MESSAGES.log("Removing message {} because it is null.", key);
                 document.remove("msg." + key);
             }
@@ -68,24 +68,28 @@ public class Config {
                 Debug.CONFIG.log("Creating key {}.enabled", key);
                 document.set(key + ".enabled", false);
             }
+            Debug.CONFIG_COMMENTS.log("Checking comments for module {}...", key);
             if (module.getDescription() != null && !module.getDescription().isBlank()) {
+                Debug.CONFIG_COMMENTS.log("Module {} has a description.", key);
                 Block<?> block = document.getBlock(key);
                 if (block.getComments() != null && block.getComments().stream().anyMatch(c -> c.trim().equalsIgnoreCase(module.getDescription().trim()))) {
+                    Debug.CONFIG_COMMENTS.log("Skipping comment for module {} because it already exists.", key);
                     continue;
                 }
-                block.removeComments();
-                block.addComment(" " + module.getDescription());
+                block.setComments(List.of(" " + module.getDescription()));
+                Debug.CONFIG_COMMENTS.log("Added comment for module {}.", key);
             }
             boolean found = false;
             for (ConfigOption<?> option : getOptions(module)) {
                 found = true;
-                if(!document.contains(key + "." + option.getKey())) {
-                    Debug.CONFIG.log("Creating key {}.{} with default value {}", key, option.getKey(), option.getDefaultValue());
+                if (!document.contains(key + "." + option.getKey())) {
+                    Debug.CONFIG.log("Creating key {}.{} with default value \"{}\".", key, option.getKey(), option.getDefaultValue());
                     option.reset();
+                    Debug.CONFIG_COMMENTS.log("Checking comments for option {}...", option.toPath());
                     Block<?> block = document.getBlock(option.toPath());
                     if (option.getDescription() != null && !option.getDescription().isBlank()) {
-                        block.removeComments();
-                        block.addComment(" " + option.getDescription());
+                        block.setComments(List.of(" " + option.getDescription()));
+                        Debug.CONFIG_COMMENTS.log("Added comment for option {}.", option.toPath());
                     }
                 }
             }
@@ -127,7 +131,7 @@ public class Config {
     }
 
     public String message(String key) {
-        if(!document.contains("msg." + key)) {
+        if (!document.contains("msg." + key)) {
             Debug.CONFIG.log("Tried accessing non-existent message {}!", key);
             return "Missing translation!";
         }
@@ -164,7 +168,7 @@ public class Config {
             }
             Debug.CONFIG_OPTIONS.log("Checking field {}...", field.getName());
             Debug.CONFIG_OPTIONS.log("Type: {}, Assignable: {}", field.getType(), ConfigOption.class.isAssignableFrom(field.getType()));
-            if(ConfigOption.class.isAssignableFrom(field.getType())) {
+            if (ConfigOption.class.isAssignableFrom(field.getType())) {
                 try {
                     ConfigOption<?> option;
                     if (isKotlinObject) {

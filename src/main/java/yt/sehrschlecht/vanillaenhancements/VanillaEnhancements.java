@@ -109,9 +109,6 @@ public final class VanillaEnhancements extends JavaPlugin {
         new Config(configuration).init();
     }
 
-
-
-
     public void registerModules() {
         moduleRegistry = new ModuleRegistry();
         for (VEModule module : inbuiltModules) {
@@ -129,7 +126,7 @@ public final class VanillaEnhancements extends JavaPlugin {
         return plugin;
     }
 
-    public static String getPrefix() {
+    public static String getPrefix() { // ToDo: Currently unused
         return Config.getInstance().message("prefix");
     }
 
