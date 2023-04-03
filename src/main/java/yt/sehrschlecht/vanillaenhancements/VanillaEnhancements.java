@@ -121,11 +121,6 @@ public final class VanillaEnhancements extends JavaPlugin {
         }
     }
 
-    @Override
-    public void onDisable() {
-
-    }
-
     public static VanillaEnhancements getPlugin() {
         return plugin;
     }

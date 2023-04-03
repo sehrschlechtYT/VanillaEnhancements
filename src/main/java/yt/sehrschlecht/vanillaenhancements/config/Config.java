@@ -65,11 +65,6 @@ public class Config {
         for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
             Debug.CONFIG_MODULES.log("Initializing config for module {}...", module.getModuleKey());
             String key = module.getModuleKey().getKey();
-            //Debug.CONFIG_MODULES.log("Module {} does{} have a config enabled key.", key, document.contains(key + ".enabled") ? "" : " not");
-            /*if (!document.contains(key + ".enabled")) { // ToDo replace with an option
-                Debug.CONFIG.log("Creating key {}.enabled", key);
-                document.set(key + ".enabled", false);
-            }*/
             boolean found = false;
             for (ConfigOption<?> option : getOptions(module)) {
                 found = true;
@@ -196,7 +191,7 @@ public class Config {
         }
         for (Field field : fields) {
             //check if field is public
-            if(!isKotlinObject && !Modifier.isPublic(field.getModifiers())) {
+            if (!isKotlinObject && !Modifier.isPublic(field.getModifiers())) {
                 Debug.CONFIG_OPTIONS.log("Field {} is not public, skipping...", field.getName());
                 continue;
             }
