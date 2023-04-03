@@ -53,7 +53,7 @@ public class VEDocsGenerator {
             builder.append(module.getDescription()).append("\n");
         }
         if (module.getClass().isAnnotationPresent(Source.class)) {
-            builder.append("[Idea Source](").append(module.getClass().getAnnotation(Source.class).value()).append(")\n");
+            builder.append("Idea Source: ").append(module.getClass().getAnnotation(Source.class).value()).append("\n");
         }
         builder.append("# " + module.getName() + "\n\n");
         List<ConfigOption<?>> configOptions = getConfigOptions(module);

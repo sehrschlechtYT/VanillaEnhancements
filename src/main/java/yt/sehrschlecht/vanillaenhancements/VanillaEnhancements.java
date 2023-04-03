@@ -13,6 +13,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.AlwaysFlying;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.AttackKnockback;
+import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.BasaltGenReplace;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes.*;
 import yt.sehrschlecht.vanillaenhancements.recipes.RecipeManager;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
@@ -78,7 +79,8 @@ public final class VanillaEnhancements extends JavaPlugin {
 
                 // 23w13a_or_b modules
                 new AttackKnockback(),
-                new AlwaysFlying()
+                new AlwaysFlying(),
+                new BasaltGenReplace()
         );
 
         createConfig();

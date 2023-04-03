@@ -9,12 +9,14 @@ import org.bukkit.event.entity.EntityToggleGlideEvent
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
+import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
 @Since(1.0)
+@Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
 class AlwaysFlying : VEModule(
     "Makes all entities always fly/glide like with an elytra.",
 ) {

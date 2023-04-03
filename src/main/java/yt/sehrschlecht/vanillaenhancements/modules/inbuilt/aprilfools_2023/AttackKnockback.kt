@@ -11,14 +11,15 @@ import yt.sehrschlecht.vanillaenhancements.config.Config
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
+import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-@Suppress("MemberVisibilityCanBePrivate")
 @Since(1.0)
+@Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
 class AttackKnockback : VEModule(
     "Multiplies the knockback of attacks by a percentage",
 ), CommandExecutor {

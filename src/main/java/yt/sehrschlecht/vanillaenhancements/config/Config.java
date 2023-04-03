@@ -3,6 +3,7 @@ package yt.sehrschlecht.vanillaenhancements.config;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.block.Block;
 import kotlin.Metadata;
+import kotlin.reflect.KProperty;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
@@ -74,10 +75,10 @@ public class Config {
                 Block<?> block = document.getBlock(key);
                 if (block.getComments() != null && block.getComments().stream().anyMatch(c -> c.trim().equalsIgnoreCase(module.getDescription().trim()))) {
                     Debug.CONFIG_COMMENTS.log("Skipping comment for module {} because it already exists.", key);
-                    continue;
+                } else {
+                    block.setComments(List.of(" " + module.getDescription()));
+                    Debug.CONFIG_COMMENTS.log("Added comment for module {}.", key);
                 }
-                block.setComments(List.of(" " + module.getDescription()));
-                Debug.CONFIG_COMMENTS.log("Added comment for module {}.", key);
             }
             boolean found = false;
             for (ConfigOption<?> option : getOptions(module)) {
@@ -152,13 +153,15 @@ public class Config {
         Debug.CONFIG_OPTIONS.log("Getting options for module {}...", module.getModuleKey());
         List<ConfigOption<?>> options = new ArrayList<>();
         Class<?> moduleClass = module.getClass();
-        List<Field> fields;
+        Set<Field> fields;
+        Map<Field, KProperty<?>> kotlinFields = null;
         boolean isKotlinObject = moduleClass.isAnnotationPresent(Metadata.class);
         if (isKotlinObject) {
             Debug.CONFIG_OPTIONS.log("Module {} seems to be a Kotlin object, using Kotlin reflection...", module.getModuleKey());
-            fields = KotlinConfigHelper.Companion.getFields(module);
+            kotlinFields = KotlinConfigHelper.Companion.getFields(module.getClass());
+            fields = kotlinFields.keySet();
         } else {
-            fields = List.of(moduleClass.getDeclaredFields());
+            fields = Set.of(moduleClass.getDeclaredFields());
         }
         for (Field field : fields) {
             //check if field is public
@@ -172,7 +175,7 @@ public class Config {
                 try {
                     ConfigOption<?> option;
                     if (isKotlinObject) {
-                        option = (ConfigOption<?>) KotlinConfigHelper.Companion.getFieldValue(module, field);
+                        option = (ConfigOption<?>) KotlinConfigHelper.Companion.getFieldValue(kotlinFields.get(field), module);
                         if (option == null) {
                             Debug.CONFIG_OPTIONS.log("Kotlin field {} is null, skipping...", field.getName());
                             continue;
