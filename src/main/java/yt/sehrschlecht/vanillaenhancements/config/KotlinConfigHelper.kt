@@ -13,12 +13,20 @@ import kotlin.reflect.full.superclasses
  */
 class KotlinConfigHelper {
     companion object {
-        // ToDo this is not a permanent solution
         private fun getFields(clazz: KClass<*>): Map<Field, KProperty<*>> {
             val fields = mutableMapOf<Field, KProperty<*>>()
-            fields.putAll(clazz.declaredMemberProperties.map { Pair<Field, KProperty<*>>(clazz.java.getDeclaredField(it.name), it) })
-            if (clazz.superclasses.isNotEmpty()) {
-                fields.putAll(getFields(clazz.superclasses.first()))
+            val classFields = mutableListOf<Map<Field, KProperty<*>>>()
+            var currentClass: KClass<*>? = clazz
+            while (currentClass != null && currentClass != Any::class) {
+                classFields.add(currentClass.declaredMemberProperties.associateBy {
+                    currentClass?.java?.getDeclaredField(
+                        it.name
+                    ) ?: throw IllegalStateException("Cannot get field for property ${it.name}")
+                })
+                currentClass = currentClass.superclasses.firstOrNull()
+            }
+            for (classField in classFields.reversed()) {
+                fields.putAll(classField)
             }
             return fields
         }

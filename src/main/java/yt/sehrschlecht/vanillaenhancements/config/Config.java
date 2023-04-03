@@ -174,15 +174,25 @@ public class Config {
         Debug.CONFIG_OPTIONS.log("Getting options for module {}...", module.getModuleKey());
         List<ConfigOption<?>> options = new ArrayList<>();
         Class<?> moduleClass = module.getClass();
-        Set<Field> fields;
+        List<Field> fields;
         Map<Field, KProperty<?>> kotlinFields = null;
         boolean isKotlinObject = moduleClass.isAnnotationPresent(Metadata.class);
         if (isKotlinObject) {
             Debug.CONFIG_OPTIONS.log("Module {} seems to be a Kotlin object, using Kotlin reflection...", module.getModuleKey());
             kotlinFields = KotlinConfigHelper.Companion.getFields(module.getClass());
-            fields = kotlinFields.keySet();
+            fields = new ArrayList<>(kotlinFields.keySet());
         } else {
-            fields = Set.of(moduleClass.getDeclaredFields());
+            List<List<Field>> classFields = new ArrayList<>();
+            fields = new ArrayList<>();
+            Class<?> currentClass = moduleClass;
+            while (currentClass != null && currentClass != Object.class) { // search recursively for fields
+                classFields.add(Arrays.asList(currentClass.getDeclaredFields()));
+                currentClass = currentClass.getSuperclass();
+            }
+            Collections.reverse(classFields); // superclass fields first (e.g. "enable" field)
+            for (List<Field> classField : classFields) {
+                fields.addAll(classField);
+            }
         }
         for (Field field : fields) {
             //check if field is public
@@ -208,11 +218,11 @@ public class Config {
                     option.setKey(field.getName());
                     options.add(option);
                     Debug.CONFIG_OPTIONS.log("Found option {} with default value {}.", field.getName(), option.getDefaultValue());
-                } catch (Exception e) {
+                } catch (Exception exception) {
                     VanillaEnhancements.getPlugin().getLogger().severe(
                             "An error occurred while getting option %s from module %s:".formatted(field.getName(), module.getModuleKey().getKey())
                     );
-                    e.printStackTrace();
+                    exception.printStackTrace();
                 }
             }
         }

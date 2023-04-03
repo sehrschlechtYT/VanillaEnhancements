@@ -62,10 +62,9 @@ public class Debug {
     }
 
     public void warn(String message, ComponentType componentType, Object... args) {
-        if(args != null && args.length > 0) {
-            for (int i = 0; i < args.length; i++) {
-                Object arg = args[i];
-                if(arg == null) continue;
+        if (args != null) {
+            for (Object arg : args) {
+                if (arg == null) continue;
                 message = message.replaceFirst("\\{}", arg.toString());
             }
         }
@@ -73,10 +72,9 @@ public class Debug {
     }
 
     public void log(String message, ComponentType componentType, Object... args) {
-        if(args != null && args.length > 0) {
-            for (int i = 0; i < args.length; i++) {
-                Object arg = args[i];
-                if(arg == null) continue;
+        if (args != null) {
+            for (Object arg : args) {
+                if (arg == null) continue;
                 message = message.replaceFirst("\\{}", arg.toString());
             }
         }
