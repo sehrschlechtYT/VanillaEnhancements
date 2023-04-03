@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import kotlin.Metadata;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
@@ -96,9 +97,17 @@ public class Config {
         Debug.CONFIG_OPTIONS.log("Getting options for module {}...", module.getModuleKey());
         List<ConfigOption<?>> options = new ArrayList<>();
         Class<?> moduleClass = module.getClass();
-        for (Field field : moduleClass.getDeclaredFields()) {
+        List<Field> fields;
+        boolean isKotlinObject = moduleClass.isAnnotationPresent(Metadata.class);
+        if (isKotlinObject) {
+            Debug.CONFIG_OPTIONS.log("Module {} seems to be a Kotlin object, using Kotlin reflection...", module.getModuleKey());
+            fields = KotlinConfigHelper.Companion.getFields(module);
+        } else {
+            fields = List.of(moduleClass.getDeclaredFields());
+        }
+        for (Field field : fields) {
             //check if field is public
-            if(!Modifier.isPublic(field.getModifiers())) {
+            if(!isKotlinObject && !Modifier.isPublic(field.getModifiers())) {
                 Debug.CONFIG_OPTIONS.log("Field {} is not public, skipping...", field.getName());
                 continue;
             }
@@ -106,10 +115,19 @@ public class Config {
             Debug.CONFIG_OPTIONS.log("Type: {}, Assignable: {}", field.getType(), ConfigOption.class.isAssignableFrom(field.getType()));
             if(ConfigOption.class.isAssignableFrom(field.getType())) {
                 try {
-                    ConfigOption<?> option = (ConfigOption<?>) field.get(module);
+                    ConfigOption<?> option;
+                    if (isKotlinObject) {
+                        option = (ConfigOption<?>) KotlinConfigHelper.Companion.getFieldValue(module, field);
+                        if (option == null) {
+                            Debug.CONFIG_OPTIONS.log("Kotlin field {} is null, skipping...", field.getName());
+                            continue;
+                        }
+                    } else {
+                        option = (ConfigOption<?>) field.get(module);
+                    }
                     option.setModuleKey(module.getModuleKey());
                     option.setKey(field.getName());
-                    options.add((ConfigOption<?>) field.get(module));
+                    options.add(option);
                     Debug.CONFIG_OPTIONS.log("Found option {} with default value {}.", field.getName(), option.getDefaultValue());
                 } catch (Exception e) {
                     VanillaEnhancements.getPlugin().getLogger().severe(

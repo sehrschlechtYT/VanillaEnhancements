@@ -89,6 +89,7 @@ public class Debug {
 
     public void reload() {
         Config.getInstance().reload();
+        // ToDo reload debug settings too
     }
 
     public void generateDocs() throws IOException {
