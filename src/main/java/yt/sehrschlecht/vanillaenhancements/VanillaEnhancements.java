@@ -11,9 +11,7 @@ import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
-import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.AlwaysFlying;
-import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.AttackKnockback;
-import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.BasaltGenReplace;
+import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.*;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes.*;
 import yt.sehrschlecht.vanillaenhancements.recipes.RecipeManager;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
@@ -76,11 +74,15 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new MoreBlackstoneRecipes(),
                 new SmeltConcretePowderToGlass(),
                 new CraftNetheriteGearWithoutDiamonds(),
+                new IceGenReplace(),
 
                 // 23w13a_or_b modules
                 new AttackKnockback(),
                 new AlwaysFlying(),
-                new BasaltGenReplace()
+                new BasaltGenReplace(),
+                new CobblestoneGenReplace(),
+                new ObsidianGenReplace(),
+                new StoneGenReplace()
         );
 
         createConfig();

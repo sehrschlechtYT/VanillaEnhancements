@@ -9,18 +9,18 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
  * @since 1.0
  */
 @Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
-class BasaltGenReplace : GenReplaceModule(
-    blockToReplace = Material.BASALT,
-    description = "Replaces generated basalt (lava + soul soil + blue ice) with the set block",
+class CobblestoneGenReplace : GenReplaceModule(
+    blockToReplace = Material.COBBLESTONE,
+    description = "Replaces generated cobblestone (water + lava) with the set block",
     since = "1.0",
 ) {
 
     override fun getKey(): String {
-        return "basalt_gen_replace"
+        return "cobblestone_gen_replace"
     }
 
     override fun getName(): String {
-        return "Replace generated basalt"
+        return "Replace generated cobblestone"
     }
 
 }

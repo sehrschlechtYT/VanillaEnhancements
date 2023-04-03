@@ -14,12 +14,14 @@ abstract class GenReplaceModule(
     description: String? = null,
     since: String? = null
 ) : VEModule(description, since) {
+
     val block = MaterialOption(Material.BASALT, "Block to replace generated basalt with")
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     fun onBlockForm(event: BlockFormEvent) {
         if (event.newState.type == blockToReplace) {
             event.newState.type = block.get()
         }
     }
+
 }
