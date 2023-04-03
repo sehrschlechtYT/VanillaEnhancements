@@ -11,6 +11,7 @@ import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
+import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.AlwaysFlying;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.AttackKnockback;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes.*;
 import yt.sehrschlecht.vanillaenhancements.recipes.RecipeManager;
@@ -76,7 +77,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new CraftNetheriteGearWithoutDiamonds(),
 
                 // 23w13a_or_b modules
-                new AttackKnockback()
+                new AttackKnockback(),
+                new AlwaysFlying()
         );
 
         createConfig();
@@ -113,7 +115,11 @@ public final class VanillaEnhancements extends JavaPlugin {
     public void registerModules() {
         moduleRegistry = new ModuleRegistry();
         for (VEModule module : inbuiltModules) {
-            moduleRegistry.registerModule(module);
+            if (moduleRegistry.registerModule(module)) {
+                Debug.MODULES.log("Registered module {}", module.getName());
+            } else {
+                getLogger().warning("Failed to register module " + module.getName() + "!");
+            }
         }
     }
 

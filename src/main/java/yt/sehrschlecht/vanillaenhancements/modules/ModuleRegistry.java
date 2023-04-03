@@ -21,12 +21,12 @@ import java.util.logging.Logger;
  * @since 1.0
  */
 public class ModuleRegistry {
-    private List<VEModule> enabledModules = new ArrayList<>();
-    private List<VEModule> registeredModules = new ArrayList<>();
-    private Logger logger = VanillaEnhancements.getPlugin().getLogger();
+    private final List<VEModule> enabledModules = new ArrayList<>();
+    private final List<VEModule> registeredModules = new ArrayList<>();
+    private final Logger logger = VanillaEnhancements.getPlugin().getLogger();
 
     public boolean registerModule(VEModule module) {
-        boolean inbuilt = (module.getModuleKey().getNamespace().equalsIgnoreCase(VanillaEnhancements.getPlugin().getName()));
+        boolean inbuilt = module.getModuleKey().getNamespace().equalsIgnoreCase(VanillaEnhancements.getPlugin().getName());
         Debug.MODULES.log("Registering {} module {}...", inbuilt ? "inbuilt" : "external", inbuilt ? module.getModuleKey().getKey() : module.getModuleKey());
         registeredModules.add(module);
         module.initialize();

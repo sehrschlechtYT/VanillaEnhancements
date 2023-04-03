@@ -32,7 +32,9 @@ public class Config {
     public void init() {
         Debug.CONFIG.log("Initializing config...");
         for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
+            Debug.CONFIG_MODULES.log("Initializing config for module {}...", module.getModuleKey());
             String key = module.getModuleKey().getKey();
+            Debug.CONFIG_MODULES.log("Module {} does{} have a config enabled key.", key, document.contains(key + ".enabled") ? "" : " not");
             if(!document.contains(key + ".enabled")) {
                 Debug.CONFIG.log("Creating key {}.enabled", key);
                 document.set(key + ".enabled", false);
@@ -53,11 +55,12 @@ public class Config {
     }
 
     public void reload() {
-        VanillaEnhancements.getPlugin().getLogger().info("Reloading config...");
+        VanillaEnhancements.getPlugin().getLogger().info("Reloading config (experimental)...");
+        VanillaEnhancements.getPlugin().getLogger().info("Warning: This will not enable/disable modules! Only options will be reloaded!");
         try {
             document.reload();
         } catch (IOException e) {
-            VanillaEnhancements.getPlugin().getLogger().severe("Could not reload config!");
+            VanillaEnhancements.getPlugin().getLogger().severe("Could not reload config:");
             e.printStackTrace();
         }
         Debug.CONFIG_OPTIONS.log("Reloading config options...");
