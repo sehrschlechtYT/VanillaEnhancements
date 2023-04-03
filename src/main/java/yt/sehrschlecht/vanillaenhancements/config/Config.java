@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.block.Block;
 import kotlin.Metadata;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
@@ -12,10 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -66,9 +64,17 @@ public class Config {
             Debug.CONFIG_MODULES.log("Initializing config for module {}...", module.getModuleKey());
             String key = module.getModuleKey().getKey();
             Debug.CONFIG_MODULES.log("Module {} does{} have a config enabled key.", key, document.contains(key + ".enabled") ? "" : " not");
-            if(!document.contains(key + ".enabled")) {
+            if (!document.contains(key + ".enabled")) {
                 Debug.CONFIG.log("Creating key {}.enabled", key);
                 document.set(key + ".enabled", false);
+            }
+            if (module.getDescription() != null && !module.getDescription().isBlank()) {
+                Block<?> block = document.getBlock(key);
+                if (block.getComments() != null && block.getComments().stream().anyMatch(c -> c.trim().equalsIgnoreCase(module.getDescription().trim()))) {
+                    continue;
+                }
+                block.removeComments();
+                block.addComment(" " + module.getDescription());
             }
             boolean found = false;
             for (ConfigOption<?> option : getOptions(module)) {
@@ -76,9 +82,14 @@ public class Config {
                 if(!document.contains(key + "." + option.getKey())) {
                     Debug.CONFIG.log("Creating key {}.{} with default value {}", key, option.getKey(), option.getDefaultValue());
                     option.reset();
+                    Block<?> block = document.getBlock(option.toPath());
+                    if (option.getDescription() != null && !option.getDescription().isBlank()) {
+                        block.removeComments();
+                        block.addComment(" " + option.getDescription());
+                    }
                 }
             }
-            if(!found) {
+            if (!found) {
                 Debug.CONFIG.log("No options found for module {}.", module.getModuleKey());
             }
         }

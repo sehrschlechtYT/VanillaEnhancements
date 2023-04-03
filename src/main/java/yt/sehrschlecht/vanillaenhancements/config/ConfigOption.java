@@ -12,7 +12,7 @@ public abstract class ConfigOption<T> {
     protected String key;
     protected NamespacedKey moduleKey;
     protected final T defaultValue;
-    protected final String description; // ToDo add description as a comment to the config file
+    protected final String description;
 
     /**
      * @param defaultValue The default value of the option.
