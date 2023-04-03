@@ -86,7 +86,7 @@ public class Debug {
             } catch (Exception e) {
                 VanillaEnhancements.getPlugin().getLogger().log(Level.SEVERE, "Failed to read debug file!", e);
             }
-            logMessage("Enabled debug components: " + String.join(", ", enabledComponents.stream().map(Enum::name).toList()));
+            logMessage("Enabled debug components: " + (enabledComponents.isEmpty() ? "None" : String.join(", ", enabledComponents.stream().map(Enum::name).toList())));
         }
     }
 
