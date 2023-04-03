@@ -115,11 +115,8 @@ public final class VanillaEnhancements extends JavaPlugin {
     public void registerModules() {
         moduleRegistry = new ModuleRegistry();
         for (VEModule module : inbuiltModules) {
-            if (moduleRegistry.registerModule(module)) {
-                Debug.MODULES.log("Registered module {}", module.getName());
-            } else {
-                getLogger().warning("Failed to register module " + module.getName() + "!");
-            }
+            moduleRegistry.registerModule(module);
+            Debug.MODULES.log("Registered module {}", module.getName());
         }
     }
 
