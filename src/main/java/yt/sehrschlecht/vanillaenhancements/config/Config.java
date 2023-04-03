@@ -70,7 +70,13 @@ public class Config {
         return instance;
     }
 
-    public void set(ConfigOption option, Object value) {
+    public void set(ConfigOption<?> option, Object value) {
+        try {
+            document.reload();
+        } catch (IOException e) {
+            Debug.CONFIG.log("An error occurred while reloading the config:");
+            Debug.CONFIG.log(e.getMessage());
+        }
         document.set(option.toPath(), value);
         save();
     }

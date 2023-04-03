@@ -48,6 +48,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
             sender.sendMessage("§cDebugging is disabled!");
             return true;
         }
+        // ToDo make pages such as recipes paginated
         if(args.length == 1) {
             if(args[0].equalsIgnoreCase("reload")) {
                 sender.sendMessage("§7§oWarning: This command can have unexpected side effects!" +

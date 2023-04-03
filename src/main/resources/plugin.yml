@@ -9,3 +9,8 @@ commands:
   ve-debug:
     description: Debug command for VanillaEnhancements
     permission: ve.debug
+  knockback:
+    description: Sets the knockback for the attack_knockback module
+    permission: ve.knockback
+    aliases:
+      - kb

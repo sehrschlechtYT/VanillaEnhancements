@@ -83,8 +83,6 @@ public class RecipeManager {
     }
 
     public void clearRecipes(VEModule module) {
-        recipes.stream()
-                .filter(pair -> pair.getFirst().equals(module.getModuleKey()))
-                .forEach(recipes::remove);
+        recipes.removeIf(pair -> pair != null && pair.getFirst().equals(module.getModuleKey()));
     }
 }
