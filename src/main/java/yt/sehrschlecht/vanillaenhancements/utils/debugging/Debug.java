@@ -43,13 +43,13 @@ public class Debug {
 
     public void log(String message, ComponentType componentType) {
         if (notInitialized()) return;
-        if (!enabledComponents.contains(componentType)) return;
+        if (!componentEnabled(componentType)) return;
         logMessage(componentType.getPrefix() + message);
     }
 
     public void warn(String message, ComponentType componentType) {
         if (notInitialized()) return;
-        if (!enabledComponents.contains(componentType)) return;
+        if (!componentEnabled(componentType)) return;
         warn(componentType.getPrefix() + message);
     }
 
@@ -59,6 +59,10 @@ public class Debug {
             return true;
         }
         return false;
+    }
+
+    public boolean componentEnabled(ComponentType componentType) {
+        return enabledComponents.contains(componentType);
     }
 
     public void warn(String message, ComponentType componentType, Object... args) {
@@ -143,6 +147,10 @@ public class Debug {
         CONFIG_COMMENTS("[Config Comments]"),
         CONFIG_OPTIONS("[Config Options]"),
         CONFIG_MODULES("[Config Modules]"),
+        /**
+         * This component is not used to log anything, but to delete the config on startup.
+         */
+        DELETE_CONFIG_ON_STARTUP(null),
         MESSAGES("[Messages]"),
         MODULES("[Modules]"),
         TICK_SERVICES("[TickServices]"),
@@ -176,4 +184,5 @@ public class Debug {
             VanillaEnhancements.getPlugin().getDebug().warn(message, type, args);
         }
     }
+
 }

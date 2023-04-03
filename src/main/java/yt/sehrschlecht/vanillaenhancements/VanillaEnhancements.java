@@ -45,6 +45,17 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         debug = new Debug();
 
+        if (debug.isEnabled() && debug.componentEnabled(Debug.ComponentType.DELETE_CONFIG_ON_STARTUP)) {
+            getLogger().warning("Attempting to delete config.yml (this behaviour was enabled in the .debug file)");
+            File configFile = new File(getDataFolder(), "config.yml");
+            if (configFile.exists()) {
+                configFile.delete();
+                getLogger().warning("Successfully deleted config.yml");
+            } else {
+                getLogger().warning("config.yml does not exist (yet), skipping deletion");
+            }
+        }
+
         ExternalAPIs.init();
 
         recipeManager = new RecipeManager();
