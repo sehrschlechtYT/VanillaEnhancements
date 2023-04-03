@@ -44,20 +44,20 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
      */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(!debug().isEnabled()) {
+        if (!debug().isEnabled()) {
             sender.sendMessage("§cDebugging is disabled!");
             return true;
         }
         // ToDo make pages such as recipes paginated
-        if(args.length == 1) {
-            if(args[0].equalsIgnoreCase("reload")) {
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("reload")) {
                 sender.sendMessage("§7§oWarning: This command can have unexpected side effects!" +
                         " Restart your server if you want to be sure that everything is working as expected.");
                 sender.sendMessage("§aReloading the config...");
                 debug().reload();
                 sender.sendMessage("§aSuccessfully reloaded the config!");
                 return true;
-            } else if(args[0].equalsIgnoreCase("generate-docs")) {
+            } else if (args[0].equalsIgnoreCase("generate-docs")) {
                 sender.sendMessage("§aGenerating docs...");
                 try {
                     debug().generateDocs();
@@ -68,7 +68,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                     throw new RuntimeException(e);
                 }
                 return true;
-            } else if(args[0].equalsIgnoreCase("modules")) {
+            } else if (args[0].equalsIgnoreCase("modules")) {
                 sender.sendMessage("-------------------------------------------------");
                 sender.sendMessage("§l§nModules:");
                 for (VEModule module : VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules()) {
@@ -83,16 +83,16 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 }
                 sender.sendMessage("-------------------------------------------------");
                 return true;
-            } else if(args[0].equalsIgnoreCase("tickservices")) {
+            } else if (args[0].equalsIgnoreCase("tickservices")) {
                 sender.sendMessage("-------------------------------------------------");
                 sender.sendMessage("§l§nTick Services:");
-                if(VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServices().isEmpty()) {
+                if (VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServices().isEmpty()) {
                     sender.sendMessage("§cNo tick services registered!");
                 } else {
                     for (TickService tickService : VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServices()) {
                         boolean enabled = tickService.moduleInstance().isEnabled();
                         TextComponent component = new TextComponent("§7- " + (enabled ? "§a" : "§c") + tickService.method().getName());
-                        String serviceKey = tickService.method().getDeclaringClass().getName() + "#" + tickService.method().getName();
+                        String serviceKey = tickService.method().getDeclaringClass().getSimpleName() + "#" + tickService.method().getName();
                         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ve-debug tickservice " + serviceKey));
                         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
                                 new TextComponent("§7Key: §e" + serviceKey + "\n"),
@@ -103,11 +103,11 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                     sender.sendMessage("-------------------------------------------------");
                 }
                 return true;
-            } else if(args[0].equalsIgnoreCase("recipes")) {
+            } else if (args[0].equalsIgnoreCase("recipes")) {
                 sender.sendMessage("-------------------------------------------------");
                 sender.sendMessage("§l§nRecipes:");
                 List<Pair<NamespacedKey, VERecipe>> recipes = VanillaEnhancements.getPlugin().getRecipeManager().getRecipes();
-                if(recipes.isEmpty()) {
+                if (recipes.isEmpty()) {
                     sender.sendMessage("§cNo recipes registered!");
                 } else {
                     for (Pair<NamespacedKey, VERecipe> pair : recipes) {
@@ -125,16 +125,16 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("-------------------------------------------------");
                 return true;
             }
-        } else if(args.length == 2) {
-            if(args[0].equalsIgnoreCase("module")) {
+        } else if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("module")) {
                 String moduleKey = args[1];
                 NamespacedKey key = NamespacedKey.fromString(moduleKey);
-                if(key == null) {
+                if (key == null) {
                     sender.sendMessage("§cInvalid module key!");
                     return true;
                 }
                 VEModule module = VanillaEnhancements.getPlugin().getModuleRegistry().getModule(key);
-                if(module == null) {
+                if (module == null) {
                     sender.sendMessage("§cModule not found!");
                     return true;
                 }
@@ -145,12 +145,12 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§7Key: §e" + module.getModuleKey().getKey());
                 sender.sendMessage("§7Enabled: " + (enabled ? "§a" : "§c") + enabled);
                 sender.sendMessage("§7Full class name: §e" + module.getClass().getName());
-                if(module.getClass().isAnnotationPresent(Since.class)) {
+                if (module.getClass().isAnnotationPresent(Since.class)) {
                     Since since = module.getClass().getAnnotation(Since.class);
                     sender.sendMessage("§7Since: §e" + since.value());
                 }
                 Plugin plugin = Bukkit.getPluginManager().getPlugin(module.getModuleKey().getNamespace());
-                if(plugin == null) {
+                if (plugin == null) {
                     sender.sendMessage("§7Plugin: §cNot found!");
                 } else {
                     TextComponent component = new TextComponent("§7Plugin: §e" + plugin.getName());
@@ -163,7 +163,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                     sender.spigot().sendMessage(component);
                 }
                 List<TickService> tickServices = VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServicesForModule(module);
-                if(tickServices.isEmpty()) {
+                if (tickServices.isEmpty()) {
                     sender.sendMessage("§7Tick services: §cNone");
                 } else {
                     for (TickService tickService : tickServices) {
@@ -179,7 +179,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 }
                 sender.sendMessage("-------------------------------------------------");
                 return true;
-            } else if(args[0].equalsIgnoreCase("tickservice")) {
+            } else if (args[0].equalsIgnoreCase("tickservice")) {
                 String serviceKey = args[1];
                 String className = serviceKey.split("#")[0];
                 String methodName = serviceKey.split("#")[1];
@@ -187,22 +187,46 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                         .filter(tickService -> tickService.method().getDeclaringClass().getSimpleName().equalsIgnoreCase(className))
                         .filter(tickService -> tickService.method().getName().equalsIgnoreCase(methodName))
                         .findFirst().orElse(null);
-                if(service == null) {
+                if (service == null) {
                     sender.sendMessage("§cTick service not found!");
                     return true;
                 }
                 boolean running = service.moduleInstance().isEnabled();
                 sender.sendMessage("-------------------------------------------------");
-                sender.sendMessage("§7Tick service: §e" + service.method().getName());
+                sender.sendMessage("§7Tick service: §e" + service.method().getDeclaringClass().getSimpleName() + "#" + service.method().getName());
                 sender.sendMessage("§7Execution interval: §e" + service.period());
                 sender.sendMessage("§7Execute now: §e" + service.shouldExecuteNow());
                 sender.sendMessage("§7Running: " + (running ? "§a" : "§c") + running);
+                TextComponent runComponent = new TextComponent("§a[Run now]");
+                runComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
+                        "/ve-debug runtickservice " + service.method().getDeclaringClass().getSimpleName() + "#" + service.method().getName()
+                ));
+                runComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                        new TextComponent("§9Click to run now")
+                }));
+                sender.spigot().sendMessage(runComponent);
                 sender.sendMessage("-------------------------------------------------");
                 return true;
-            } else if(args[0].equalsIgnoreCase("plugin")) {
+            } else if (args[0].equalsIgnoreCase("runtickservice")) {
+                String serviceKey = args[1];
+                String className = serviceKey.split("#")[0];
+                String methodName = serviceKey.split("#")[1];
+                TickService service = VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServices().stream()
+                        .filter(tickService -> tickService.method().getDeclaringClass().getSimpleName().equalsIgnoreCase(className))
+                        .filter(tickService -> tickService.method().getName().equalsIgnoreCase(methodName))
+                        .findFirst().orElse(null);
+                if (service == null) {
+                    sender.sendMessage("§cTick service not found!");
+                    return true;
+                }
+                sender.sendMessage("§aRunning tick service...");
+                service.run();
+                sender.sendMessage("§aSuccessfully ran tick service!");
+                return true;
+            } else if (args[0].equalsIgnoreCase("plugin")) {
                 String pluginName = args[1];
                 Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
-                if(plugin == null) {
+                if (plugin == null) {
                     sender.sendMessage("§cPlugin not found!");
                     return true;
                 }
@@ -221,17 +245,17 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§7Enabled: " + (plugin.isEnabled() ? "§a" : "§c") + plugin.isEnabled());
                 sender.sendMessage("-------------------------------------------------");
                 return true;
-            } else if(args[0].equalsIgnoreCase("recipe")) {
+            } else if (args[0].equalsIgnoreCase("recipe")) {
                 String recipeKey = args[1];
                 NamespacedKey key = NamespacedKey.fromString(recipeKey);
-                if(key == null) {
+                if (key == null) {
                     sender.sendMessage("§cInvalid recipe key!");
                     return true;
                 }
                 Pair<NamespacedKey, VERecipe> entry = VanillaEnhancements.getPlugin().getRecipeManager().getRecipes().stream()
                         .filter(pair -> pair.getSecond().key().equals(key))
                         .findFirst().orElse(null);
-                if(entry == null) {
+                if (entry == null) {
                     sender.sendMessage("§cRecipe not found!");
                     return true;
                 }
@@ -243,7 +267,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§7Registered: " + (registered ? "§a" : "§c") + registered);
                 sender.sendMessage("§7DiscoverItem: §e" + (recipe.discoverItem() == null ? "Not set" : recipe.discoverItem().toString()));
                 sender.sendMessage("§7Result: §e" + recipe.recipe().getResult().getType().name() + " x" + recipe.recipe().getResult().getAmount());
-                if(module == null) {
+                if (module == null) {
                     sender.sendMessage("§7Module: §cNot found!");
                 } else {
                     TextComponent moduleComponent = new TextComponent("§7Module: §e" + module.getName());
@@ -283,20 +307,20 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(!debug().isEnabled()) return null;
-        if(args.length == 1) {
-            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "plugin", "tickservices", "recipes", "recipe");
-        } else if(args.length == 2) {
-            if(args[0].equalsIgnoreCase("module")) {
+        if (!debug().isEnabled()) return null;
+        if (args.length == 1) {
+            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "runtickservice", "plugin", "tickservices", "recipes", "recipe");
+        } else if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("module")) {
                 return complete(args, 1, VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules().stream().map(VEModule::getModuleKey).map(Object::toString).toArray(String[]::new));
-            } else if(args[0].equalsIgnoreCase("tickservice")) {
+            } else if (args[0].equalsIgnoreCase("tickservice") || args[0].equalsIgnoreCase("runtickservice")) {
                 return complete(args, 1, VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServices().stream()
                         .map(TickService::method)
-                        .map(method -> method.getDeclaringClass().getName() + "#" + method.getName())
+                        .map(method -> method.getDeclaringClass().getSimpleName() + "#" + method.getName())
                         .toArray(String[]::new));
-            } else if(args[0].equalsIgnoreCase("plugin")) {
+            } else if (args[0].equalsIgnoreCase("plugin")) {
                 return complete(args, 1, Arrays.stream(Bukkit.getPluginManager().getPlugins()).map(Plugin::getName).toArray(String[]::new));
-            } else if(args[0].equalsIgnoreCase("recipe")) {
+            } else if (args[0].equalsIgnoreCase("recipe")) {
                 return complete(args, 1, VanillaEnhancements.getPlugin().getRecipeManager().getRecipes().stream()
                         .map(Pair::getSecond)
                         .map(VERecipe::key)

@@ -12,22 +12,16 @@ import java.util.*;
  * @since 1.0
  */
 public class TickServiceExecutor {
-    private List<TickService> tickServices = new ArrayList<>();
+    private final List<TickService> tickServices = new ArrayList<>();
 
     public void startTicking() {
         for (TickService tickService : tickServices) {
             VEModule instance = tickService.moduleInstance();
-            Method method = tickService.method();
             long period = tickService.period();
             boolean executeNow = tickService.shouldExecuteNow();
             Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
-                if(!instance.isEnabled()) return;
-                try {
-                    method.invoke(instance);
-                } catch (Exception e) {
-                    VanillaEnhancements.getPlugin().getLogger().severe("An error occurred while executing a tick service:");
-                    e.printStackTrace();
-                }
+                if (!instance.isEnabled()) return;
+                tickService.run();
             }, executeNow ? 0 : period, period);
         }
     }
