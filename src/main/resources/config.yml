@@ -4,10 +4,3 @@ recipe-discover-period: 60 #How often (in ticks) should the plugin check for new
 
 msg:
   prefix: "&7[&cVE&7] "
-
-unstrip_logs:
-  enabled: false
-  damageTools: true
-glow_sac_fishing:
-  enabled: false
-  chance: 0.01
