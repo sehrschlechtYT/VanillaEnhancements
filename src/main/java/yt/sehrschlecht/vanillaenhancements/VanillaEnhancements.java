@@ -93,7 +93,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new CobblestoneGenReplace(),
                 new ObsidianGenReplace(),
                 new StoneGenReplace(),
-                new IceGenReplace() // not in 23w13a_or_b but related to the other modules above
+                new IceGenReplace(), // not in 23w13a_or_b but related to the other modules above
+                new AlwaysThunder()
         );
 
         createConfig();

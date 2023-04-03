@@ -32,7 +32,7 @@ public class VEDocsGenerator {
         for (VEModule module : modules) {
             String doc = generateDoc(module);
             File file = new File(VanillaEnhancements.getPlugin().getDataFolder(), "docs/" + module.getModuleKey().getKey() + ".md");
-            if(!file.exists()) {
+            if (!file.exists()) {
                 try {
                     file.createNewFile();
                 } catch (Exception e) {
