@@ -27,7 +27,7 @@ public class Debug {
     public final static Component TICK_SERVICES = new Component(ComponentType.TICK_SERVICES);
     public final static Component RECIPES = new Component(ComponentType.RECIPES);
     public final static Component RECIPE_DISCOVERING = new Component(ComponentType.RECIPE_DISCOVERING);
-    public final static Component OTHER = new Component(ComponentType.OTHER);
+    public final static Component MISC = new Component(ComponentType.MISC);
 
     private final List<ComponentType> enabledComponents;
     private boolean enabled = false;
@@ -42,12 +42,34 @@ public class Debug {
     }
 
     public void log(String message, ComponentType componentType) {
-        if(VanillaEnhancements.getPlugin() == null || VanillaEnhancements.getPlugin().getDebug() == null) {
-            System.err.println("Warning: Debug.log() was called before VanillaEnhancements was initialized!");
-            return;
+        if (notInitialized()) return;
+        if (!enabledComponents.contains(componentType)) return;
+        logMessage(componentType.getPrefix() + message);
+    }
+
+    public void warn(String message, ComponentType componentType) {
+        if (notInitialized()) return;
+        if (!enabledComponents.contains(componentType)) return;
+        warn(componentType.getPrefix() + message);
+    }
+
+    private boolean notInitialized() {
+        if (VanillaEnhancements.getPlugin() == null || VanillaEnhancements.getPlugin().getDebug() == null) {
+            System.err.println("Warning: Debug.warn() was called before VanillaEnhancements was initialized! Debug messages are not being logged yet!");
+            return true;
         }
-        if(!enabledComponents.contains(componentType)) return;
-        VanillaEnhancements.getPlugin().getDebug().logMessage(componentType.getPrefix() + message);
+        return false;
+    }
+
+    public void warn(String message, ComponentType componentType, Object... args) {
+        if(args != null && args.length > 0) {
+            for (int i = 0; i < args.length; i++) {
+                Object arg = args[i];
+                if(arg == null) continue;
+                message = message.replaceFirst("\\{}", arg.toString());
+            }
+        }
+        warn(message, componentType);
     }
 
     public void log(String message, ComponentType componentType, Object... args) {
@@ -63,8 +85,13 @@ public class Debug {
 
     public Debug() {
         enabledComponents = new ArrayList<>();
+        loadDebugSettings();
+    }
+
+    private void loadDebugSettings() {
         File file = new File(VanillaEnhancements.getPlugin().getDataFolder(), ".debug");
         if (file.exists()) {
+            enabledComponents.clear();
             enabled = true;
             warn("----------------------------------------");
             warn("");
@@ -88,12 +115,14 @@ public class Debug {
                 VanillaEnhancements.getPlugin().getLogger().log(Level.SEVERE, "Failed to read debug file!", e);
             }
             logMessage("Enabled debug components: " + (enabledComponents.isEmpty() ? "None" : String.join(", ", enabledComponents.stream().map(Enum::name).toList())));
+        } else {
+            enabled = false;
         }
     }
 
     public void reload() {
         Config.getInstance().reload();
-        // ToDo reload debug settings too
+        loadDebugSettings();
     }
 
     public void generateDocs() throws IOException {
@@ -121,7 +150,7 @@ public class Debug {
         TICK_SERVICES("[TickServices]"),
         RECIPES("[Recipes]"),
         RECIPE_DISCOVERING("[Recipe Discovering]"),
-        OTHER("[Other]");
+        MISC("[Misc]");
 
         private final String prefix;
 
@@ -143,6 +172,10 @@ public class Debug {
 
         public void log(String message, Object... args) {
             VanillaEnhancements.getPlugin().getDebug().log(message, type, args);
+        }
+
+        public void warn(String message, Object... args) {
+            VanillaEnhancements.getPlugin().getDebug().warn(message, type, args);
         }
     }
 }

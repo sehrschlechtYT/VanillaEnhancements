@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.logging.Logger;
@@ -18,6 +19,8 @@ public abstract class VEModule implements Listener {
 
     private final @Nullable String description;
     private final @Nullable String since;
+
+    public final BooleanOption enabled = new BooleanOption(false, "Controls whether the module is enabled or not.");
 
     /**
      * @param description A <b>short</b> description of the module.
@@ -92,7 +95,7 @@ public abstract class VEModule implements Listener {
     }
 
     public boolean isEnabled() {
-        return Config.getInstance().isModuleEnabled(this);
+        return enabled.get();
     }
 
     public @Nullable String getSince() {

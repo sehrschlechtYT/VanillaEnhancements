@@ -5,6 +5,7 @@ import dev.dejvokep.boostedyaml.block.Block;
 import kotlin.Metadata;
 import kotlin.reflect.KProperty;
 import org.bukkit.ChatColor;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
@@ -64,11 +65,37 @@ public class Config {
         for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
             Debug.CONFIG_MODULES.log("Initializing config for module {}...", module.getModuleKey());
             String key = module.getModuleKey().getKey();
-            Debug.CONFIG_MODULES.log("Module {} does{} have a config enabled key.", key, document.contains(key + ".enabled") ? "" : " not");
-            if (!document.contains(key + ".enabled")) {
+            //Debug.CONFIG_MODULES.log("Module {} does{} have a config enabled key.", key, document.contains(key + ".enabled") ? "" : " not");
+            /*if (!document.contains(key + ".enabled")) { // ToDo replace with an option
                 Debug.CONFIG.log("Creating key {}.enabled", key);
                 document.set(key + ".enabled", false);
+            }*/
+            boolean found = false;
+            for (ConfigOption<?> option : getOptions(module)) {
+                found = true;
+                if (!document.contains(key + "." + option.getKey())) {
+                    Debug.CONFIG.log("Creating key {}.{} with default value \"{}\".", key, option.getKey(), option.getDefaultValue());
+                    option.reset();
+                }
             }
+            if (!found) {
+                Debug.CONFIG.log("No options found for module {}.", module.getModuleKey());
+            }
+            if (!document.contains(key + ".enabled")) {
+                Debug.CONFIG.warn("Module {} does not have a config enabled key!", key);
+            }
+        }
+        save();
+        setupComments();
+        save();
+    }
+
+    @ApiStatus.Internal
+    protected void setupComments() {
+        Debug.CONFIG.log("Setting up comments...");
+        Debug.CONFIG_COMMENTS.log("Starting comment setup for modules...");
+        for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
+            String key = module.getModuleKey().getKey();
             Debug.CONFIG_COMMENTS.log("Checking comments for module {}...", key);
             if (module.getDescription() != null && !module.getDescription().isBlank()) {
                 Debug.CONFIG_COMMENTS.log("Module {} has a description.", key);
@@ -80,25 +107,19 @@ public class Config {
                     Debug.CONFIG_COMMENTS.log("Added comment for module {}.", key);
                 }
             }
-            boolean found = false;
+        }
+
+        Debug.CONFIG_COMMENTS.log("Starting comment setup for options...");
+        for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
             for (ConfigOption<?> option : getOptions(module)) {
-                found = true;
-                if (!document.contains(key + "." + option.getKey())) {
-                    Debug.CONFIG.log("Creating key {}.{} with default value \"{}\".", key, option.getKey(), option.getDefaultValue());
-                    option.reset();
-                    Debug.CONFIG_COMMENTS.log("Checking comments for option {}...", option.toPath());
-                    Block<?> block = document.getBlock(option.toPath());
-                    if (option.getDescription() != null && !option.getDescription().isBlank()) {
-                        block.setComments(List.of(" " + option.getDescription()));
-                        Debug.CONFIG_COMMENTS.log("Added comment for option {}.", option.toPath());
-                    }
+                Debug.CONFIG_COMMENTS.log("Checking comments for option {}...", option.toPath());
+                Block<?> block = document.getBlock(option.toPath());
+                if (option.getDescription() != null && !option.getDescription().isBlank()) {
+                    block.setComments(List.of(" " + option.getDescription()));
+                    Debug.CONFIG_COMMENTS.log("Added comment for option {}.", option.toPath());
                 }
             }
-            if (!found) {
-                Debug.CONFIG.log("No options found for module {}.", module.getModuleKey());
-            }
         }
-        save();
     }
 
     public void reload() {
@@ -198,11 +219,8 @@ public class Config {
         return options;
     }
 
-    public boolean isModuleEnabled(VEModule module) {
-        return document.getBoolean(module.getModuleKey().getKey() + ".enabled");
-    }
-
     public YamlDocument getDocument() {
         return document;
     }
+
 }
