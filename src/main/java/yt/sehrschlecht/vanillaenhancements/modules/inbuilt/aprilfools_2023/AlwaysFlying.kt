@@ -15,7 +15,9 @@ import yt.sehrschlecht.vanillaenhancements.ticking.Tick
  * @since 1.0
  */
 @Since(1.0)
-class AlwaysFlying : VEModule() {
+class AlwaysFlying : VEModule(
+    "Makes all entities always fly/glide like with an elytra.",
+) {
     val applyToMobs = BooleanOption(true, "Controls whether mobs should forced to fly too.")
 
     override fun getKey(): String {

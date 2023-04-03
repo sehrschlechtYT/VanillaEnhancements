@@ -24,6 +24,10 @@ public class RottenFleshSmelting extends RecipeModule {
     public IntegerOption resultAmount = new IntegerOption(1,
             "The amount of leather that is produced", 1, 64);
 
+    public RottenFleshSmelting() {
+        super("Allows players to smelt rotten flesh into leather.");
+    }
+
     @Override
     public @NotNull String getKey() {
         return "rotten_flesh_smelting";

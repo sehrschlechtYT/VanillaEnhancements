@@ -21,6 +21,11 @@ public class CreativeKeepInventory extends VEModule {
             "Controls if a permission is required to keep inventory.");
     public StringOption permission = new StringOption("ve.keep_inventory_in_creative",
             "Controls the permission that is required to keep the inventory. `requirePermission` has to be enabled.");
+    // ToDo add keepLevel option
+
+    public CreativeKeepInventory() {
+        super("Makes players keep their inventory when they die in creative mode.");
+    }
 
     @Override
     public @NotNull String getName() {

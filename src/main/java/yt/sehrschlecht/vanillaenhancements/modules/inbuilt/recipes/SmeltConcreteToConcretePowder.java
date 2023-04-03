@@ -21,6 +21,10 @@ public class SmeltConcreteToConcretePowder extends RecipeModule {
     public IntegerOption cookingTime = new IntegerOption(200,
             "The cooking time of the recipe in ticks", 1, null);
 
+    public SmeltConcreteToConcretePowder() {
+        super("Allows players to smelt concrete to concrete powder.");
+    }
+
     @Override
     public @NotNull String getName() {
         return "Smelt concrete to concrete powder";

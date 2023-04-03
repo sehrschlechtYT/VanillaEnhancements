@@ -28,6 +28,10 @@ public class RemoveNametags extends VEModule {
     public BooleanOption dropNametag = new BooleanOption(true,
             "Controls if a nametag with the corresponding name will be dropped.");
 
+    public RemoveNametags() {
+        super("Removes nametags from mobs when shearing them while sneaking.");
+    }
+
     @Override
     public @NotNull String getKey() {
         return "remove_nametags";

@@ -43,12 +43,16 @@ public class VEDocsGenerator {
         }
     }
 
+    // ToDo generate crafting table images for recipe modules
     private String generateDoc(VEModule module) {
         StringBuilder builder = new StringBuilder();
         builder.append("---\n");
         builder.append("title: ").append(module.getName()).append("\n");
         builder.append("---\n");
-        if(module.getClass().isAnnotationPresent(Source.class)) {
+        if (module.getDescription() != null && !module.getDescription().isBlank()) {
+            builder.append(module.getDescription()).append("\n");
+        }
+        if (module.getClass().isAnnotationPresent(Source.class)) {
             builder.append("[Idea Source](").append(module.getClass().getAnnotation(Source.class).value()).append(")\n");
         }
         builder.append("# " + module.getName() + "\n\n");
@@ -67,7 +71,14 @@ public class VEDocsGenerator {
         builder.append("| Full class name | `" + module.getClass().getName() + "` |\n");
         builder.append("| Namespace | `" + module.getModuleKey().getNamespace() + "` |\n");
         builder.append("| Key | `" + module.getModuleKey().getKey() + "` |\n");
-        if(module.getClass().isAnnotationPresent(Since.class)) {
+
+        String since = null;
+        if (module.getSince() != null && !module.getSince().isBlank()) {
+            since = module.getSince();
+        } else if (module.getClass().isAnnotationPresent(Since.class)) {
+            since = String.valueOf(module.getClass().getAnnotation(Since.class).value());
+        }
+        if (since != null) {
             builder.append("| Since | `" + module.getClass().getAnnotation(Since.class).value() + "` |\n");
         }
 

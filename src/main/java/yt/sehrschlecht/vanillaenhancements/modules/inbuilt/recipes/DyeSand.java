@@ -19,13 +19,17 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 public class DyeSand extends RecipeModule {
     public BooleanOption dyeSandRed = new BooleanOption(true,
             "The amount of blocks that players will receive");
-
     public BooleanOption dyeSandstoneRed = new BooleanOption(true,
             "Controls if the craft sandstone to red sandstone crafting recipe will be registered");
+
     public BooleanOption dyeRedSandWhite = new BooleanOption(true,
             "Controls if the craft red sand to sand crafting recipe will be registered");
     public BooleanOption dyeRedSandstoneWhite = new BooleanOption(true,
             "Controls if the craft red sandstone to sandstone crafting recipe will be registered");
+
+    public DyeSand() {
+        super("Allows players to dye sand and sandstone red or white.");
+    }
 
     @Override
     public void registerRecipes() {

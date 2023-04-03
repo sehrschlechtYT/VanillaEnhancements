@@ -18,7 +18,9 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule
  */
 @Suppress("MemberVisibilityCanBePrivate")
 @Since(1.0)
-class AttackKnockback : VEModule(), CommandExecutor {
+class AttackKnockback : VEModule(
+    "Multiplies the knockback of attacks by a percentage",
+), CommandExecutor {
 
     val percentage = IntegerOption(100, "Multiply the knockback by this percentage", 0, 1000)
     val randomizePercentage = BooleanOption(false, "Randomize the knockback percentage (${percentage.min}-${percentage.max}%)")

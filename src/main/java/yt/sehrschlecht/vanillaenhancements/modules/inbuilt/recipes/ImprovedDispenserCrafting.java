@@ -23,6 +23,10 @@ public class ImprovedDispenserCrafting extends RecipeModule {
     public BooleanOption dropperAndStringsAndSticks = new BooleanOption(true,
             "Controls if the dropper + strings + sticks crafting recipe will be registered");
 
+    public ImprovedDispenserCrafting() {
+        super("Simplifies crafting of dispensers.");
+    }
+
     @Override
     public void registerRecipes() {
         if(dropperAndBow.get()) createDropperAndBowRecipe();

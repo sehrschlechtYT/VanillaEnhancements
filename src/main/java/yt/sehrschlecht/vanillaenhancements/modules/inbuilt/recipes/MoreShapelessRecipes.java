@@ -24,6 +24,10 @@ public class MoreShapelessRecipes extends RecipeModule {
     public BooleanOption shulkerBoxRecipe = new BooleanOption(true,
             "Controls if the shulker box recipe will be registered.");
 
+    public MoreShapelessRecipes() {
+        super("Adds shapeless recipes for some items.");
+    }
+
     @Override
     public void registerRecipes() {
         if(breadRecipe.get()) addBreadRecipe();

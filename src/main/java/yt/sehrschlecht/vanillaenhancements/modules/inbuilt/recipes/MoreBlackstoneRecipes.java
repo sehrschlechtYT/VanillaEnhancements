@@ -32,6 +32,10 @@ public class MoreBlackstoneRecipes extends RecipeModule {
     public BooleanOption pistonRecipe = new BooleanOption(true,
             "Controls if the piston recipe will be registered.");
 
+    public MoreBlackstoneRecipes() {
+        super("Makes all recipes that use cobblestone allow blackstone as well.");
+    }
+
     @Override
     public void registerRecipes() {
         if(brewingStandRecipe.get()) addBrewingStandRecipe();

@@ -24,6 +24,10 @@ public class OldRecipes extends RecipeModule {
     public BooleanOption horseArmorRecipes = new BooleanOption(false,
             "Controls if the horse armor crafting recipes will be registered");
 
+    public OldRecipes() {
+        super("Adds some crafting recipes that existed in older versions of Minecraft.");
+    }
+
     private RecipeChoice.MaterialChoice woolChoice;
 
     @Override

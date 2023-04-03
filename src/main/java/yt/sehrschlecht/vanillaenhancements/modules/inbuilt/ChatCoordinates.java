@@ -20,6 +20,10 @@ public class ChatCoordinates extends VEModule {
         return "chat_coordinates";
     }
 
+    public ChatCoordinates() {
+        super("Allows players to send their coordinates in chat by typing \"~ ~ ~\".");
+    }
+
     /*@Override
     public void onEnable() {
         super.onEnable();

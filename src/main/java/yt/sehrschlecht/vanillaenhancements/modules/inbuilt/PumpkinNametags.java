@@ -23,6 +23,10 @@ import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
 public class PumpkinNametags extends VEModule {
     private Scoreboard scoreboard;
 
+    public PumpkinNametags() {
+        super("Hides the nametags of players wearing a pumpkin on their head.");
+    }
+
     @Override
     public @NotNull String getName() {
         return "Hide nametag if wearing pumpkin";

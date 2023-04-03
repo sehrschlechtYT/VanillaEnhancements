@@ -30,6 +30,10 @@ public class ZombiesDryToHusks extends VEModule {
     public BooleanOption dryZombiesOnHotDeath = new BooleanOption(true,
             "Controls if zombies will be converted to husks when dying of fire, lava or magma block damage.");
 
+    public ZombiesDryToHusks() {
+        super("Converts zombies to husks when they die of fire, lava or magma block damage or when they enter a nether portal.");
+    }
+
     @Override
     public @NotNull String getKey() {
         return "zombies_dry_to_husks";

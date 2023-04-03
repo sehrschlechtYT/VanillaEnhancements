@@ -26,6 +26,10 @@ public class CraftBlocksToTwoSlabs extends RecipeModule {
             "POLISHED_BLACKSTONE" //prevent button recipes from being overridden
     ), "Exclude recipes for blocks from being registered");
 
+    public CraftBlocksToTwoSlabs() {
+        super("Allows players to craft two slabs from one block.");
+    }
+
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).forEach(block -> {

@@ -25,6 +25,10 @@ public class CraftChainArmor extends RecipeModule {
     public BooleanOption chainBoots = new BooleanOption(true,
             "Controls if the chain boots crafting recipe will be registered");
 
+    public CraftChainArmor() {
+        super("Allows players to craft chain armor using chains.");
+    }
+
     @Override
     public @NotNull String getKey() {
         return "chain_armor_crafting";

@@ -24,6 +24,10 @@ public class CraftSlabsToBlocks extends RecipeModule {
     public MaterialListOption excludedSlabs = new MaterialListOption(Collections.emptyList(),
             "Exclude recipes for slabs from being registered");
 
+    public CraftSlabsToBlocks() {
+        super("Allows players to craft two slabs into a block.");
+    }
+
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).filter(m -> m.name().endsWith("_SLAB")).forEach(slab -> {

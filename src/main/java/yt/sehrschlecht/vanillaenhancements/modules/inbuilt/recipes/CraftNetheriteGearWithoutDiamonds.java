@@ -43,6 +43,10 @@ public class CraftNetheriteGearWithoutDiamonds extends RecipeModule {
     public BooleanOption craftNetheriteBoots = new BooleanOption(true,
             "Controls if the recipe for crafting a netherite boots is enabled.");
 
+    public CraftNetheriteGearWithoutDiamonds() {
+        super("Allows players to craft netherite gear by using netherite ingots in a crafting table.");
+    }
+
     @Override
     public void registerRecipes() {
         if(removeVanillaRecipes.get()) {

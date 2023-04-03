@@ -24,6 +24,25 @@ public abstract class RecipeModule extends VEModule {
         registerRecipes();
     }
 
+    /**
+     * @param description A <b>short</b> description of the module.
+     * @param since       The version since the module is available.
+     */
+    public RecipeModule(@Nullable String description, @Nullable String since) {
+        super(description, since);
+    }
+
+    /**
+     * @param description A <b>short</b> description of the module.
+     */
+    public RecipeModule(@Nullable String description) {
+        super(description);
+    }
+
+    public RecipeModule() {
+
+    }
+
     @Override
     public void onEnable() {
         super.onEnable();

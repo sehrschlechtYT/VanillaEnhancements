@@ -29,6 +29,10 @@ public class CraftStairsToBlocks extends RecipeModule {
     public IntegerOption blockAmount = new IntegerOption(3,
             "The amount of blocks that players will receive", 1, 64);
 
+    public CraftStairsToBlocks() {
+        super("Allows players to craft stairs back into blocks.");
+    }
+
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).filter(m -> m.name().endsWith("_STAIRS")).forEach(stairs -> {

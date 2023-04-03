@@ -14,6 +14,11 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
  */
 @Since(1.0)
 public class CobblestoneInStoneCutter extends RecipeModule {
+
+    public CobblestoneInStoneCutter() {
+        super("Allows players to craft cobblestone in a stone cutter.");
+    }
+
     @Override
     public @NotNull String getName() {
         return "Craft cobblestone in stone cutter";

@@ -25,6 +25,10 @@ public class SmeltConcretePowderToGlass extends RecipeModule {
     public IntegerOption cookingTime = new IntegerOption(200,
             "The cooking time of the recipe in ticks", 1, null);
 
+    public SmeltConcretePowderToGlass() {
+        super("Allows players to smelt concrete powder into stained glass.");
+    }
+
     @Override
     public @NotNull String getName() {
         return "Smelt concrete powder to glass";

@@ -23,6 +23,10 @@ public class UnstripLogs extends VEModule {
     public BooleanOption damageTools = new BooleanOption(true,
             "Controls if the axe will be damaged.");
 
+    public UnstripLogs() {
+        super("Allows players to unstrip logs by right clicking them with an axe.");
+    }
+
     @Override
     public @NotNull String getKey() {
         return "unstrip_logs";

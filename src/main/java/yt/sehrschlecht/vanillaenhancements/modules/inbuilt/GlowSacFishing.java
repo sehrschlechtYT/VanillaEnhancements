@@ -20,6 +20,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GlowSacFishing extends VEModule {
     public DoubleOption chance = new DoubleOption(0.01D, "The chance for a glow inc sac to drop when fishing", 0D, 1D);
 
+    public GlowSacFishing() {
+        super("Adds a chance for a glow ink sac to drop when fishing.");
+    }
+
     @Override
     public @NotNull String getKey() {
         return "glow_sac_fishing";

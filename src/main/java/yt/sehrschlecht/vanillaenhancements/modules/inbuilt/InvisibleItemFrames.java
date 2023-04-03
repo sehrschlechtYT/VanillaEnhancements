@@ -24,6 +24,10 @@ public class InvisibleItemFrames extends VEModule {
     public BooleanOption useMilkToMakeVisible = new BooleanOption(true,
             "Controls if players can use milk buckets to make item frames visible again.");
 
+    public InvisibleItemFrames() {
+        super("Allows players to make item frames invisible by using invisibility potions on them.");
+    }
+
     @Override
     public @NotNull String getKey() {
         return "invisible_item_frames";

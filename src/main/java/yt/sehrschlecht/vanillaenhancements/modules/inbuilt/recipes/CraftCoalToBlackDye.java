@@ -22,6 +22,10 @@ public class CraftCoalToBlackDye extends RecipeModule {
     public BooleanOption coalToBlackDye = new BooleanOption(true,
             "Controls if the coal to black dye crafting recipe will be registered");
 
+    public CraftCoalToBlackDye() {
+        super("Allows players to craft black dye from coal and charcoal.");
+    }
+
     @Override
     public void registerRecipes() {
         if(charCoalToBlackDye.get()) registerCharcoalRecipe();

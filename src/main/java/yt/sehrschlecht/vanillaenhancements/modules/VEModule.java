@@ -3,6 +3,7 @@ package yt.sehrschlecht.vanillaenhancements.modules;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
@@ -15,8 +16,27 @@ import java.util.logging.Logger;
  */
 public abstract class VEModule implements Listener {
 
-    public VEModule() {
+    private final @Nullable String description;
+    private final @Nullable String since;
 
+    /**
+     * @param description A <b>short</b> description of the module.
+     * @param since The version since the module is available.
+     */
+    public VEModule(@Nullable String description, @Nullable String since) {
+        this.description = description;
+        this.since = since;
+    }
+
+    /**
+     * @param description A <b>short</b> description of the module. Best practice is to describe the functionality of the module in one sentence.
+     */
+    public VEModule(@Nullable String description) {
+        this(description, null);
+    }
+
+    public VEModule() {
+        this(null, null);
     }
 
     @NotNull
@@ -74,4 +94,13 @@ public abstract class VEModule implements Listener {
     public boolean isEnabled() {
         return Config.getInstance().isModuleEnabled(this);
     }
+
+    public @Nullable String getSince() {
+        return since;
+    }
+
+    public @Nullable String getDescription() {
+        return description;
+    }
+
 }
