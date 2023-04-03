@@ -5,6 +5,7 @@ import dev.dejvokep.boostedyaml.block.Block;
 import kotlin.Metadata;
 import kotlin.reflect.KProperty;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
@@ -25,6 +26,8 @@ public class Config {
     private final YamlDocument document;
     private static Config instance;
 
+    private final Map<NamespacedKey, List<ConfigOption<?>>> moduleOptions;
+
     /**
      * Default messages
      * If the value is null, the message will be removed when updating the config. This is useful for messages that have been removed.
@@ -39,6 +42,7 @@ public class Config {
 
     public Config(YamlDocument document) {
         instance = this;
+        this.moduleOptions = new HashMap<>();
         this.document = document;
         Debug.CONFIG.log("Loading config {}...", document.getNameAsString());
     }
@@ -64,9 +68,10 @@ public class Config {
 
         for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
             Debug.CONFIG_MODULES.log("Initializing config for module {}...", module.getModuleKey());
+            moduleOptions.put(module.getModuleKey(), getOptions(module));
             String key = module.getModuleKey().getKey();
             boolean found = false;
-            for (ConfigOption<?> option : getOptions(module)) {
+            for (ConfigOption<?> option : moduleOptions.get(module.getModuleKey())) {
                 found = true;
                 if (!document.contains(key + "." + option.getKey())) {
                     Debug.CONFIG.log("Creating key {}.{} with default value \"{}\".", key, option.getKey(), option.getDefaultValue());
@@ -106,7 +111,7 @@ public class Config {
 
         Debug.CONFIG_COMMENTS.log("Starting comment setup for options...");
         for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
-            for (ConfigOption<?> option : getOptions(module)) {
+            for (ConfigOption<?> option : moduleOptions.get(module.getModuleKey())) {
                 Debug.CONFIG_COMMENTS.log("Checking comments for option {}...", option.toPath());
                 Block<?> block = document.getBlock(option.toPath());
                 if (option.getDescription() != null && !option.getDescription().isBlank()) {
@@ -164,8 +169,14 @@ public class Config {
         }
     }
 
+    /**
+     * Warning: This method should only be called once in #init() because it is performance heavy! Options are cached and can be accessed via {@link #getModuleOptions(VEModule)}
+     * @param module The module to get the options for
+     * @return A list of all options for the given module
+     */
     @NotNull
-    public List<ConfigOption<?>> getOptions(VEModule module) {
+    @ApiStatus.Internal
+    private List<ConfigOption<?>> getOptions(VEModule module) {
         Debug.CONFIG_OPTIONS.log("Getting options for module {}...", module.getModuleKey());
         List<ConfigOption<?>> options = new ArrayList<>();
         Class<?> moduleClass = module.getClass();
@@ -226,6 +237,15 @@ public class Config {
 
     public YamlDocument getDocument() {
         return document;
+    }
+
+    /**
+     * Retrieves all options for the given module, saved in {@link #moduleOptions} in {@link #init()}
+     * @param module The module to get the options for
+     * @return A list of all options for the given module
+     */
+    public List<ConfigOption<?>> getModuleOptions(VEModule module) {
+        return moduleOptions.get(module.getModuleKey());
     }
 
 }

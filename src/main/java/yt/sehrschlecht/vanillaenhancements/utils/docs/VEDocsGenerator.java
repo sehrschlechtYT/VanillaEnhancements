@@ -94,6 +94,6 @@ public class VEDocsGenerator {
     }
 
     private List<ConfigOption<?>> getConfigOptions(VEModule module) {
-        return Config.getInstance().getOptions(module);
+        return Config.getInstance().getModuleOptions(module);
     }
 }
