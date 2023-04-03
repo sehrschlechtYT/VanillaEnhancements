@@ -20,6 +20,7 @@ import java.util.logging.Level;
 public class Debug {
     public final static Component CONFIG = new Component(ComponentType.CONFIG);
     public final static Component CONFIG_OPTIONS = new Component(ComponentType.CONFIG_OPTIONS);
+    public final static Component CONFIG_MODULES = new Component(ComponentType.CONFIG_MODULES);
     public final static Component MODULES = new Component(ComponentType.MODULES);
     public final static Component TICK_SERVICES = new Component(ComponentType.TICK_SERVICES);
     public final static Component RECIPES = new Component(ComponentType.RECIPES);
@@ -74,6 +75,7 @@ public class Debug {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
                 while ((line = br.readLine()) != null) {
+                    if (line.startsWith("#") || line.trim().isEmpty()) continue;
                     try {
                         enabledComponents.add(ComponentType.valueOf(line.trim().toUpperCase()));
                     } catch (IllegalArgumentException e) {
@@ -110,6 +112,7 @@ public class Debug {
     public enum ComponentType {
         CONFIG("[Config]"),
         CONFIG_OPTIONS("[Config Options]"),
+        CONFIG_MODULES("[Config Modules]"),
         MODULES("[Modules]"),
         TICK_SERVICES("[TickServices]"),
         RECIPES("[Recipes]"),
