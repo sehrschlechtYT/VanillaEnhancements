@@ -27,23 +27,6 @@ class KotlinConfigHelper {
             return getFields(jClass.kotlin)
         }
 
-        @Deprecated("old")
-        private fun getFieldValue(clazz: KClass<*>, module: VEModule, field: Field): Any? {
-            if (module::class.declaredMemberProperties.none { it.name == field.name }) {
-                if (clazz.superclasses.isNotEmpty()) {
-                    return getFieldValue(clazz.superclasses.first(), module, field)
-                }
-                return null
-            }
-            val kotlinField = module::class.declaredMemberProperties.first { it.name == field.name }
-            return kotlinField.getter.call(module)
-        }
-
-        @Deprecated("old")
-        private fun getFieldValue(module: VEModule, field: Field): Any? {
-            return getFieldValue(module::class, module, field)
-        }
-
         fun getFieldValue(field: KProperty<*>, module: VEModule): Any? {
             return field.getter.call(module)
         }
