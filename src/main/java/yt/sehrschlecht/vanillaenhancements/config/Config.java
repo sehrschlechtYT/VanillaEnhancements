@@ -170,7 +170,7 @@ public class Config {
                 continue;
             }
             Debug.CONFIG_OPTIONS.log("Checking field {}...", field.getName());
-            Debug.CONFIG_OPTIONS.log("Type: {}, Assignable: {}", field.getType(), ConfigOption.class.isAssignableFrom(field.getType()));
+            Debug.CONFIG_OPTIONS.log("Type: {}, Assignable: {}", field.getType().getSimpleName(), ConfigOption.class.isAssignableFrom(field.getType()));
             if (ConfigOption.class.isAssignableFrom(field.getType())) {
                 try {
                     ConfigOption<?> option;

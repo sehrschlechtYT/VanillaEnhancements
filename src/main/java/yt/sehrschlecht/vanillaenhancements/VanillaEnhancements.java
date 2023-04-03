@@ -74,7 +74,6 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new MoreBlackstoneRecipes(),
                 new SmeltConcretePowderToGlass(),
                 new CraftNetheriteGearWithoutDiamonds(),
-                new IceGenReplace(),
 
                 // 23w13a_or_b modules
                 new AttackKnockback(),
@@ -82,7 +81,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new BasaltGenReplace(),
                 new CobblestoneGenReplace(),
                 new ObsidianGenReplace(),
-                new StoneGenReplace()
+                new StoneGenReplace(),
+                new IceGenReplace() // not in 23w13a_or_b but related to the other modules above
         );
 
         createConfig();
