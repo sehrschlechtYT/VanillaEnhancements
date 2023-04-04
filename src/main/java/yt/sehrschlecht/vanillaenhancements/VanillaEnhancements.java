@@ -96,7 +96,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new IceGenReplace(), // not in 23w13a_or_b but related to the other modules above
                 new AlwaysThunder(),
                 new BedPVP(),
-                new Beeloons()
+                new Beeloons(),
+                new ChargedCreepers()
         );
 
         createConfig();
