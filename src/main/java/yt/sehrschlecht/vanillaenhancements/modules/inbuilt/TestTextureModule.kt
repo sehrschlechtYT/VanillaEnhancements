@@ -15,7 +15,7 @@ class TestTextureModule : CustomTextureModule() {
     override fun createResourcePack(): ResourcePackBuilder {
         val image = readImageFromJar("/textures/la_baguette.png", VanillaEnhancements::class.java)
         return packBuilder {
-            addCustomModelData(Material.WOODEN_SWORD, 123, Texture("la_baguette", image))
+            addCustomModelData(Material.WOODEN_SWORD, 123, Texture("la_baguette.png", image))
         }
     }
 

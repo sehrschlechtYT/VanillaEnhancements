@@ -32,7 +32,7 @@ class ResourcePackBuilder {
         Debug.RESOURCE_PACKS.log("Running resource pack builder (build folder: ${buildFolder.absolutePath})")
         customModelDatas.forEach { (material, dataList) ->
             Debug.RESOURCE_PACKS.log("Building custom model data for item ${material.key.key}")
-            val file = File(buildFolder, "assets/minecraft/models/item/${material.key.key}_custom.json")
+            val file = File(buildFolder, "assets/minecraft/models/item/${material.key.key}.json")
             createFileAndParentsIfNotExists(file)
             val fileContents = StringBuilder()
             fileContents.append(
@@ -53,7 +53,7 @@ class ResourcePackBuilder {
                         "predicate": {
                             "custom_model_data": ${data.value}
                         },
-                        "model": "${data.model.parent}"
+                        "model": "item/${data.model.parent}/${data.model.texture.name}}"
                     }
                 """.trimIndent()
                 )
@@ -90,14 +90,14 @@ class ResourcePackBuilder {
 
     private fun saveModel(model: Model, buildFolder: File) {
         Debug.RESOURCE_PACKS.log("Saving model ${model.parent}")
-        val file = File(buildFolder, "assets/minecraft/models/item/${model.parent}.json")
+        val file = File(buildFolder, "assets/minecraft/models/item/${model.parent}/${model.texture.name}.json")
         createFileAndParentsIfNotExists(file)
         file.writeText(
             """
             {
                 "parent": "item/handheld",
                 "textures": {
-                    "layer0": "item/${model.parent}/${model.texture}"
+                    "layer0": "item/${model.parent}/${model.texture.name}"
                 }
             }
         """.trimIndent()
@@ -111,6 +111,7 @@ class ResourcePackBuilder {
             file.createNewFile()
         }
     }
+
 }
 
 class CustomModelData(
@@ -126,4 +127,10 @@ class Model(
 class Texture(
     val name: String,
     val texture: BufferedImage
-)
+) {
+    init {
+        if (!name.lowercase().endsWith(".png")) {
+            throw IllegalArgumentException("Texture name must have a file extension of .png!")
+        }
+    }
+}
