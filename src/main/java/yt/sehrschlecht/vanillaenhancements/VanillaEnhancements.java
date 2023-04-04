@@ -102,7 +102,10 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new Beeloons(),
                 new ChargedCreepers(),
                 new DefaultSheepColor(),
-                new DisableShieldBlocking()
+                new DisableShieldBlocking(),
+
+                // Test Modules - ToDo: Remove
+                new TestTextureModule()
         );
 
         createConfig();
@@ -125,7 +128,7 @@ public final class VanillaEnhancements extends JavaPlugin {
                     GeneralSettings.DEFAULT,
                     LoaderSettings.builder().setAutoUpdate(true).build(),
                     DumperSettings.DEFAULT,
-                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version")).build()
+                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version")).setKeepAll(true).build()
             );
         } catch (IOException e) {
             e.printStackTrace();

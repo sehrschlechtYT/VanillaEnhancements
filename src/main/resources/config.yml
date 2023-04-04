@@ -1,4 +1,4 @@
-config-version: 2 #DO NOT MODIFY THIS SETTING!
+config-version: 3 #DO NOT MODIFY THIS SETTING!
 
 recipe-discover-period: 60 #How often (in ticks) should the plugin check for new recipes? May have an impact on performance if set too low.
 
@@ -6,6 +6,6 @@ msg:
   prefix: "&7[&cVE&7] "
 
 resource_pack:
-  # Should the plugin create and send a resource resourcepacks to the player?
-  # This is only needed if you enable a module that has custom textures or models.
+  # Should the plugin create and send a resource pack to the player?
+  # This is only needed if you have enabled a module that has custom textures or models.
   enabled: false

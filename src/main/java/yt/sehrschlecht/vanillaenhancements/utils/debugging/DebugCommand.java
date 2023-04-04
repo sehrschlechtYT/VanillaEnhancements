@@ -116,13 +116,18 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                         TextComponent component = new TextComponent("§7- " + (registered ? "§a" : "§c") + recipe.key().getKey());
                         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ve-debug recipe " + recipe.key().toString()));
                         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
-                                new TextComponent("§7Key: §e" + recipe.key().toString() + "\n"),
+                                new TextComponent("§7Key: §e" + recipe.key() + "\n"),
                                 new TextComponent("§9Click for more information")
                         }));
                         sender.spigot().sendMessage(component);
                     }
                 }
                 sender.sendMessage("-------------------------------------------------");
+                return true;
+            } else if (args[0].equalsIgnoreCase("generate-pack")) {
+                sender.sendMessage("Generating pack...");
+                VanillaEnhancements.getPlugin().getResourcePackManager().buildPack();
+                sender.sendMessage("Generated pack successfully!");
                 return true;
             }
         } else if (args.length == 2) {
@@ -283,7 +288,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
         }
-        sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]/tickservices/recipe [Key]/recipes>");
+        sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]/tickservices/recipe [Key]/recipes/runtickservice [Class]#[Field]/generate-pack>");
         return true;
     }
 
@@ -309,7 +314,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!debug().isEnabled()) return null;
         if (args.length == 1) {
-            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "runtickservice", "plugin", "tickservices", "recipes", "recipe");
+            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "runtickservice", "plugin", "tickservices", "recipes", "recipe", "generate-pack");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("module")) {
                 return complete(args, 1, VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules().stream().map(VEModule::getModuleKey).map(Object::toString).toArray(String[]::new));

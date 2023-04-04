@@ -1,15 +1,17 @@
 package yt.sehrschlecht.vanillaenhancements.items.resourcepack
 
 import org.bukkit.Material
+import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
 import java.awt.image.BufferedImage
 import java.io.File
+import java.nio.file.Files
 import javax.imageio.ImageIO
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ResourcePackBuilder() {
+class ResourcePackBuilder {
 
     private val customModelDatas = mutableMapOf<Material, MutableList<CustomModelData>>()
 
@@ -19,45 +21,19 @@ class ResourcePackBuilder() {
         } else {
             customModelDatas[item] = mutableListOf(data)
         }
+        Debug.RESOURCE_PACKS.log("Added custom model data for ${item.key.key} with value ${data.value}")
     }
 
     fun addCustomModelData(item: Material, value: Int, texture: Texture) {
         addCustomModelData(item, CustomModelData(value, Model(item.key.key, texture)))
     }
 
-    /*fun addCustomModelData(item: Material, value: Int) { // ToDo handle multiple datas for same item
-        val file = File(buildFolder, "assets/minecraft/models/item/${item.key.key}.json")
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-        file.writeText(
-            """
-            {
-                "parent": "item/handheld",
-                "textures": {
-                    "layer0": "item/${item.key.key}"
-                },
-                "overrides": [
-                    {
-                        "predicate": {
-                            "custom_model_data": $value
-                        },
-                        "model": "item/${item.key.key}_custom"
-                    }
-                ]
-            }
-        """.trimIndent()
-        )
-    }
-
-     */
-
     fun run(buildFolder: File) {
+        Debug.RESOURCE_PACKS.log("Running resource pack builder (build folder: ${buildFolder.absolutePath})")
         customModelDatas.forEach { (material, dataList) ->
+            Debug.RESOURCE_PACKS.log("Building custom model data for item ${material.key.key}")
             val file = File(buildFolder, "assets/minecraft/models/item/${material.key.key}_custom.json")
-            if (!file.exists()) {
-                file.createNewFile()
-            }
+            createFileAndParentsIfNotExists(file)
             val fileContents = StringBuilder()
             fileContents.append(
                 """
@@ -70,6 +46,7 @@ class ResourcePackBuilder() {
                 """.trimIndent()
             )
             dataList.forEach { data ->
+                Debug.RESOURCE_PACKS.log("Adding custom model data ${data.value} for item ${material.key.key}")
                 fileContents.append(
                     """
                     {
@@ -99,22 +76,22 @@ class ResourcePackBuilder() {
                 saveModel(data.model, buildFolder)
             }
         }
+        Debug.RESOURCE_PACKS.log("Finished resource pack builder")
     }
 
     private fun saveTexture(texture: Texture, buildFolder: File) {
+        Debug.RESOURCE_PACKS.log("Saving texture ${texture.name}")
         val file = File(buildFolder, "assets/minecraft/textures/item/${texture.name}.png")
-        if (!file.exists()) {
-            file.createNewFile()
-        }
+        createFileAndParentsIfNotExists(file)
         val image = texture.texture
         ImageIO.write(image, "png", file)
+        Debug.RESOURCE_PACKS.log("Saved texture ${texture.name} to ${file.absolutePath}")
     }
 
     private fun saveModel(model: Model, buildFolder: File) {
+        Debug.RESOURCE_PACKS.log("Saving model ${model.parent}")
         val file = File(buildFolder, "assets/minecraft/models/item/${model.parent}.json")
-        if (!file.exists()) {
-            file.createNewFile()
-        }
+        createFileAndParentsIfNotExists(file)
         file.writeText(
             """
             {
@@ -125,6 +102,14 @@ class ResourcePackBuilder() {
             }
         """.trimIndent()
         )
+        Debug.RESOURCE_PACKS.log("Saved model ${model.parent} to ${file.absolutePath}")
+    }
+
+    private fun createFileAndParentsIfNotExists(file: File) {
+        Files.createDirectories(file.parentFile.toPath())
+        if (!file.exists()) {
+            file.createNewFile()
+        }
     }
 }
 

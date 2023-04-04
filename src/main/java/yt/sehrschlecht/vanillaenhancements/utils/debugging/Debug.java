@@ -27,6 +27,7 @@ public class Debug {
     public final static Component TICK_SERVICES = new Component(ComponentType.TICK_SERVICES);
     public final static Component RECIPES = new Component(ComponentType.RECIPES);
     public final static Component RECIPE_DISCOVERING = new Component(ComponentType.RECIPE_DISCOVERING);
+    public final static Component RESOURCE_PACKS = new Component(ComponentType.RESOURCE_PACKS);
     public final static Component MISC = new Component(ComponentType.MISC);
 
     private final List<ComponentType> enabledComponents;
@@ -156,6 +157,7 @@ public class Debug {
         TICK_SERVICES("[TickServices]"),
         RECIPES("[Recipes]"),
         RECIPE_DISCOVERING("[Recipe Discovering]"),
+        RESOURCE_PACKS("[Resource Packs]"),
         MISC("[Misc]");
 
         private final String prefix;
