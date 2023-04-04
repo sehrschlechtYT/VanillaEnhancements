@@ -115,7 +115,10 @@ public class Config {
                 Debug.CONFIG_COMMENTS.log("Checking comments for option {}...", option.toPath());
                 Block<?> block = document.getBlock(option.toPath());
                 if (option.getDescription() != null && !option.getDescription().isBlank()) {
-                    block.setComments(List.of(" " + option.getDescription()));
+                    block.setComments(List.of(
+                            " Possible values: " + option.getPossibleValues(),
+                            " " + option.getDescription()
+                    ));
                     Debug.CONFIG_COMMENTS.log("Added comment for option {}.", option.toPath());
                 }
             }

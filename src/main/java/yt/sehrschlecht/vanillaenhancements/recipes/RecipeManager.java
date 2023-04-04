@@ -28,7 +28,7 @@ public class RecipeManager {
 
     public void discoverRecipes() {
         long period = Config.getInstance().getDocument().getLong("recipe-discover-period", 60L);
-        if(period <= 0) period = 60L;
+        if (period <= 0) period = 60L;
         Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 for (ItemStack stack : player.getInventory().getContents()) {
@@ -51,7 +51,7 @@ public class RecipeManager {
                 .filter(recipe -> collectedItem == recipe.discoverItem())
                 .forEach(recipe -> {
                     Debug.RECIPE_DISCOVERING.log("Has player {} discovered recipe {}? {}", player.getName(), recipe.key(), player.hasDiscoveredRecipe(recipe.key()));
-                    if(!player.hasDiscoveredRecipe(recipe.key())) {
+                    if (!player.hasDiscoveredRecipe(recipe.key())) {
                         player.discoverRecipe(recipe.key());
                         Debug.RECIPE_DISCOVERING.log("Discovered recipe {} for player {}.", recipe.key(), player.getName());
                     }
