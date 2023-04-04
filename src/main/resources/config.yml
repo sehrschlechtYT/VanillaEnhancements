@@ -4,3 +4,8 @@ recipe-discover-period: 60 #How often (in ticks) should the plugin check for new
 
 msg:
   prefix: "&7[&cVE&7] "
+
+resource_pack:
+  # Should the plugin create and send a resource resourcepacks to the player?
+  # This is only needed if you enable a module that has custom textures or models.
+  enabled: false

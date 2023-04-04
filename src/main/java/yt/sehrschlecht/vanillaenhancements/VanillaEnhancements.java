@@ -8,6 +8,7 @@ import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import org.bukkit.plugin.java.JavaPlugin;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.items.resourcepack.ResourcePackManager;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
@@ -38,6 +39,7 @@ public final class VanillaEnhancements extends JavaPlugin {
     private TickServiceExecutor tickServiceExecutor;
     private Debug debug;
     private RecipeManager recipeManager;
+    private ResourcePackManager resourcePackManager;
 
     @Override
     public void onEnable() {
@@ -60,6 +62,7 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         recipeManager = new RecipeManager();
         tickServiceExecutor = new TickServiceExecutor();
+        resourcePackManager = new ResourcePackManager(this);
 
         inbuiltModules = Arrays.asList(
                 new UnstripLogs(),
@@ -108,6 +111,7 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         tickServiceExecutor.startTicking();
         recipeManager.discoverRecipes();
+        resourcePackManager.initialize();
 
         getCommand("ve-debug").setExecutor(new DebugCommand());
         getCommand("ve-debug").setTabCompleter(new DebugCommand());
@@ -160,6 +164,10 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public RecipeManager getRecipeManager() {
         return recipeManager;
+    }
+
+    public ResourcePackManager getResourcePackManager() {
+        return resourcePackManager;
     }
 
     public Debug getDebug() {
