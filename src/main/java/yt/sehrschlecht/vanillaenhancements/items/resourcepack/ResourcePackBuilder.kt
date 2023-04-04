@@ -53,7 +53,7 @@ class ResourcePackBuilder {
                         "predicate": {
                             "custom_model_data": ${data.value}
                         },
-                        "model": "item/${data.model.parent}/${data.model.texture.name}}"
+                        "model": "item/${data.model.parent}/${data.model.texture.plainName()}"
                     }
                 """.trimIndent()
                 )
@@ -68,7 +68,7 @@ class ResourcePackBuilder {
 
             // save textures
             dataList.forEach { data ->
-                saveTexture(data.model.texture, buildFolder)
+                saveTexture(material, data.model.texture, buildFolder)
             }
 
             // save model
@@ -79,9 +79,9 @@ class ResourcePackBuilder {
         Debug.RESOURCE_PACKS.log("Finished resource pack builder")
     }
 
-    private fun saveTexture(texture: Texture, buildFolder: File) {
+    private fun saveTexture(item: Material, texture: Texture, buildFolder: File) {
         Debug.RESOURCE_PACKS.log("Saving texture ${texture.name}")
-        val file = File(buildFolder, "assets/minecraft/textures/item/${texture.name}.png")
+        val file = File(buildFolder, "assets/minecraft/textures/item/${item.key.key}/${texture.name}")
         createFileAndParentsIfNotExists(file)
         val image = texture.texture
         ImageIO.write(image, "png", file)
@@ -90,14 +90,14 @@ class ResourcePackBuilder {
 
     private fun saveModel(model: Model, buildFolder: File) {
         Debug.RESOURCE_PACKS.log("Saving model ${model.parent}")
-        val file = File(buildFolder, "assets/minecraft/models/item/${model.parent}/${model.texture.name}.json")
+        val file = File(buildFolder, "assets/minecraft/models/item/${model.parent}/${model.texture.plainName()}.json")
         createFileAndParentsIfNotExists(file)
         file.writeText(
             """
             {
                 "parent": "item/handheld",
                 "textures": {
-                    "layer0": "item/${model.parent}/${model.texture.name}"
+                    "layer0": "item/${model.parent}/${model.texture.plainName()}"
                 }
             }
         """.trimIndent()
@@ -132,5 +132,9 @@ class Texture(
         if (!name.lowercase().endsWith(".png")) {
             throw IllegalArgumentException("Texture name must have a file extension of .png!")
         }
+    }
+
+    fun plainName(): String {
+        return name.split(".")[0]
     }
 }

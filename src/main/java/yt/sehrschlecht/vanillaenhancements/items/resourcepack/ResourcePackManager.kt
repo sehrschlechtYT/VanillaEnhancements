@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.items.resourcepack
 
+import org.zeroturnaround.zip.ZipUtil
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.CustomTextureModule
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
@@ -61,6 +62,10 @@ class ResourcePackManager(val plugin: VanillaEnhancements) {
         }
         Debug.RESOURCE_PACKS.log("Running builders done!")
         Debug.RESOURCE_PACKS.log("Building resource pack done!")
+
+        Debug.RESOURCE_PACKS.log("Zipping resource pack...")
+        zipPack()
+        Debug.RESOURCE_PACKS.log("Zipping resource pack done!")
     }
 
     private fun getBuilders() : List<ResourcePackBuilder?> {
@@ -68,6 +73,12 @@ class ResourcePackManager(val plugin: VanillaEnhancements) {
             if (module !is CustomTextureModule) return@map null
             return@map module.createResourcePack()
         }
+    }
+
+    private fun zipPack() {
+        val target = File(folder, "pack.zip")
+        if (target.exists()) target.delete()
+        ZipUtil.pack(buildFolder, target)
     }
 
 }
