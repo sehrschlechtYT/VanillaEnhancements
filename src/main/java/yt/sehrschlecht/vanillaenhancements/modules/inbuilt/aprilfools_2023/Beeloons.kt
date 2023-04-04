@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerUnleashEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
+import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -25,6 +26,7 @@ class Beeloons : VEModule(
 ) {
 
     private val bees = mutableMapOf<UUID, MutableList<Bee>>()
+    val minBeesForLevitation = IntegerOption(3, "The minimum amount of bees a player needs to be dragged into the air", 1, 1000)
 
     override fun getKey(): String {
         return "beeloons"
@@ -65,8 +67,8 @@ class Beeloons : VEModule(
                 // move bee to the y position
                 bee.velocity = Vector(0.0, (y - bee.location.y) / 10, 0.0)
             }
-            if (list.size >= 3) {
-                player.addPotionEffect(PotionEffect(PotionEffectType.LEVITATION, 40, list.size - 3))
+            if (list.size >= minBeesForLevitation.get()) {
+                player.addPotionEffect(PotionEffect(PotionEffectType.LEVITATION, 40, list.size - minBeesForLevitation.get()))
             } else if (list.size >= 1) {
                 player.addPotionEffect(PotionEffect(PotionEffectType.SLOW_FALLING, 40, list.size - 1))
             }
