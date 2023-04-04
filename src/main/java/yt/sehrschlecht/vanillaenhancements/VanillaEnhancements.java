@@ -105,7 +105,7 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new DisableShieldBlocking(),
 
                 // Test Modules - ToDo: Remove
-                new TestTextureModule()
+                new LaBaguette()
         );
 
         createConfig();

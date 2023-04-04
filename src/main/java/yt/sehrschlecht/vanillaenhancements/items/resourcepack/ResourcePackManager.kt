@@ -2,7 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.items.resourcepack
 
 import org.zeroturnaround.zip.ZipUtil
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
-import yt.sehrschlecht.vanillaenhancements.modules.CustomTextureModule
+import yt.sehrschlecht.vanillaenhancements.modules.CustomTextureProvider
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
 import java.io.File
 
@@ -70,7 +70,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) {
 
     private fun getBuilders() : List<ResourcePackBuilder?> {
         return VanillaEnhancements.getPlugin().moduleRegistry.registeredModules.map { module ->
-            if (module !is CustomTextureModule) return@map null
+            if (module !is CustomTextureProvider) return@map null
             return@map module.createResourcePack()
         }
     }

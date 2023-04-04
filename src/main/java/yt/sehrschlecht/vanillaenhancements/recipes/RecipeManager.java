@@ -20,7 +20,7 @@ import java.util.List;
  * @since 1.0
  */
 public class RecipeManager {
-    private final List<Pair<NamespacedKey, VERecipe>> recipes;
+    private final List<Pair<NamespacedKey, VERecipe>> recipes; // not a map because the key is the module key
 
     public RecipeManager() {
         recipes = new ArrayList<>();

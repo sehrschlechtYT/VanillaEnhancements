@@ -5,7 +5,9 @@ package yt.sehrschlecht.vanillaenhancements.utils
  * @since 1.0
  */
 class SpigotExtensions {
+
     companion object {
 
     }
+
 }

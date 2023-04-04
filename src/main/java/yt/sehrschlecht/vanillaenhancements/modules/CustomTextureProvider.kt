@@ -9,8 +9,10 @@ import javax.imageio.ImageIO
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-abstract class CustomTextureModule(description: String? = null, since: String? = null) : VEModule(description, since) {
-    abstract fun createResourcePack() : ResourcePackBuilder
+// WARNING: You have to implement this in the module class!
+interface CustomTextureProvider {
+
+    fun createResourcePack() : ResourcePackBuilder
 
     fun packBuilder(builder: ResourcePackBuilder.() -> Unit): ResourcePackBuilder {
         val packBuilder = ResourcePackBuilder()
@@ -18,6 +20,7 @@ abstract class CustomTextureModule(description: String? = null, since: String? =
         return packBuilder
     }
 
+    // for pluginClass: use this::class.java in Kotlin and Class.class in Java instead of object.getClass()
     fun readImageFromJar(path: String, pluginClass: Class<*>): BufferedImage {
         val imageResource = pluginClass.getResourceAsStream(path);
 
