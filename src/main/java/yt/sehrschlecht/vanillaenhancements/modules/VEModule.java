@@ -2,6 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.modules;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -112,6 +113,10 @@ public abstract class VEModule implements Listener {
         getPlugin().getServer().getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
             if (entity.isValid()) consumer.accept(entity);
         }));
+    }
+
+    public void loopPlayers(Consumer<Player> consumer) {
+        getPlugin().getServer().getOnlinePlayers().forEach(consumer);
     }
 
 }

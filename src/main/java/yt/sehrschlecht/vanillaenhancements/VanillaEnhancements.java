@@ -98,7 +98,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new BedPVP(),
                 new Beeloons(),
                 new ChargedCreepers(),
-                new DefaultSheepColor()
+                new DefaultSheepColor(),
+                new DisableShieldBlocking()
         );
 
         createConfig();
