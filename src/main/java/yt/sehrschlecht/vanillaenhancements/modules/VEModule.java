@@ -22,8 +22,7 @@ public abstract class VEModule implements Listener {
     private final @Nullable String description;
     private final @Nullable String since;
 
-    // ToDo maybe remove description (it bloats the config)
-    public final BooleanOption enabled = new BooleanOption(false, "Controls whether the module is enabled or not.");
+    public final BooleanOption enabled = new BooleanOption(false, null);
 
     /**
      * @param description A <b>short</b> description of the module.

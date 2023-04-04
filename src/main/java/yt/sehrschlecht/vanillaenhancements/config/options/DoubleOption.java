@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 
 /**
@@ -14,7 +15,7 @@ public class DoubleOption extends NumberOption<Double> {
      * @param min          The minimum value of the option.
      * @param max          The maximum value of the option.
      */
-    public DoubleOption(Double defaultValue, String description, Double min, Double max) {
+    public DoubleOption(Double defaultValue, @Nullable String description, Double min, Double max) {
         super(defaultValue, description, min, max);
     }
 

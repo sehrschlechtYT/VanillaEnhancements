@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 
 /**
@@ -14,7 +15,7 @@ public class FloatOption extends NumberOption<Float> {
      * @param min          The minimum value of the option.
      * @param max          The maximum value of the option.
      */
-    public FloatOption(Float defaultValue, String description, Float min, Float max) {
+    public FloatOption(Float defaultValue, @Nullable String description, Float min, Float max) {
         super(defaultValue, description, min, max);
     }
 

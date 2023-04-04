@@ -15,7 +15,7 @@ public class StringListOption extends ConfigOption<List<String>> {
      * @param defaultValue The default value of the option.
      * @param description  A markdown formatted description of the option.
      */
-    public StringListOption(List<String> defaultValue, String description) {
+    public StringListOption(List<String> defaultValue, @Nullable String description) {
         super(defaultValue, description);
     }
 

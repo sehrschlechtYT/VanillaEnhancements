@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 
 /**
@@ -13,7 +14,7 @@ public class IntegerOption extends NumberOption<Integer> {
      * @param min          The minimum value of the option.
      * @param max          The maximum value of the option.
      */
-    public IntegerOption(Integer defaultValue, String description, Integer min, Integer max) {
+    public IntegerOption(Integer defaultValue, @Nullable String description, Integer min, Integer max) {
         super(defaultValue, description, min, max);
     }
 

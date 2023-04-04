@@ -18,7 +18,7 @@ public abstract class ConfigOption<T> {
      * @param defaultValue The default value of the option.
      * @param description A markdown formatted description of the option.
      */
-    public ConfigOption(T defaultValue, String description) {
+    public ConfigOption(T defaultValue, @Nullable String description) {
         this.defaultValue = defaultValue;
         this.description = description;
     }
@@ -82,7 +82,7 @@ public abstract class ConfigOption<T> {
         this.moduleKey = moduleKey;
     }
 
-    public String getDescription() {
+    public @Nullable String getDescription() {
         return description;
     }
 }

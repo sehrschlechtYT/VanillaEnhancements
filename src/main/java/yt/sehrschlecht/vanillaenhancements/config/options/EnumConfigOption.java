@@ -17,7 +17,7 @@ public abstract class EnumConfigOption<T extends Enum<T>> extends ConfigOption<T
      * @param description  A markdown formatted description of the option.
      * @param typeClass
      */
-    public EnumConfigOption(T defaultValue, String description, Class<T> typeClass) {
+    public EnumConfigOption(T defaultValue, @Nullable String description, Class<T> typeClass) {
         super(defaultValue, description);
         this.typeClass = typeClass;
     }

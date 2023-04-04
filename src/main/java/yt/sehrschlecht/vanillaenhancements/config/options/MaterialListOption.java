@@ -19,7 +19,7 @@ public class MaterialListOption extends ConfigOption<List<Material>> { // ToDo m
      * @param defaultValue The default value of the option.
      * @param description  A markdown formatted description of the option.
      */
-    public MaterialListOption(List<Material> defaultValue, String description) {
+    public MaterialListOption(List<Material> defaultValue, @Nullable String description) {
         super(defaultValue, description);
     }
 

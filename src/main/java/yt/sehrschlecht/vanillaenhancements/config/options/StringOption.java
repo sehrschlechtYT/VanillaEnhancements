@@ -16,7 +16,7 @@ public class StringOption extends ConfigOption<String> {
      * @param description  A markdown formatted description of the option.
      * @param allowEmpty
      */
-    public StringOption(String defaultValue, String description, boolean allowEmpty) {
+    public StringOption(String defaultValue, @Nullable String description, boolean allowEmpty) {
         super(defaultValue, description);
         this.allowEmpty = allowEmpty;
     }

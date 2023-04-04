@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
 import org.bukkit.Material;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -12,7 +13,7 @@ public class MaterialOption extends EnumConfigOption<Material> {
      * @param defaultValue The default value of the option.
      * @param description  A markdown formatted description of the option.
      */
-    public MaterialOption(Material defaultValue, String description) {
+    public MaterialOption(Material defaultValue, @Nullable String description) {
         super(defaultValue, description, Material.class);
     }
 

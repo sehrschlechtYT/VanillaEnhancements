@@ -14,7 +14,7 @@ public class BooleanOption extends ConfigOption<Boolean> {
      * @param defaultValue The default value of the option.
      * @param description  A markdown formatted description of the option.
      */
-    public BooleanOption(Boolean defaultValue, String description) {
+    public BooleanOption(Boolean defaultValue, @Nullable String description) {
         super(defaultValue, description);
     }
 

@@ -18,7 +18,7 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
      * @param min          The minimum value of the option.
      * @param max          The maximum value of the option.
      */
-    public NumberOption(T defaultValue, String description, T min, T max) {
+    public NumberOption(T defaultValue, @Nullable String description, T min, T max) {
         super(defaultValue, description);
         this.min = min;
         this.max = max;

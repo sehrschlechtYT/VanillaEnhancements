@@ -60,7 +60,6 @@ public class VEDocsGenerator {
         builder.append("## Configuration\n\n");
         builder.append("| Key | Description | Default Value | Type | Possible values |\n");
         builder.append("| --- | ----------- | ------------- | ---- | --------------- |\n");
-        builder.append("| `" + module.getModuleKey().getKey() + ".enabled` | Controls if the module is enabled | `false` | `Boolean` | `true/false` |\n");
         for (ConfigOption<?> option : configOptions) {
            builder.append(optionToString(option));
         }
@@ -86,8 +85,12 @@ public class VEDocsGenerator {
     }
 
     private String optionToString(ConfigOption<?> option) {
+        String description = option.getDescription() == null ? "" : option.getDescription();
+        if (option.getKey().equalsIgnoreCase("enabled") && description.isEmpty()) {
+            description = "Enable/Disable this module";
+        }
         return "| `" + option.toPath() + "` | "
-                + option.getDescription()
+                + description
                 + " | `" + option.getDefaultValue()
                 + "` | `" + option.getClass().getSimpleName().replace("Option", "")
                 + "` | " + option.getPossibleValues() + " |\n";
