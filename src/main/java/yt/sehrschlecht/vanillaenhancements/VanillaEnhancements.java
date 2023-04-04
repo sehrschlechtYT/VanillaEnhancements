@@ -97,7 +97,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new AlwaysThunder(),
                 new BedPVP(),
                 new Beeloons(),
-                new ChargedCreepers()
+                new ChargedCreepers(),
+                new DefaultSheepColor()
         );
 
         createConfig();

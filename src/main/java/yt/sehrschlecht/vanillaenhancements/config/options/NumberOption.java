@@ -8,6 +8,7 @@ import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
  * @since 1.0
  */
 public abstract class NumberOption<T> extends ConfigOption<T> {
+
     private final T min;
     private final T max;
 
@@ -25,13 +26,13 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
 
     @Override
     public String getPossibleValues() {
-        if(min == null && max == null) {
+        if (min == null && max == null) {
             return "Any number";
         }
-        if(min == null) {
+        if (min == null) {
             return "`<=" + max + "`";
         }
-        if(max == null) {
+        if (max == null) {
             return "`>=" + min + "`";
         }
         return "`" + min + "-" + max + "`";
@@ -43,21 +44,21 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
      */
     @Override
     public @Nullable String validate(T value) {
-        if(!(value instanceof Number number)) return null;
-        if(min != null && max != null) {
+        if (!(value instanceof Number number)) return null;
+        if (min != null && max != null) {
             Number minNumber = (Number) min;
             Number maxNumber = (Number) max;
-            if(number.doubleValue() < minNumber.doubleValue() || number.doubleValue() > maxNumber.doubleValue()) {
+            if (number.doubleValue() < minNumber.doubleValue() || number.doubleValue() > maxNumber.doubleValue()) {
                 return "Value must be between " + min + " and " + max;
             }
-        } else if(min != null) {
+        } else if (min != null) {
             Number minNumber = (Number) min;
-            if(number.doubleValue() < minNumber.doubleValue()) {
+            if (number.doubleValue() < minNumber.doubleValue()) {
                 return "Value must be greater than " + min;
             }
-        } else if(max != null) {
+        } else if (max != null) {
             Number maxNumber = (Number) max;
-            if(number.doubleValue() > maxNumber.doubleValue()) {
+            if (number.doubleValue() > maxNumber.doubleValue()) {
                 return "Value must be less than " + max;
             }
         }
@@ -71,4 +72,5 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
     public T getMax() {
         return max;
     }
+
 }

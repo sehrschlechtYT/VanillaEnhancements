@@ -13,7 +13,8 @@ import java.util.Objects;
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-public class MaterialListOption extends ConfigOption<List<Material>> {
+public class MaterialListOption extends ConfigOption<List<Material>> { // ToDo make it a EnumListConfigOption
+
     /**
      * @param defaultValue The default value of the option.
      * @param description  A markdown formatted description of the option.
@@ -67,4 +68,5 @@ public class MaterialListOption extends ConfigOption<List<Material>> {
     public @Nullable String validate(List<Material> value) {
         return null;
     }
+
 }

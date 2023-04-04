@@ -22,4 +22,5 @@ public class FloatOption extends NumberOption<Float> {
     public Float getFromConfig() {
         return Config.getInstance().getDocument().getFloat(toPath());
     }
+
 }
