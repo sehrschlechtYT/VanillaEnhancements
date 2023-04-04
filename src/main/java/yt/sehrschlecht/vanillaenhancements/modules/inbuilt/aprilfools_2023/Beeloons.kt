@@ -8,6 +8,7 @@ import org.bukkit.event.entity.PlayerLeashEntityEvent
 import org.bukkit.event.player.PlayerUnleashEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import org.bukkit.util.Vector
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -22,7 +23,6 @@ class Beeloons : VEModule(
     "Players who are holding at least 3 bees with leashes will be dragged into the air",
     "1.0"
 ) {
-    // ToDo modify pathfinding to make bees fly above the player
 
     private val bees = mutableMapOf<UUID, MutableList<Bee>>()
 
@@ -54,14 +54,20 @@ class Beeloons : VEModule(
     fun updateBeeList() {
         bees.entries.forEach {
             val list = it.value
-            list.removeIf { bee -> !bee.isValid }
+            val player = Bukkit.getPlayer(it.key)
+            if (player == null) {
+                list.clear()
+                return@forEach
+            }
+            list.removeIf { bee -> !bee.isValid || bee.leashHolder != player }
+            list.forEach beeLoop@{ bee ->
+                val y = player.location.y + 5
+                // move bee to the y position
+                bee.velocity = Vector(0.0, (y - bee.location.y) / 10, 0.0)
+            }
             if (list.size >= 3) {
-                val player = Bukkit.getPlayer(it.key)
-                player ?: return@forEach
                 player.addPotionEffect(PotionEffect(PotionEffectType.LEVITATION, 40, list.size - 3))
             } else if (list.size >= 1) {
-                val player = Bukkit.getPlayer(it.key)
-                player ?: return@forEach
                 player.addPotionEffect(PotionEffect(PotionEffectType.SLOW_FALLING, 40, list.size - 1))
             }
         }
