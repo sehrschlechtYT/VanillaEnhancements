@@ -1,4 +1,4 @@
-config-version: 3 #DO NOT MODIFY THIS SETTING!
+config-version: 4 #DO NOT MODIFY THIS SETTING!
 
 recipe-discover-period: 60 #How often (in ticks) should the plugin check for new recipes? May have an impact on performance if set too low.
 
@@ -18,3 +18,12 @@ resource_pack:
   force: false
   # The prompt message that is displayed on the download screen.
   prompt: "Please download the resource pack to use custom textures and models."
+  3rd_party:
+    # Instead of running the resource pack server, you can also upload the built VE resource pack (/plugins/VanillaEnhancements/resourcepacks/pack.zip) on a 3rd party server.
+    # This is useful if
+    # - you have a Bungeecord or CloudNet network and want to use the same resource pack on all servers
+    # - your server host does not allow you to run a resource pack server
+    # - your server is behind a firewall and you cannot open the port for the resource pack server
+    enabled: false
+    url: "" # The URL of the resource pack. This must be a direct download link.
+    hash: "" # Optional: The SHA-1 hash of the resource pack. This can be found using an online service like https://emn178.github.io/online-tools/sha1_checksum.html (not affiliated with VE)
