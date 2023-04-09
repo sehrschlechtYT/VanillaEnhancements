@@ -158,5 +158,16 @@
             <version>1.15</version>
             <type>jar</type>
         </dependency>
+        <!-- Resource pack hosting -->
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-core-jvm</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-netty-jvm</artifactId>
+            <version>2.2.4</version>
+        </dependency>
     </dependencies>
 </project>

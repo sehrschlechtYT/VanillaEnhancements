@@ -9,3 +9,12 @@ resource_pack:
   # Should the plugin create and send a resource pack to the player?
   # This is only needed if you have enabled a module that has custom textures or models.
   enabled: false
+  # The port on which the resource pack server should listen.
+  # This port must be open for the players to be able to download the resource pack.
+  port: 8080
+  # The hostname of the server. This is used to create the download link for the resource pack.
+  hostname: "127.0.0.1"
+  # Whether players should be forced to use the resource pack.
+  force: false
+  # The prompt message that is displayed on the download screen.
+  prompt: "Please download the resource pack to use custom textures and models."
