@@ -49,6 +49,7 @@ public abstract class RecipeModule extends VEModule {
         Debug.RECIPES.log("Adding recipes for module {}...", getModuleKey());;
         addedRecipes = VanillaEnhancements.getPlugin().getRecipeManager().getRecipes(this);
         getRecipeManager().getRecipes(this).forEach(recipe -> Bukkit.addRecipe(recipe.recipe()));
+        Debug.RECIPES.log("Added {} recipes for module {}.", addedRecipes.size(), getModuleKey());
     }
 
     @Override

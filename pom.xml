@@ -163,11 +163,13 @@
             <groupId>io.ktor</groupId>
             <artifactId>ktor-server-core-jvm</artifactId>
             <version>2.2.4</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-server-netty-jvm</artifactId>
             <version>2.2.4</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

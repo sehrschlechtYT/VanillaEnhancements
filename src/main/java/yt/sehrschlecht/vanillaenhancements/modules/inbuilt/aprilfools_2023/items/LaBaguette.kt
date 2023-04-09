@@ -42,5 +42,6 @@ class LaBaguette : VEItem(
             DisplayType.FIXED to Scale(2.0, 2.0, 1.0),
             DisplayType.GROUND to Scale(1.0, 1.0, 1.0)
         )
-    )
+    ),
+    key = "la_baguette"
 )

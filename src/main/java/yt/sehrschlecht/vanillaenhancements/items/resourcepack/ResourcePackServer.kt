@@ -33,7 +33,7 @@ class ResourcePackServer {
     }
 
     fun stop() {
-        server.stop()
+        server.stop() // ToDo - Doesn't work
     }
 
 }

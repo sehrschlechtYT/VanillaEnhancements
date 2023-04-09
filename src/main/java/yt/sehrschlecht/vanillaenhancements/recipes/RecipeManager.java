@@ -32,8 +32,8 @@ public class RecipeManager {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 for (ItemStack stack : player.getInventory().getContents()) {
-                    if(stack == null) continue;
-                    if(!stack.getType().isItem()) continue;
+                    if (stack == null) continue;
+                    if (!stack.getType().isItem()) continue;
                     discoverRecipes(player, stack.getType());
                 }
             }
@@ -85,4 +85,5 @@ public class RecipeManager {
     public void clearRecipes(VEModule module) {
         recipes.removeIf(pair -> pair != null && pair.getFirst().equals(module.getModuleKey()));
     }
+
 }

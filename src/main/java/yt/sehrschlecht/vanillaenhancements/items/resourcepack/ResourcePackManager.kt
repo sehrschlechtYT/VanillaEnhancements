@@ -27,7 +27,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
     private lateinit var hash: ByteArray
     private val force = plugin.config.getBoolean("resource_pack.force")
     private val prompt = plugin.config.getString("resource_pack.prompt")
-    private lateinit var server: ResourcePackServer
+    private var server: ResourcePackServer? = null
 
     fun initialize() {
         if (!isEnabled()) return
@@ -52,6 +52,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
             } else {
                 providedHash.toByteArray()
             }
+            server = null
         } else {
             plugin.logger.info("Starting resource pack server...")
             server = runServer(packFile)
@@ -166,7 +167,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
 
     fun disable() {
         if (!isEnabled()) return
-        server.stop()
+        server?.stop()
     }
 
 }

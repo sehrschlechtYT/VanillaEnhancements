@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.utils.debugging;
 
 import com.google.gson.annotations.Since;
+import kotlin.Unit;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -10,12 +11,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.schlechteutils.data.Pair;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import yt.sehrschlecht.vanillaenhancements.items.VEItem;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.VERecipe;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
@@ -49,6 +52,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
             return true;
         }
         // ToDo make pages such as recipes paginated
+        // ToDo move subcommands to separate classes
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 sender.sendMessage("§7§oWarning: This command can have unexpected side effects!" +
@@ -286,6 +290,36 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 }
                 sender.sendMessage("-------------------------------------------------");
                 return true;
+            } else if (args[0].equalsIgnoreCase("give-item")) {
+                VEItem item = VanillaEnhancements.getPlugin().getItemManager().findItemByKey(args[1]);
+                if (!(sender instanceof Player player)) {
+                    sender.sendMessage("§cYou must be a player to use this command!");
+                    return true;
+                }
+                if (item == null) {
+                    sender.sendMessage("§cItem not found!");
+                    return true;
+                }
+                player.getInventory().addItem(item.createItem().build());
+                player.sendMessage("You have been given " + item.getDisplayName());
+            }
+        } else if (args.length == 3) {
+            if (args[0].equalsIgnoreCase("give-item")) {
+                VEItem item = VanillaEnhancements.getPlugin().getItemManager().findItemByKey(args[1]);
+                if (!(sender instanceof Player player)) {
+                    sender.sendMessage("§cYou must be a player to use this command!");
+                    return true;
+                }
+                if (item == null) {
+                    sender.sendMessage("§cItem not found!");
+                    return true;
+                }
+                int amount = Integer.parseInt(args[2]);
+                player.getInventory().addItem(item.createItem(creator -> {
+                    creator.amount(amount);
+                    return Unit.INSTANCE; // wtf is this, I hate using kotlin stuff in java
+                }).build());
+                player.sendMessage("You have been given " + item.getDisplayName() + " x" + amount);
             }
         }
         sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]/tickservices/recipe [Key]/recipes/runtickservice [Class]#[Field]/generate-pack>");
@@ -314,7 +348,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!debug().isEnabled()) return null;
         if (args.length == 1) {
-            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "runtickservice", "plugin", "tickservices", "recipes", "recipe", "generate-pack");
+            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "runtickservice", "plugin", "tickservices", "recipes", "recipe", "generate-pack", "give-item");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("module")) {
                 return complete(args, 1, VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules().stream().map(VEModule::getModuleKey).map(Object::toString).toArray(String[]::new));
@@ -331,6 +365,16 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                         .map(VERecipe::key)
                         .map(NamespacedKey::toString)
                         .toArray(String[]::new));
+            } else if (args[0].equalsIgnoreCase("give-item")) {
+                return complete(args, 1, VanillaEnhancements.getPlugin().getItemManager().getItems().stream()
+                        .map(VEItem::getKey)
+                        .toArray(String[]::new));
+            }
+        } else if(args.length == 3) {
+            if (args[0].equalsIgnoreCase("give-item")) {
+                VEItem item = VanillaEnhancements.getPlugin().getItemManager().findItemByKey(args[1]);
+                if (item == null) return null;
+                return complete(args, 2, String.valueOf(item.createItem().build().getMaxStackSize()));
             }
         }
         return null;
