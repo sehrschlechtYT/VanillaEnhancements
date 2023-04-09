@@ -6,8 +6,10 @@ msg:
   prefix: "&7[&cVE&7] "
 
 resource_pack:
-  # Should the plugin create and send a resource pack to the player?
-  # This is only needed if you have enabled a module that has custom textures or models.
+  # If this option is enabled, the plugin will create a resource pack that contains custom textures and models for custom items every time it gets enabled.
+  # This pack will be served by a resource pack server that is started by the plugin.
+  # Note: Running the server requires you to open a port on your firewall.
+  #       If you are not able or willing to do this, you can also upload the resource pack to a 3rd party server (see below).
   enabled: false
   # The port on which the resource pack server should listen.
   # This port must be open for the players to be able to download the resource pack.
@@ -25,5 +27,5 @@ resource_pack:
     # - your server host does not allow you to run a resource pack server
     # - your server is behind a firewall and you cannot open the port for the resource pack server
     enabled: false
-    url: "" # The URL of the resource pack. This must be a direct download link.
+    url: "https://yourdomain.com/pack.zip" # The URL of the resource pack. This must be a direct download link.
     hash: "" # Optional: The SHA-1 hash of the resource pack. This can be found using an online service like https://emn178.github.io/online-tools/sha1_checksum.html (not affiliated with VE)
