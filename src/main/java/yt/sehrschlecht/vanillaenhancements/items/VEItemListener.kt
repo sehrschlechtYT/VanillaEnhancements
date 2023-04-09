@@ -1,9 +1,12 @@
 package yt.sehrschlecht.vanillaenhancements.items
 
-import org.bukkit.Keyed
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.inventory.PrepareAnvilEvent
 import org.bukkit.event.inventory.PrepareItemCraftEvent
+import org.bukkit.event.inventory.PrepareSmithingEvent
+import org.bukkit.event.inventory.TradeSelectEvent
+import org.bukkit.inventory.ItemStack
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 
 /**
@@ -16,17 +19,42 @@ class VEItemListener : Listener {
     @EventHandler
     fun onPrepareItemCraft(event: PrepareItemCraftEvent) {
         val recipe = event.recipe ?: return
-        // check if the recipe is a vanilla recipe
-        if (recipe !is Keyed) return
-        if (!recipe.key.namespace.equals("minecraft", true)) return
+        if (handleEvent(event.inventory.matrix, shouldBlock = { it.blockUsageInCraftingRecipe(recipe) })) {
+            event.inventory.result = null
+        }
+    }
+
+    @EventHandler
+    fun onPrepareAnvil(event: PrepareAnvilEvent) {
+        if (handleEvent(event.inventory.contents, shouldBlock = { it.blockUsageInAnvilRecipe(event) })) {
+            event.inventory.setItem(2, null)
+        }
+    }
+
+    @EventHandler
+    fun onPrepareSmithing(event: PrepareSmithingEvent) {
+        if (handleEvent(event.inventory.contents, shouldBlock = { it.blockUsageInSmithingRecipe(event) })) {
+            event.result = null
+        }
+    }
+
+    @EventHandler
+    fun onSelectTrade(event: TradeSelectEvent) {
+        val recipe = event.merchant.getRecipe(event.index)
+        if (handleEvent(event.inventory.contents, shouldBlock = { it.blockUsageForTrading(recipe) })) {
+            event.inventory.setItem(2, null)
+        }
+    }
+
+    private fun handleEvent(items: Array<ItemStack?>, shouldBlock: (VEItem) -> Boolean) : Boolean {
         // check if one of the ingredients is a custom item
-        for (ingredient in event.inventory.matrix) {
+        for (ingredient in items) {
             ingredient ?: continue
             val customItem = itemManager.findItem(ingredient) ?: continue
-            if (!customItem.disableVanillaCrafting) continue
-            event.inventory.result = null
-            return
+            if (!shouldBlock(customItem)) continue
+            return true
         }
+        return false
     }
 
 }

@@ -302,6 +302,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 }
                 player.getInventory().addItem(item.createItem().build());
                 player.sendMessage("You have been given " + item.getDisplayName());
+                return true;
             }
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("give-item")) {
@@ -320,6 +321,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                     return Unit.INSTANCE; // wtf is this, I hate using kotlin stuff in java
                 }).build());
                 player.sendMessage("You have been given " + item.getDisplayName() + " x" + amount);
+                return true;
             }
         }
         sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]/tickservices/recipe [Key]/recipes/runtickservice [Class]#[Field]/generate-pack>");

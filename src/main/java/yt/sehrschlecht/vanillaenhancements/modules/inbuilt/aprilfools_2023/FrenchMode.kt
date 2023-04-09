@@ -37,24 +37,26 @@ class FrenchMode : CustomItemModule(
     }
 
     private fun registerLaBaguetteRecipe() {
-        val recipe = ShapedRecipe(moduleKey, laBaguette.createItem().build())
+        val key = NamespacedKey(plugin, "la_baguette")
+        val recipe = ShapedRecipe(key, laBaguette.createItem().build())
         recipe.shape("  S", " S ", "S  ")
         recipe.setIngredient('S', Material.BREAD)
         addRecipe(
-            NamespacedKey(plugin, "la_baguette"),
+            key,
             recipe,
             Material.BREAD
         )
     }
 
     private fun registerLeTricoloreRecipe() {
-        val recipe = ShapedRecipe(moduleKey, leTricolore.createItem().build())
+        val key = NamespacedKey(plugin, "le_tricolore")
+        val recipe = ShapedRecipe(key, leTricolore.createItem().build())
         recipe.shape("BWR", "BWR", "BWR")
         recipe.setIngredient('B', Material.BLUE_WOOL)
         recipe.setIngredient('W', Material.WHITE_WOOL)
         recipe.setIngredient('R', Material.RED_WOOL)
         addRecipe(
-            NamespacedKey(plugin, "le_tricolore"),
+            key,
             recipe,
             Material.WHITE_WOOL
         )

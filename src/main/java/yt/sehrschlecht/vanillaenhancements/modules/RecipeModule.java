@@ -63,7 +63,7 @@ public abstract class RecipeModule extends VEModule {
     protected void reloadRecipes() {
         Debug.RECIPES.log("Reloading recipes of module {}...", getModuleKey());
         addedRecipes.forEach(recipe -> {
-            if(Bukkit.getRecipe(recipe.key()) == null) {
+            if (Bukkit.getRecipe(recipe.key()) == null) {
                 Debug.RECIPES.log("Recipe {} was never added.", recipe.key());
             }
             boolean removed = Bukkit.removeRecipe(recipe.key());

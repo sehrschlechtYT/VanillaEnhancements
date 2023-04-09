@@ -1,6 +1,10 @@
 package yt.sehrschlecht.vanillaenhancements.items
 
 import org.bukkit.Material
+import org.bukkit.event.inventory.PrepareAnvilEvent
+import org.bukkit.event.inventory.PrepareSmithingEvent
+import org.bukkit.inventory.MerchantRecipe
+import org.bukkit.inventory.Recipe
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.items.resourcepack.Display
 import yt.sehrschlecht.vanillaenhancements.items.resourcepack.Texture
@@ -17,7 +21,10 @@ abstract class VEItem(
     val customModelData: Int = VanillaEnhancements.getPlugin().resourcePackManager.getNextCustomModelData(vanillaItem),
     val displayName: String,
     val key: String,
-    val disableVanillaCrafting: Boolean = true // whether to disable the usage of this item in vanilla crafting recipes,
+    val blockUsageInCraftingRecipe: (Recipe) -> Boolean = {true}, // whether to disable the usage of this item in crafting recipes
+    val blockUsageInAnvilRecipe: (PrepareAnvilEvent) -> Boolean = {true}, // whether to disable the usage of this item in repairing recipes
+    val blockUsageInSmithingRecipe: (PrepareSmithingEvent) -> Boolean = {true}, // whether to disable the usage of this item in smithing recipes
+    val blockUsageForTrading: (MerchantRecipe) -> Boolean = {true} // whether to disable the usage of this item in trading
 ) {
 
     open fun createItem(): ItemCreator {
