@@ -119,6 +119,11 @@ public final class VanillaEnhancements extends JavaPlugin {
         getCommand("ve-debug").setTabCompleter(new DebugCommand());
     }
 
+    @Override
+    public void onDisable() {
+        resourcePackManager.disable();
+    }
+
     private void createConfig() {
         try {
             configuration = YamlDocument.create(

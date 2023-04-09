@@ -14,20 +14,26 @@ import java.io.File
  * @since 1.0
  */
 class ResourcePackServer {
+    private lateinit var server: ApplicationEngine;
 
     fun run(file: File, port: Int, plugin: VanillaEnhancements) {
         plugin.logger.info("Starting resource pack server...")
-        val server = embeddedServer(Netty, port = port) {
+        server = embeddedServer(Netty, port = port) {
             routing {
                 get("/pack.zip") {
                     call.respondFile(file)
                 }
             }
         }
+        // ToDo redirect log output to plugin logger
         Bukkit.getScheduler().runTaskAsynchronously(plugin, Runnable {
             server.start(wait = true)
             plugin.logger.info("Successfully started resource pack server on port $port!")
         })
+    }
+
+    fun stop() {
+        server.stop()
     }
 
 }

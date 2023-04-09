@@ -17,6 +17,7 @@ import java.security.MessageDigest
  */
 class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
 
+    private val enabled = plugin.config.getBoolean("resource_pack.enabled")
     private val folder = File(plugin.dataFolder, "resourcepacks")
     private val buildFolder = File(folder, "build")
     private val defaultPackFiles = mutableListOf("pack.mcmeta")
@@ -25,6 +26,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
     private lateinit var hash: ByteArray
     private val force = plugin.config.getBoolean("resource_pack.force")
     private val prompt = plugin.config.getString("resource_pack.prompt")
+    private lateinit var server: ResourcePackServer
 
     fun initialize() {
         if (!isEnabled()) return
@@ -36,7 +38,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
             return
         }
         plugin.logger.info("Starting resource pack server...")
-        runServer(packFile)
+        server = runServer(packFile)
         plugin.logger.info("Resource pack server started!")
 
         plugin.server.pluginManager.registerEvents(this, plugin)
@@ -47,12 +49,14 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
     }
 
     private fun calculateHash(file: File): ByteArray {
+        // byte array size must be 20
+        // algorithm: SHA-1
         val data: ByteArray = file.readBytes()
-        return MessageDigest.getInstance("MD5").digest(data)
+        return MessageDigest.getInstance("SHA-1").digest(data)
     }
 
     private fun isEnabled(): Boolean {
-        return plugin.config.getBoolean("resource_pack.enabled")
+        return enabled
     }
 
     fun buildPack(): File? {
@@ -100,9 +104,11 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
         return packFile
     }
 
-    private fun runServer(file: File) {
+    private fun runServer(file: File): ResourcePackServer {
         val port = plugin.config.getInt("resource_pack.port")
-        ResourcePackServer().run(file, port, plugin)
+        val server = ResourcePackServer()
+        server.run(file, port, plugin)
+        return server
     }
 
     private fun getBuilders() : List<ResourcePackBuilder?> {
@@ -130,6 +136,11 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
     fun onJoin(event: PlayerJoinEvent) {
         if (!isEnabled()) return
         event.player.setResourcePack(packUrl, hash, prompt, force)
+    }
+
+    fun disable() {
+        if (!isEnabled()) return
+        server.stop()
     }
 
 }
