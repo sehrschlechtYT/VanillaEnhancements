@@ -13,6 +13,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.*;
+import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.FrenchMode;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.recipes.*;
 import yt.sehrschlecht.vanillaenhancements.recipes.RecipeManager;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickServiceExecutor;
@@ -103,9 +104,7 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new ChargedCreepers(),
                 new DefaultSheepColor(),
                 new DisableShieldBlocking(),
-
-                // Test Modules - ToDo: Remove
-                new LaBaguette()
+                new FrenchMode()
         );
 
         createConfig();

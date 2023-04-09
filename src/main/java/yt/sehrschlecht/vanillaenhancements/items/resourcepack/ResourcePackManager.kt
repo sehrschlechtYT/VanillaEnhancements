@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.items.resourcepack
 
+import org.bukkit.Material
 import org.zeroturnaround.zip.ZipUtil
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.CustomTextureProvider
@@ -15,6 +16,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) {
     private val folder = File(plugin.dataFolder, "resourcepacks")
     private val buildFolder = File(folder, "build")
     private val defaultPackFiles = mutableListOf("pack.mcmeta")
+    private val customModelData = mutableMapOf<Material, Int>()
 
     fun initialize() {
         if (!isEnabled()) return //ToDo
@@ -79,6 +81,13 @@ class ResourcePackManager(val plugin: VanillaEnhancements) {
         val target = File(folder, "pack.zip")
         if (target.exists()) target.delete()
         ZipUtil.pack(buildFolder, target)
+    }
+
+    fun getNextCustomModelData(vanillaItem: Material): Int {
+        var current = customModelData[vanillaItem] ?: 0
+        current++
+        customModelData[vanillaItem] = current
+        return current
     }
 
 }
