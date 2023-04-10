@@ -324,7 +324,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
         }
-        sender.sendMessage("§cUsage: /ve-debug <reload/generate-docs/module [Module Key]/modules/tickservice [Class]#[Field]/plugin [Name]/tickservices/recipe [Key]/recipes/runtickservice [Class]#[Field]/generate-pack>");
+        sender.sendMessage("§cUsage: /ve-debug reload/generate-docs/module <Module Key>/modules/tickservice <Class>#<Field>/plugin <Name>/tickservices/recipe <Key>/recipes/runtickservice <Class>#<Field>/generate-pack/give-item <Key> [Amount]");
         return true;
     }
 
