@@ -8,6 +8,7 @@ import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.removeColorCodes
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -29,9 +30,9 @@ class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: M
         val modules = plugin.moduleRegistry.getModulesByTag(tag)
         modules.forEach { // ToDo: Add pagination
             contents.add(ClickableItem.of(it.buildIcon().apply {
-                displayName("§l${getDisplayName()}")
-                it.description?.let { desc -> addLore(desc) }
-                addLore("Category: ${it.category.displayName}")
+                displayName("§f§l${getDisplayName().removeColorCodes()}")
+                it.description?.let { desc -> addLongLore(desc, lineStart = "§f§o") }
+                addLore("§fCategory: ${it.category.displayName}")
             }.build()) { _ -> player.sendMessage("You clicked on module ${it.name}!") })
         }
         contents.addBackButton { _ -> ModuleTagsMenu.getInventory(plugin) }

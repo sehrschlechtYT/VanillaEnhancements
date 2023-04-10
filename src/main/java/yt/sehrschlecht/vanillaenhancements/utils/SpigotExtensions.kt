@@ -13,20 +13,36 @@ import org.bukkit.entity.Player
 class SpigotExtensions {
 
     companion object {
-        fun InventoryContents.addBackButton(onClick: (Player) -> SmartInventory? = { null }) {
+        fun InventoryContents.addBackButton(onClick: ((Player) -> SmartInventory?)? = null) {
             set(2, 8, ClickableItem.of(
                 ItemCreator(Material.IRON_DOOR) {
-                    displayName("§cClose")
+                    if (onClick == null) {
+                        displayName("§cClose")
+                    } else {
+                        displayName("§cBack")
+                    }
                 }.build()
-            ) { event ->
+            ) click@{ event ->
                 val player = event.whoClicked as Player
+                onClick ?: return@click player.closeInventory()
                 val inventory = onClick(player)
-                if (inventory == null) {
-                    player.closeInventory()
-                } else {
-                    inventory.open(player)
-                }
+                inventory ?: return@click player.closeInventory()
+                inventory.open(player)
             })
+        }
+
+        fun InventoryContents.fillBackground() {
+            while (true) {
+                val firstEmpty = firstEmpty() ?: break
+                if (firstEmpty.isEmpty) return
+                set(firstEmpty.get(), ClickableItem.empty(ItemCreator(Material.GRAY_STAINED_GLASS_PANE) {
+                    displayName("§0")
+                }.build()))
+            }
+        }
+
+        fun String.removeColorCodes(): String {
+            return this.replace("§[0-9a-fk-or]".toRegex(), "")
         }
     }
 

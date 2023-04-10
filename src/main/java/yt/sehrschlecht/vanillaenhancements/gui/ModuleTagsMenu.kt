@@ -8,6 +8,8 @@ import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.removeColorCodes
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -26,18 +28,18 @@ class ModuleTagsMenu(private val plugin: VanillaEnhancements) : InventoryProvide
     }
 
     override fun init(player: Player, contents: InventoryContents) {
-        contents.fill(null)
         val tags = plugin.moduleRegistry.collectTags()
         tags.forEach { // TODO: Add pagination
             val modules = plugin.moduleRegistry.getModulesByTag(it)
             val total = modules.size
             val enabled = modules.count(VEModule::isEnabled)
             contents.add(ClickableItem.of(it.buildIcon {
-                displayName("§l${getDisplayName()}")
-                addLore("$enabled/$total enabled")
+                displayName("§f§l${getDisplayName().removeColorCodes()}")
+                addLore("§f$enabled/$total enabled")
             }.build()) { _ -> ModuleListMenu.getInventory(plugin, it).open(player) })
         }
         contents.addBackButton { _ -> MainMenu.getInventory(plugin) }
+        contents.fillBackground()
     }
 
     override fun update(player: Player, contents: InventoryContents) {

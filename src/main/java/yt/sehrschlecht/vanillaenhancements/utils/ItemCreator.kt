@@ -103,6 +103,21 @@ class ItemCreator {
         lore(currentLore)
     }
 
+    fun addLongLore(lore: String, lineStart: String = "§f", limit: Int = 45) {
+        val currentLore: MutableList<String> = meta.lore ?: mutableListOf()
+        val lines = lore.split(" ")
+        var currentLine = ""
+        for (line in lines) {
+            if (currentLine.length + line.length > limit) {
+                currentLore.add(lineStart + currentLine)
+                currentLine = ""
+            }
+            currentLine += "$line "
+        }
+        currentLore.add(lineStart + currentLine.trim())
+        lore(currentLore)
+    }
+
     fun enchantment(enchantment: Enchantment, level: Int = 1) {
         meta.addEnchant(enchantment, level, true)
     }

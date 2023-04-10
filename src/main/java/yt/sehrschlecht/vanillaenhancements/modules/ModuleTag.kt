@@ -28,8 +28,8 @@ class ModuleTag(displayName: String, key: String, description: String, displayIt
 
     fun buildIcon(modify: ItemCreator.() -> Unit): ItemCreator {
         val creator = ItemCreator(displayItem) {
-            displayName(displayName)
-            lore(description)
+            displayName("§f$displayName")
+            lore("§f$description")
         }
         modify(creator)
         return creator
