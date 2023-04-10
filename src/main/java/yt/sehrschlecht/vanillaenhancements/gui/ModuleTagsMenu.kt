@@ -6,8 +6,10 @@ import fr.minuskube.inv.content.InventoryContents
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
+import yt.sehrschlecht.vanillaenhancements.utils.PaginationType
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.removeColorCodes
 
 /**
@@ -28,15 +30,21 @@ class ModuleTagsMenu(private val plugin: VanillaEnhancements) : UpdatingInventor
 
     override fun init(player: Player, contents: InventoryContents) {
         val tags = plugin.moduleRegistry.collectTags()
-        tags.forEach { // TODO: Add pagination
+        val items = tags.map {
             val modules = plugin.moduleRegistry.getModulesByTag(it)
             val total = modules.size
             val enabled = modules.count(VEModule::isEnabled)
-            contents.add(ClickableItem.of(it.buildIcon {
+            ClickableItem.of(it.buildIcon {
                 displayName("§f§l${getDisplayName().removeColorCodes()}")
                 addLore("§f$enabled/$total enabled")
-            }.build()) { _ -> ModuleListMenu.getInventory(plugin, it).open(player) })
+            }.build()) { _ -> ModuleListMenu.getInventory(plugin, it).open(player) }
         }
+
+        contents.paginateItems(items, player = player, paginationType = PaginationType.HORIZONTAL_7, noneItem = {
+            displayName("§c§lNo modules found")
+            addLongLore("This should not be the case. Please report this bug to the discord server (see SpigotMC page of the VanillaEnhancements plugin)!", lineStart = "§c")
+        }, inventoryGetter = { getInventory(plugin) })
+
         contents.addBackButton { _ -> MainMenu.getInventory(plugin) }
         contents.fillBackground()
     }

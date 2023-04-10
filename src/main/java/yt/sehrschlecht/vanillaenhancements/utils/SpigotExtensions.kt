@@ -64,22 +64,26 @@ class SpigotExtensions {
             }.mapKeys { SlotPos(row, it.key) }
         }
 
-        fun InventoryContents.paginateItems(items: List<ClickableItem>, row: Int = 1, player: Player,
+        fun InventoryContents.paginateItems(items: List<ClickableItem>, row: Int = 1, player: Player, paginationType: PaginationType = PaginationType.HORIZONTAL_5, // items per page: either 5 or 7
                                             noneItem: ItemCreator.() -> Unit, inventoryGetter: () -> SmartInventory) {
+            val itemsPerPage = when (paginationType) {
+                PaginationType.HORIZONTAL_5 -> 5
+                PaginationType.HORIZONTAL_7 -> 7
+            }
             if (items.isEmpty()) {
                 set(row, 4, ClickableItem.empty(ItemCreator(Material.BARRIER) {
                     noneItem()
                 }.build()))
-            } else if (items.size <= 5) {
+            } else if (items.size <= itemsPerPage) {
                 items.center(row).forEach(this::set)
             } else {
                 val pagination = pagination()
                 pagination.setItems(*items.toTypedArray())
-                pagination.setItemsPerPage(5)
-                pagination.addToIterator(newIterator(SlotIterator.Type.HORIZONTAL, row, 2))
+                pagination.setItemsPerPage(itemsPerPage)
+                pagination.addToIterator(newIterator(SlotIterator.Type.HORIZONTAL, row, if (itemsPerPage == 5) 2 else 1))
 
                 if (!pagination.isLast) {
-                    set(row, 7, ClickableItem.of(
+                    set(row, if (itemsPerPage == 5) 7 else 8, ClickableItem.of(
                         ItemCreator(Material.ARROW) {
                             displayName("§fNext Page")
                         }.build()
@@ -87,7 +91,7 @@ class SpigotExtensions {
                 }
 
                 if (!pagination.isFirst) {
-                    set(row, 1, ClickableItem.of(
+                    set(row, if (itemsPerPage == 5) 1 else 0, ClickableItem.of(
                         ItemCreator(Material.ARROW) {
                             displayName("§fPrevious Page")
                         }.build()
@@ -97,4 +101,8 @@ class SpigotExtensions {
         }
     }
 
+}
+
+enum class PaginationType {
+    HORIZONTAL_5, HORIZONTAL_7
 }
