@@ -18,9 +18,9 @@ import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 @Since(1.0)
 public class SmeltConcreteToConcretePowder extends RecipeModule {
     public FloatOption experience = new FloatOption(0f,
-            "The experience given by the recipe", 0f, null);
+            "The experience given by the recipe", 0f, null, 0.1f);
     public IntegerOption cookingTime = new IntegerOption(200,
-            "The cooking time of the recipe in ticks", 1, null);
+            "The cooking time of the recipe in ticks", 1, null, 5);
 
     public SmeltConcreteToConcretePowder() {
         super("Allows players to smelt concrete to concrete powder.", INBUILT);

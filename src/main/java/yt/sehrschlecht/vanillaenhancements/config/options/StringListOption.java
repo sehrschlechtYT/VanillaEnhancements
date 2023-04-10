@@ -1,8 +1,14 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.gui.ModifyStringListMenu;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
 import java.util.List;
 
@@ -41,6 +47,12 @@ public class StringListOption extends ConfigOption<List<String>> {
     @Override
     public @Nullable String validate(List<String> value) {
         return null;
+    }
+
+    @Override
+    public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        creator.addLore("§9Click to modify the list");
+        return ClickableItem.of(creator.build(), event -> ModifyStringListMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked()));
     }
 
 }

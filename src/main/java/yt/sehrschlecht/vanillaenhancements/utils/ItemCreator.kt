@@ -36,6 +36,10 @@ class ItemCreator {
         init(this)
     }
 
+    fun type(material: Material) {
+        stack.type = material
+    }
+
     fun color(color: Color?) {
         if (meta !is LeatherArmorMeta) throw IllegalArgumentException("ItemMeta is not a LeatherArmorMeta!")
         meta.setColor(color)

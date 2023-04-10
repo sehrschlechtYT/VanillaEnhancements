@@ -65,6 +65,7 @@ public abstract class ConfigOption<T> {
     public abstract String valueToDisplayString(T value);
 
     public void set(T value) {
+        if (value == null) value = defaultValue;
         Config.getInstance().set(this, value);
     }
 

@@ -80,7 +80,8 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
                     addLongLore("§fDescription: ${option.description}", lineStart = "§f§o")
                     addLongLore("§fCurrent value: ${option.valueToDisplayString()}")
                     addLore("")
-                }
+                },
+                getInventory(plugin, module, sourceTag)
             )
         }
 

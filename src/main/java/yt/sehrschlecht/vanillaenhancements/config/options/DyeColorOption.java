@@ -4,6 +4,7 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
@@ -42,8 +43,17 @@ public class DyeColorOption extends EnumConfigOption<DyeColor> {
 
     @Override
     public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        creator.type(asWool());
         creator.addLore("§9Left click to change the value.");
         return ClickableItem.of(creator.build(), event -> ChooseDyeColorMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked()));
+    }
+
+    protected Material asWool() {
+        try {
+            return Material.valueOf(get().name() + "_WOOL");
+        } catch (IllegalArgumentException e) {
+            return Material.WHITE_WOOL;
+        }
     }
 
 }

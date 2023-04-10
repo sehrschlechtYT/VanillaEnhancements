@@ -23,9 +23,9 @@ import java.util.Arrays;
 @Source("https://vanillatweaks.net/")
 public class SmeltConcretePowderToGlass extends RecipeModule {
     public FloatOption experience = new FloatOption(0f,
-            "The experience given by the recipe", 0f, null);
+            "The experience given by the recipe", 0f, null, 0.1f);
     public IntegerOption cookingTime = new IntegerOption(200,
-            "The cooking time of the recipe in ticks", 1, null);
+            "The cooking time of the recipe in ticks", 1, null, 5);
 
     public SmeltConcretePowderToGlass() {
         super("Allows players to smelt concrete powder into stained glass.",

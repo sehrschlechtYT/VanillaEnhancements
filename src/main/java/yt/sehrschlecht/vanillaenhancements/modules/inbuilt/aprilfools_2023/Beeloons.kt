@@ -33,7 +33,7 @@ class Beeloons : VEModule(
 ) {
 
     private val bees = mutableMapOf<UUID, MutableList<Bee>>()
-    val minBeesForLevitation = IntegerOption(3, "The minimum amount of bees a player needs to be dragged into the air", 1, 1000)
+    val minBeesForLevitation = IntegerOption(3, "The minimum amount of bees a player needs to be dragged into the air", 1, 1000, 1)
 
     override fun getKey(): String {
         return "beeloons"

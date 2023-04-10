@@ -30,7 +30,7 @@ class AttackKnockback : VEModule(
     ModuleTag.ENTITIES,
 ), CommandExecutor {
 
-    val percentage = IntegerOption(100, "Multiply the knockback by this percentage", 0, 1000)
+    val percentage = IntegerOption(100, "Multiply the knockback by this percentage", 0, 1000, 10)
     val randomizePercentage = BooleanOption(false, "Randomize the knockback percentage (${percentage.min}-${percentage.max}%)")
     val enableCommand = BooleanOption(true, "Enable a command to set the percentage")
     val applyToVerticalVelocity = BooleanOption(false, "Apply the knockback multiplier to the vertical velocity too")

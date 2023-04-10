@@ -27,9 +27,9 @@ public class CraftStairsToBlocks extends RecipeModule {
     public MaterialListOption excludedStairs = new MaterialListOption(Collections.emptyList(),
             "Exclude recipes for stairs from being registered");
     public IntegerOption requiredStairsAmount = new IntegerOption(4,
-            "The required amount of stairs to craft the blocks", 1, 9);
+            "The required amount of stairs to craft the blocks", 1, 9, 1);
     public IntegerOption blockAmount = new IntegerOption(3,
-            "The amount of blocks that players will receive", 1, 64);
+            "The amount of blocks that players will receive", 1, 64, 1);
 
     public CraftStairsToBlocks() {
         super("Allows players to craft stairs back into blocks.",

@@ -93,6 +93,9 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
 
     @Override
     public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        creator.amount(
+                Math.min(Math.max(((Number) get()).intValue(), 1), 64)
+        );
         T diff = subtract(max, min);
         boolean enableGreaterStep = ((Number) diff).doubleValue() > ((Number) step).doubleValue() * 5;
         creator.addLore("§9Right click: -" + step);

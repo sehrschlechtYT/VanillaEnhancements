@@ -44,7 +44,7 @@ class ChooseDyeColorMenu(private val option: DyeColorOption, private val origin:
                 origin.open(player)
             })
         }
-        contents.addBackButton()
+        contents.addBackButton { origin }
     }
 
     override fun update(player: Player, contents: InventoryContents) {

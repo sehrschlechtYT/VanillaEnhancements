@@ -1,8 +1,14 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.gui.ChooseStringMenu;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -48,5 +54,13 @@ public class StringOption extends ConfigOption<String> {
     public @Nullable String validate(String value) {
         if(!allowEmpty && value.isEmpty()) return "The value can't be empty";
         return null;
+    }
+
+    @Override
+    public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        creator.addLore("§9Click to change the value");
+        return ClickableItem.of(creator.build(), event -> {
+            ChooseStringMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked());
+        });
     }
 }

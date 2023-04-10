@@ -1,10 +1,13 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.List;
@@ -74,6 +77,15 @@ public class MaterialListOption extends ConfigOption<List<Material>> { // ToDo m
     @Override
     public @Nullable String validate(List<Material> value) {
         return null;
+    }
+
+    @Override
+    public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        // ToDo
+        creator.displayName("§cNot implemented yet");
+        return ClickableItem.of(creator.build(), event -> {
+
+        });
     }
 
 }
