@@ -29,19 +29,19 @@ public abstract class RecipeModule extends VEModule {
      * @param description A <b>short</b> description of the module.
      * @param since       The version since the module is available.
      */
-    public RecipeModule(@Nullable String description, @Nullable String since, @NotNull ModuleCategory category) {
-        super(description, since, category);
+    public RecipeModule(@Nullable String description, @Nullable String since, @NotNull ModuleCategory category, ModuleTag... tags) {
+        super(description, since, category, tags);
     }
 
     /**
      * @param description A <b>short</b> description of the module.
      */
-    public RecipeModule(@Nullable String description, @NotNull ModuleCategory category) {
-        super(description, category);
+    public RecipeModule(@Nullable String description, @NotNull ModuleCategory category, ModuleTag... tags) {
+        super(description, category, tags);
     }
 
-    public RecipeModule(@NotNull ModuleCategory category) {
-        super(category);
+    public RecipeModule(@NotNull ModuleCategory category, ModuleTag... tags) {
+        super(category, tags);
     }
 
     @Override

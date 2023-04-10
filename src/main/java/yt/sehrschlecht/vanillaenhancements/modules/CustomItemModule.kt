@@ -7,7 +7,14 @@ import yt.sehrschlecht.vanillaenhancements.items.resourcepack.ResourcePackBuilde
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-abstract class CustomItemModule(description: String?, since: String?, category: ModuleCategory) : RecipeModule(description, since, category), CustomTextureProvider {
+abstract class CustomItemModule(
+    description: String?,
+    since: String?,
+    category: ModuleCategory,
+    vararg tags: ModuleTag
+) : RecipeModule(
+    description, since, category, *tags
+), CustomTextureProvider {
 
     abstract fun getItems(): List<VEItem>
 
