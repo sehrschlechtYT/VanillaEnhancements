@@ -81,7 +81,7 @@ public abstract class VEModule implements Listener {
 
     }
 
-    public VanillaEnhancements getPlugin() {
+    public VanillaEnhancements getPlugin() { // ToDo this does not support other plugins - move this in a class like "InbuiltModule" and make this abstract
         return VanillaEnhancements.getPlugin();
     }
 

@@ -20,7 +20,7 @@ import java.util.List;
  * @since 1.0
  */
 public class RecipeManager {
-    private final List<Pair<NamespacedKey, VERecipe>> recipes;
+    private final List<Pair<NamespacedKey, VERecipe>> recipes; // not a map because the key is the module key
 
     public RecipeManager() {
         recipes = new ArrayList<>();
@@ -32,8 +32,8 @@ public class RecipeManager {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 for (ItemStack stack : player.getInventory().getContents()) {
-                    if(stack == null) continue;
-                    if(!stack.getType().isItem()) continue;
+                    if (stack == null) continue;
+                    if (!stack.getType().isItem()) continue;
                     discoverRecipes(player, stack.getType());
                 }
             }
@@ -85,4 +85,5 @@ public class RecipeManager {
     public void clearRecipes(VEModule module) {
         recipes.removeIf(pair -> pair != null && pair.getFirst().equals(module.getModuleKey()));
     }
+
 }

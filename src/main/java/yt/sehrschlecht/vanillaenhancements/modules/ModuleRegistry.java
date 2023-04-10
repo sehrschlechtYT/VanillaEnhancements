@@ -48,6 +48,9 @@ public class ModuleRegistry {
         } catch (Throwable throwable) {
             logger.log(Level.SEVERE, "The module " + module.getName() + " couldn't be loaded due to an error:");
             logger.log(Level.SEVERE, throwable.getMessage());
+            if (VanillaEnhancements.getPlugin().getDebug().isEnabled()) {
+                throwable.printStackTrace();
+            }
             return false;
         }
     }

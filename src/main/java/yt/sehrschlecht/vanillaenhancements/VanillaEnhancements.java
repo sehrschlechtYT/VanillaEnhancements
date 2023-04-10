@@ -6,8 +6,12 @@ import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.items.ItemManager;
+import yt.sehrschlecht.vanillaenhancements.items.VEItemListener;
+import yt.sehrschlecht.vanillaenhancements.items.resourcepack.ResourcePackManager;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleRegistry;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.*;
@@ -38,6 +42,8 @@ public final class VanillaEnhancements extends JavaPlugin {
     private TickServiceExecutor tickServiceExecutor;
     private Debug debug;
     private RecipeManager recipeManager;
+    private ResourcePackManager resourcePackManager;
+    private ItemManager itemManager;
 
     @Override
     public void onEnable() {
@@ -58,8 +64,10 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         ExternalAPIs.init();
 
+        itemManager = new ItemManager(this);
         recipeManager = new RecipeManager();
         tickServiceExecutor = new TickServiceExecutor();
+        resourcePackManager = new ResourcePackManager(this);
 
         inbuiltModules = Arrays.asList(
                 new UnstripLogs(),
@@ -99,7 +107,8 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new Beeloons(),
                 new ChargedCreepers(),
                 new DefaultSheepColor(),
-                new DisableShieldBlocking()
+                new DisableShieldBlocking(),
+                new FrenchMode()
         );
 
         createConfig();
@@ -108,9 +117,20 @@ public final class VanillaEnhancements extends JavaPlugin {
 
         tickServiceExecutor.startTicking();
         recipeManager.discoverRecipes();
+        resourcePackManager.initialize();
+        itemManager.initialize();
 
         getCommand("ve-debug").setExecutor(new DebugCommand());
         getCommand("ve-debug").setTabCompleter(new DebugCommand());
+
+        registerListeners(
+                new VEItemListener()
+        );
+    }
+
+    @Override
+    public void onDisable() {
+        resourcePackManager.disable();
     }
 
     private void createConfig() {
@@ -121,7 +141,7 @@ public final class VanillaEnhancements extends JavaPlugin {
                     GeneralSettings.DEFAULT,
                     LoaderSettings.builder().setAutoUpdate(true).build(),
                     DumperSettings.DEFAULT,
-                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version")).build()
+                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version")).setKeepAll(true).build()
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,6 +155,12 @@ public final class VanillaEnhancements extends JavaPlugin {
         for (VEModule module : inbuiltModules) {
             moduleRegistry.registerModule(module);
             Debug.MODULES.log("Registered module {}", module.getName());
+        }
+    }
+
+    public void registerListeners(Listener... listeners) {
+        for (Listener listener : listeners) {
+            getServer().getPluginManager().registerEvents(listener, this);
         }
     }
 
@@ -160,6 +186,14 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public RecipeManager getRecipeManager() {
         return recipeManager;
+    }
+
+    public ResourcePackManager getResourcePackManager() {
+        return resourcePackManager;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 
     public Debug getDebug() {
