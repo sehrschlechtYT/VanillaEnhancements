@@ -16,7 +16,7 @@ class BasaltGenReplace : GenReplaceModule(
     description = "Replaces generated basalt (lava + soul soil + blue ice) with the set block",
     since = "1.0",
     category = INBUILT,
-    ModuleTag.APRIL_FOOLS_2023,
+    tags = arrayOf(ModuleTag.APRIL_FOOLS_2023),
 ) {
 
     override fun getKey(): String {

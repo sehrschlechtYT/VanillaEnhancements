@@ -1,12 +1,14 @@
 package yt.sehrschlecht.vanillaenhancements.modules
 
 import org.bukkit.Material
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
 class ModuleTag(displayName: String, key: String, description: String, displayItem: Material) : AbstractModuleCategorization(displayName, key, description, displayItem) {
+
     companion object {
         @JvmField val APRIL_FOOLS_2023 = ModuleTag("April Fools 2023", "april_fools_2023", "Features from the april fools snapshot 23w13a_or_b", Material.CAKE)
         @JvmField val RECIPES = ModuleTag("Recipes", "recipes", "Custom recipes", Material.CRAFTING_TABLE)
@@ -23,4 +25,18 @@ class ModuleTag(displayName: String, key: String, description: String, displayIt
         @JvmField val OLD_FEATURES = ModuleTag("Old Features", "old_features", "Features that were removed from the game", Material.CLOCK)
         @JvmField val MISC = ModuleTag("Misc", "misc", "Miscellaneous features", Material.BOOK)
     }
+
+    fun buildIcon(modify: ItemCreator.() -> Unit): ItemCreator {
+        val creator = ItemCreator(displayItem) {
+            displayName(displayName)
+            lore(description)
+        }
+        modify(creator)
+        return creator
+    }
+
+    fun buildIcon(): ItemCreator {
+        return buildIcon {}
+    }
+
 }

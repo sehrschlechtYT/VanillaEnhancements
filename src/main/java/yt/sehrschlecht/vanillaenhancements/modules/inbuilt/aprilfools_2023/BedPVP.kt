@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.inventory.EquipmentSlot
@@ -38,6 +39,10 @@ class BedPVP : VEModule(
 
     override fun getName(): String {
         return "Bed PVP"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.RED_BED
     }
 
     @Tick(period = 20, executeNow = true)

@@ -75,4 +75,9 @@ public class InvisibleItemFrames extends VEModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.ITEM_FRAME;
+    }
+
 }

@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules;
 
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public abstract class VEModule implements Listener {
      * @param description A <b>short</b> description of the module.
      * @param since       The version since the module is available.
      * @param category
+     * @param displayItem
      */
     public VEModule(@Nullable String description, @Nullable String since, @NotNull ModuleCategory category, ModuleTag... tags) {
         this.description = description;
@@ -49,6 +52,7 @@ public abstract class VEModule implements Listener {
     /**
      * @param description A <b>short</b> description of the module. Best practice is to describe the functionality of the module in one sentence.
      * @param category
+     * @param displayItem
      */
     public VEModule(@Nullable String description, @NotNull ModuleCategory category, ModuleTag... tags) {
         this(description, null, category, tags);
@@ -144,6 +148,16 @@ public abstract class VEModule implements Listener {
 
     public void loopPlayers(Consumer<Player> consumer) {
         getPlugin().getServer().getOnlinePlayers().forEach(consumer);
+    }
+
+    public abstract Material getDisplayItem();
+
+    @NotNull
+    public ItemCreator buildIcon() {
+        return new ItemCreator(getDisplayItem(), itemCreator -> {
+            itemCreator.displayName(getName());
+            return null;
+        });
     }
 
 }

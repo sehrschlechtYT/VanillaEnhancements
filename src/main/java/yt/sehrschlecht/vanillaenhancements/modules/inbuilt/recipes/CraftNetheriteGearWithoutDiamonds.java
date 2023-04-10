@@ -171,4 +171,9 @@ public class CraftNetheriteGearWithoutDiamonds extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.NETHERITE_INGOT;
+    }
+
 }

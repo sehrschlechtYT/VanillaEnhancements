@@ -88,4 +88,9 @@ public class DyeSand extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.RED_SAND;
+    }
+
 }

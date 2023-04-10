@@ -75,4 +75,9 @@ public class MoreShapelessRecipes extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.CRAFTING_TABLE;
+    }
+
 }

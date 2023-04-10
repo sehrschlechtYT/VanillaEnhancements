@@ -2,6 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import com.google.gson.annotations.Since;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
@@ -73,7 +74,7 @@ public class ZombiesDryToHusks extends VEModule {
             husk.addPotionEffect(effect);
         }
         try {
-            if(zombie.getMemory(MemoryKey.ANGRY_AT) != null) {
+            if (zombie.getMemory(MemoryKey.ANGRY_AT) != null) {
                 husk.setMemory(MemoryKey.ANGRY_AT, zombie.getMemory(MemoryKey.ANGRY_AT));
             }
         } catch (IllegalStateException ignored) {
@@ -99,6 +100,11 @@ public class ZombiesDryToHusks extends VEModule {
     @Override
     public JavaPlugin getPlugin() {
         return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.HUSK_SPAWN_EGG;
     }
 
 }

@@ -117,4 +117,9 @@ public class MoreBlackstoneRecipes extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.BLACKSTONE;
+    }
+
 }

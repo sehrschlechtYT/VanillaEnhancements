@@ -56,4 +56,9 @@ public class RottenFleshSmelting extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.ROTTEN_FLESH;
+    }
+
 }

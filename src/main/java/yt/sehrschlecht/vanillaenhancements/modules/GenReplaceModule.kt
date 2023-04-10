@@ -26,4 +26,8 @@ abstract class GenReplaceModule(
         }
     }
 
+    override fun getDisplayItem(): Material {
+        return blockToReplace
+    }
+
 }

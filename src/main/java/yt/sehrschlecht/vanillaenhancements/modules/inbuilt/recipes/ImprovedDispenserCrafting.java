@@ -64,4 +64,9 @@ public class ImprovedDispenserCrafting extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.DISPENSER;
+    }
+
 }

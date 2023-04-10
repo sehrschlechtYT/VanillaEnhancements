@@ -107,4 +107,12 @@ class ModuleRegistry {
         return registeredModules.flatMap { it.tags }.distinct()
     }
 
+    fun getModulesByCategory(category: ModuleCategory): List<VEModule> {
+        return registeredModules.filter { it.category == category }
+    }
+
+    fun getModulesByTag(tag: ModuleTag): List<VEModule> {
+        return registeredModules.filter { it.tags.contains(tag) }
+    }
+
 }

@@ -85,6 +85,10 @@ class ItemCreator {
         meta.setDisplayName(name)
     }
 
+    fun getDisplayName(): String {
+        return meta.displayName
+    }
+
     fun lore(vararg lore: String) {
         meta.lore = lore.toList()
     }

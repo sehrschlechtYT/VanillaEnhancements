@@ -56,4 +56,9 @@ public class CraftChainArmor extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.CHAINMAIL_CHESTPLATE;
+    }
+
 }

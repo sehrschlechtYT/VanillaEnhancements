@@ -65,4 +65,9 @@ public class SmeltConcretePowderToGlass extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.GREEN_CONCRETE_POWDER;
+    }
+
 }

@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
+import org.bukkit.Material
 import org.bukkit.entity.Creeper
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntitySpawnEvent
@@ -23,6 +24,10 @@ class ChargedCreepers : VEModule(
 
     override fun getKey(): String {
         return "charged_creepers"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.CREEPER_HEAD
     }
 
     override fun onEnable() {

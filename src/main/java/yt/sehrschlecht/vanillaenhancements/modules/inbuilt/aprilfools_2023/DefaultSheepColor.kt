@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import org.bukkit.DyeColor
+import org.bukkit.Material
 import org.bukkit.entity.Sheep
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntitySpawnEvent
@@ -27,6 +28,10 @@ class DefaultSheepColor : VEModule(
 
     override fun getKey(): String {
         return "default_sheep_color"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.SHEEP_SPAWN_EGG
     }
 
     override fun onEnable() {

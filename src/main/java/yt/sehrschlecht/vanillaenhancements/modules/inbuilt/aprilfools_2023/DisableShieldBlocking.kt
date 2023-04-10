@@ -28,6 +28,10 @@ class DisableShieldBlocking : VEModule(
         return "disable_shield_blocking"
     }
 
+    override fun getDisplayItem(): Material {
+        return Material.SHIELD
+    }
+
     @EventHandler
     fun onShieldBlock(event: PlayerInteractEvent) { // not sure if this is needed
         event.item ?: return

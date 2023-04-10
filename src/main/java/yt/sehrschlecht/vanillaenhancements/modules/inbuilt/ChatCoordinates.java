@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import com.google.gson.annotations.Since;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
@@ -57,6 +58,11 @@ public class ChatCoordinates extends VEModule {
     @Override
     public JavaPlugin getPlugin() {
         return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.FILLED_MAP;
     }
 
 }

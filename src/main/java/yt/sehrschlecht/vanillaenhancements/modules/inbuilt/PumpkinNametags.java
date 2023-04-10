@@ -80,4 +80,9 @@ public class PumpkinNametags extends VEModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.CARVED_PUMPKIN;
+    }
+
 }

@@ -92,4 +92,9 @@ public class CraftSlabsToBlocks extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.OAK_LOG;
+    }
+
 }

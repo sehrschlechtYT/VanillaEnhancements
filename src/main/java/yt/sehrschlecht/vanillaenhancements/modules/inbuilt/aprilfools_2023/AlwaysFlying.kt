@@ -2,6 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import com.google.gson.annotations.Since
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -34,6 +35,10 @@ class AlwaysFlying : VEModule(
 
     override fun getPlugin(): JavaPlugin {
         return veInstance
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.ELYTRA
     }
 
     @EventHandler

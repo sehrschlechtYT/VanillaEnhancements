@@ -55,4 +55,9 @@ public class UnstripLogs extends VEModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.STRIPPED_OAK_LOG;
+    }
+
 }

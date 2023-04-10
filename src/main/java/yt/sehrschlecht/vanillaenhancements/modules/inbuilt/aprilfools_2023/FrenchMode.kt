@@ -37,6 +37,10 @@ class FrenchMode : CustomItemModule(
         return "french_mode"
     }
 
+    override fun getDisplayItem(): Material {
+        return Material.BREAD
+    }
+
     override fun registerRecipes() {
         registerLaBaguetteRecipe()
         registerLeTricoloreRecipe()

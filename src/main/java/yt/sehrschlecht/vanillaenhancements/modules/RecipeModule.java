@@ -108,5 +108,4 @@ public abstract class RecipeModule extends VEModule {
         getRecipeManager().removeRecipe(getModuleKey(), key);
     }
 
-
 }

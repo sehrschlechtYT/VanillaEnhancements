@@ -40,4 +40,9 @@ public class CobblestoneInStoneCutter extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.COBBLESTONE;
+    }
+
 }

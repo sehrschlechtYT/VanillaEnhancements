@@ -171,5 +171,10 @@
             <version>2.2.4</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>fr.minuskube.inv</groupId>
+            <artifactId>smart-invs</artifactId>
+            <version>1.2.7</version>
+        </dependency>
     </dependencies>
 </project>

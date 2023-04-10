@@ -2,6 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import com.google.gson.annotations.Since
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -36,6 +37,10 @@ class AttackKnockback : VEModule(
 
     override fun getKey(): String {
         return "attack_knockback"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.WOODEN_SWORD
     }
 
     override fun onEnable() {

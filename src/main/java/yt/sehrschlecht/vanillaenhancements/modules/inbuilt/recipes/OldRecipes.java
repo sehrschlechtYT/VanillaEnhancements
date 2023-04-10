@@ -109,4 +109,9 @@ public class OldRecipes extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.ENCHANTED_GOLDEN_APPLE;
+    }
+
 }

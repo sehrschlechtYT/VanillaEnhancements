@@ -65,4 +65,9 @@ public class RemoveNametags extends VEModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.NAME_TAG;
+    }
+
 }

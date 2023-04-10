@@ -59,4 +59,9 @@ public class CraftCoalToBlackDye extends RecipeModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.BLACK_DYE;
+    }
+
 }

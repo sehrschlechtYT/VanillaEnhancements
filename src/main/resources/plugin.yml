@@ -14,3 +14,10 @@ commands:
     permission: ve.knockback
     aliases:
       - kb
+  ve:
+    description: Opens the VanillaEnhancements GUI
+    permission: ve.gui
+    aliases:
+      - vanilla-enhancements
+      - ve-gui
+      - vui

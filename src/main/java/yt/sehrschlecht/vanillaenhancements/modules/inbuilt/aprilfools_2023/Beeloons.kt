@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Bee
 import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
@@ -36,6 +37,10 @@ class Beeloons : VEModule(
 
     override fun getKey(): String {
         return "beeloons"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.BEE_SPAWN_EGG
     }
 
     @EventHandler

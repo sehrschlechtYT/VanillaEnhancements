@@ -48,4 +48,9 @@ public class GlowSacFishing extends VEModule {
         return getVEInstance();
     }
 
+    @Override
+    public Material getDisplayItem() {
+        return Material.GLOW_INK_SAC;
+    }
+
 }

@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.World
 import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
@@ -23,6 +24,10 @@ class AlwaysThunder : VEModule(
 
     override fun getKey(): String {
         return "always_thunder"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.LIGHTNING_ROD
     }
 
     @Tick(period = 100, executeNow = true)

@@ -3,6 +3,7 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 import com.google.gson.annotations.Since;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -57,6 +58,11 @@ public class CreativeKeepInventory extends VEModule {
     @Override
     public JavaPlugin getPlugin() {
         return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.CHEST;
     }
 
 }
