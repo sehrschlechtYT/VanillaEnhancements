@@ -1,8 +1,13 @@
 package yt.sehrschlecht.vanillaenhancements.items
 
 import org.bukkit.Material
+import org.bukkit.event.inventory.CraftItemEvent
+import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.PrepareAnvilEvent
 import org.bukkit.event.inventory.PrepareSmithingEvent
+import org.bukkit.event.player.PlayerDropItemEvent
+import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.MerchantRecipe
 import org.bukkit.inventory.Recipe
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
@@ -39,6 +44,13 @@ abstract class VEItem(
         return createItem().apply(modify)
     }
 
-    // ToDo add open functions for events like interact, craft, drop, inv click etc.
+    open fun isItem(item: ItemStack) : Boolean {
+        return item.type == vanillaItem && VanillaEnhancements.getPlugin().itemManager.findItem(item) == this
+    }
+
+    open fun onInteract(event: PlayerInteractEvent) {}
+    open fun onCraft(event: CraftItemEvent) {}
+    open fun onDrop(event: PlayerDropItemEvent) {}
+    open fun onClick(event: InventoryClickEvent) {}
 
 }

@@ -2,10 +2,9 @@ package yt.sehrschlecht.vanillaenhancements.items
 
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.inventory.PrepareAnvilEvent
-import org.bukkit.event.inventory.PrepareItemCraftEvent
-import org.bukkit.event.inventory.PrepareSmithingEvent
-import org.bukkit.event.inventory.TradeSelectEvent
+import org.bukkit.event.inventory.*
+import org.bukkit.event.player.PlayerDropItemEvent
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 
@@ -55,6 +54,36 @@ class VEItemListener : Listener {
             return true
         }
         return false
+    }
+
+    /* Events handled by the item classes */
+
+    @EventHandler
+    fun onInteract(event: PlayerInteractEvent) {
+        val item = event.item ?: return
+        val customItem = itemManager.findItem(item) ?: return
+        customItem.onInteract(event)
+    }
+
+    @EventHandler
+    fun onCraft(event: CraftItemEvent) {
+        val item = event.currentItem ?: return
+        val customItem = itemManager.findItem(item) ?: return
+        customItem.onCraft(event)
+    }
+
+    @EventHandler
+    fun onDrop(event: PlayerDropItemEvent) {
+        val item = event.itemDrop.itemStack
+        val customItem = itemManager.findItem(item) ?: return
+        customItem.onDrop(event)
+    }
+
+    @EventHandler
+    fun onClick(event: InventoryClickEvent) {
+        val item = event.currentItem ?: return
+        val customItem = itemManager.findItem(item) ?: return
+        customItem.onClick(event)
     }
 
 }
