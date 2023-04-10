@@ -16,6 +16,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.center
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.removeColorCodes
 
 /**
@@ -88,11 +89,11 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
             contents.set(3, 4, ClickableItem.empty(
                 ItemCreator(Material.BARRIER) {
                     displayName("§c§lNo config options")
-                    addLore("§fThere are no configurable options for this module!")
+                    addLore("§cThere are no configurable options for this module!")
                 }.build()
             ))
         } else if (options.size <= 5) {
-            getSlots(items).forEach { (slot, item) -> contents.set(3, slot, item) }
+            items.center(3).forEach { (slot, item) -> contents.set(slot, item) }
         } else {
             val pagination = contents.pagination()
             pagination.setItems(*items.toTypedArray())
@@ -119,17 +120,6 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
         }
 
         contents.addBackButton { _ -> ModuleListMenu.getInventory(plugin, sourceTag) }
-    }
-
-    private fun getSlots(items: List<ClickableItem>): Map<Int, ClickableItem> {
-        return when (items.size) {
-            1 -> mapOf(4 to items[0])
-            2 -> mapOf(3 to items[0], 5 to items[1])
-            3 -> mapOf(3 to items[0], 4 to items[1], 5 to items[2])
-            4 -> mapOf(2 to items[0], 3 to items[1], 5 to items[2], 6 to items[3])
-            5 -> mapOf(2 to items[0], 3 to items[1], 4 to items[2], 5 to items[3], 6 to items[4])
-            else -> mapOf()
-        }
     }
 
 }

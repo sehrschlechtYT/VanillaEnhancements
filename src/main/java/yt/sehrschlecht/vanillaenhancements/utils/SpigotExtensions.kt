@@ -3,8 +3,11 @@ package yt.sehrschlecht.vanillaenhancements.utils
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
+import fr.minuskube.inv.content.SlotIterator
+import fr.minuskube.inv.content.SlotPos
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -43,6 +46,56 @@ class SpigotExtensions {
 
         fun String.removeColorCodes(): String {
             return this.replace("§[0-9a-fk-or]".toRegex(), "")
+        }
+
+        fun List<ClickableItem>.center(row: Int): Map<SlotPos, ClickableItem> {
+            return when (size) {
+                1 -> mapOf(4 to this[0])
+                2 -> mapOf(3 to this[0], 5 to this[1])
+                3 -> mapOf(3 to this[0], 4 to this[1], 5 to this[2])
+                4 -> mapOf(2 to this[0], 3 to this[1], 5 to this[2], 6 to this[3])
+                5 -> mapOf(2 to this[0], 3 to this[1], 4 to this[2], 5 to this[3], 6 to this[4])
+                6 -> mapOf(1 to this[0], 2 to this[1], 3 to this[2], 5 to this[3], 6 to this[4], 7 to this[5])
+                7 -> mapOf(1 to this[0], 2 to this[1], 3 to this[2], 4 to this[3], 5 to this[4], 6 to this[5], 7 to this[6])
+                else -> {
+                    VanillaEnhancements.getPlugin().logger.severe("SpigotExtensions: List<ClickableItem>.center(): Received a list with more than 7 items! This is not supported! Please report this to the developer!")
+                    mapOf()
+                }
+            }.mapKeys { SlotPos(it.key, row) }
+        }
+
+        fun InventoryContents.paginateItems(items: List<ClickableItem>, row: Int = 1, player: Player,
+                                            noneItem: ItemCreator.() -> Unit, inventoryGetter: () -> SmartInventory) {
+            if (items.isEmpty()) {
+                set(row, 4, ClickableItem.empty(ItemCreator(Material.BARRIER) {
+                    noneItem()
+                }.build()))
+            } else if (items.size <= 5) {
+                items.center(row).forEach(this::set)
+            } else {
+                val pagination = pagination()
+                pagination.setItems(*items.toTypedArray())
+                pagination.setItemsPerPage(5)
+                pagination.addToIterator(newIterator(SlotIterator.Type.HORIZONTAL, row, 2))
+
+                if (!pagination.isLast) {
+                    set(row, 7, ClickableItem.of(
+                        ItemCreator(Material.PLAYER_HEAD) {
+                            skullOwner("MHF_ArrowRight")
+                            displayName("§fNext Page")
+                        }.build()
+                    ) { _ -> inventoryGetter().open(player, pagination.next().page) })
+                }
+
+                if (!pagination.isFirst) {
+                    set(row, 1, ClickableItem.of(
+                        ItemCreator(Material.PLAYER_HEAD) {
+                            skullOwner("MHF_ArrowLeft")
+                            displayName("§fPrevious Page")
+                        }.build()
+                    ) { _ -> inventoryGetter().open(player, pagination.previous().page) })
+                }
+            }
         }
     }
 
