@@ -124,6 +124,16 @@ public abstract class VEModule implements Listener {
         return enabled.get();
     }
 
+    public void toggle() {
+        ModuleRegistry moduleRegistry = getVEInstance().getModuleRegistry();
+        enabled.set(!enabled.get());
+        if (isEnabled()) {
+            moduleRegistry.disableModule(this);
+        } else {
+            moduleRegistry.enableModule(this);
+        }
+    }
+
     public @Nullable String getSince() {
         return since;
     }

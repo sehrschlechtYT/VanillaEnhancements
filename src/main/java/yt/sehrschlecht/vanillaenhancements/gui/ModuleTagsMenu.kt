@@ -3,7 +3,6 @@ package yt.sehrschlecht.vanillaenhancements.gui
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
-import fr.minuskube.inv.content.InventoryProvider
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
@@ -15,7 +14,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.remo
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ModuleTagsMenu(private val plugin: VanillaEnhancements) : InventoryProvider {
+class ModuleTagsMenu(private val plugin: VanillaEnhancements) : UpdatingInventoryProvider(20) {
 
     companion object {
         fun getInventory(plugin: VanillaEnhancements): SmartInventory = SmartInventory.builder()
@@ -40,15 +39,6 @@ class ModuleTagsMenu(private val plugin: VanillaEnhancements) : InventoryProvide
         }
         contents.addBackButton { _ -> MainMenu.getInventory(plugin) }
         contents.fillBackground()
-    }
-
-    override fun update(player: Player, contents: InventoryContents) {
-        val state = contents.property("state", 0)
-        contents.setProperty("state", state + 1)
-
-        if (state % 20 == 0) {
-            init(player, contents)
-        }
     }
 
 }

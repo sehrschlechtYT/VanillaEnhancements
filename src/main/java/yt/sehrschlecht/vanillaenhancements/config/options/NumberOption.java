@@ -73,4 +73,9 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
         return max;
     }
 
+    @Override
+    public String valueToDisplayString(T value) {
+        return value.toString();
+    }
+
 }

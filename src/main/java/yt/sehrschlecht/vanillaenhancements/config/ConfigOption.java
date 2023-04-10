@@ -44,7 +44,7 @@ public abstract class ConfigOption<T> {
             return defaultValue;
         }
         String validationError = validate(object);
-        if(validationError != null){
+        if (validationError != null){
             Debug.CONFIG.log("Option " + toPath() + " is invalid, resetting to default value " + defaultValue + " (" + validationError + ")");
             reset();
             return defaultValue;
@@ -55,6 +55,11 @@ public abstract class ConfigOption<T> {
     public abstract T getFromConfig();
 
     public abstract String getPossibleValues();
+
+    public String valueToDisplayString() {
+        return valueToDisplayString(get());
+    }
+    public abstract String valueToDisplayString(T value);
 
     public void set(T value) {
         Config.getInstance().set(this, value);
@@ -85,4 +90,5 @@ public abstract class ConfigOption<T> {
     public @Nullable String getDescription() {
         return description;
     }
+
 }

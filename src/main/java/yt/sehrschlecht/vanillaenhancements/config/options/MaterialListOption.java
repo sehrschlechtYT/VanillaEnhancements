@@ -5,9 +5,11 @@ import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -58,6 +60,11 @@ public class MaterialListOption extends ConfigOption<List<Material>> { // ToDo m
     @Override
     public String getPossibleValues() {
         return "[List of materials](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)";
+    }
+
+    @Override
+    public String valueToDisplayString(List<Material> value) {
+        return toStringList(value).stream().map(ModuleUtils::getNameFromKey).collect(Collectors.joining(", "));
     }
 
     /**

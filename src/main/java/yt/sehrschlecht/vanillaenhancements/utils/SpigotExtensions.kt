@@ -14,7 +14,7 @@ class SpigotExtensions {
 
     companion object {
         fun InventoryContents.addBackButton(onClick: ((Player) -> SmartInventory?)? = null) {
-            set(2, 8, ClickableItem.of(
+            set(inventory().rows - 1, inventory().columns - 1, ClickableItem.of(
                 ItemCreator(Material.IRON_DOOR) {
                     if (onClick == null) {
                         displayName("§cClose")

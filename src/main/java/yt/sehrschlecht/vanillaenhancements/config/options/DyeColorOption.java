@@ -1,7 +1,9 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -21,6 +23,15 @@ public class DyeColorOption extends EnumConfigOption<DyeColor> {
         return "[List of materials](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/DyeColor.html#enum-constant-summary)";
     }
 
-
+    @Override
+    public String valueToDisplayString(DyeColor value) {
+        ChatColor color;
+        try {
+            color = ChatColor.valueOf(value.name());
+        } catch (IllegalArgumentException e) {
+            color = ChatColor.WHITE;
+        }
+        return color + ModuleUtils.getNameFromKey(value.name());
+    }
 
 }

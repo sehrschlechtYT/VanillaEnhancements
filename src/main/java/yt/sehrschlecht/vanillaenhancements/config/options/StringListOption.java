@@ -25,6 +25,11 @@ public class StringListOption extends ConfigOption<List<String>> {
     }
 
     @Override
+    public String valueToDisplayString(List<String> value) {
+        return String.join(", ", value);
+    }
+
+    @Override
     public List<String> getFromConfig() {
         return Config.getInstance().getDocument().getStringList(toPath());
     }
@@ -37,4 +42,5 @@ public class StringListOption extends ConfigOption<List<String>> {
     public @Nullable String validate(List<String> value) {
         return null;
     }
+
 }

@@ -90,11 +90,11 @@ class ItemCreator {
     }
 
     fun lore(vararg lore: String) {
-        meta.lore = lore.toList()
+        meta.lore = lore.map { if (!it.startsWith("§")) "§f$it" else it }
     }
 
     fun lore(lore: List<String>) {
-        meta.lore = lore
+        meta.lore = lore.map { if (!it.startsWith("§")) "§f$it" else it }
     }
 
     fun addLore(vararg lore: String) {

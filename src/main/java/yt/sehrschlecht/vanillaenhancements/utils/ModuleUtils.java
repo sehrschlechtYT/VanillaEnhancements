@@ -8,11 +8,15 @@ import org.bukkit.NamespacedKey;
  */
 public class ModuleUtils {
     public static String getNameFromKey(NamespacedKey key) {
-        String name = key.getKey();
-        name = name.replace("_", " ");
-        name = name.replace("-", " ");
+        return getNameFromKey(key.getKey());
+    }
+
+    public static String getNameFromKey(String key) {
+        key = key.toLowerCase();
+        key = key.replace("_", " ");
+        key = key.replace("-", " ");
         // Capitalize first letter
-        name = name.substring(0, 1).toUpperCase() + name.substring(1);
-        return name;
+        key = key.substring(0, 1).toUpperCase() + key.substring(1);
+        return key;
     }
 }

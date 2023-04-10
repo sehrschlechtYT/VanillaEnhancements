@@ -35,6 +35,11 @@ public class StringOption extends ConfigOption<String> {
         return "Any string";
     }
 
+    @Override
+    public String valueToDisplayString(String value) {
+        return "\"" + value + "\"";
+    }
+
     /**
      * @param value The value to check
      * @return Null if the value is valid, otherwise the error message

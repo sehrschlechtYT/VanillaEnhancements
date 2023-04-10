@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -45,6 +46,11 @@ public abstract class EnumConfigOption<T extends Enum<T>> extends ConfigOption<T
     @Override
     public @Nullable String validate(T value) {
         return null;
+    }
+
+    @Override
+    public String valueToDisplayString(T value) {
+        return ModuleUtils.getNameFromKey(value.name());
     }
 
 }

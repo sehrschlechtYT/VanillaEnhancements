@@ -248,7 +248,7 @@ public class Config {
      * @return A list of all options for the given module
      */
     public List<ConfigOption<?>> getModuleOptions(VEModule module) {
-        return moduleOptions.get(module.getModuleKey());
+        return moduleOptions.computeIfAbsent(module.getModuleKey(), key -> getOptions(module));
     }
 
 }

@@ -28,6 +28,11 @@ public class BooleanOption extends ConfigOption<Boolean> {
         return "`true/false`";
     }
 
+    @Override
+    public String valueToDisplayString(Boolean value) {
+        return value ? "§aEnabled" : "§cDisabled";
+    }
+
     /**
      * @param value The value to check
      * @return Null if the value is valid, otherwise the error message

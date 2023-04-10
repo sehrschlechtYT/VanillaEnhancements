@@ -23,5 +23,6 @@ public class DoubleOption extends NumberOption<Double> {
     public Double getFromConfig() {
         return Config.getInstance().getDocument().getDouble(toPath());
     }
+
 }
 
