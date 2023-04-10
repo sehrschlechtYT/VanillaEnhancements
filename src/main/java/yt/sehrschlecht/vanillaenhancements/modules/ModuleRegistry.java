@@ -2,6 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.modules;
 
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
@@ -31,19 +32,24 @@ public class ModuleRegistry {
         registeredModules.add(module);
         module.initialize();
         registerTickServices(module);
-        if(!module.isEnabled()) {
+        if (!module.isEnabled()) {
             Debug.MODULES.log("Module {} is disabled in config, skipping...", module.getModuleKey());
             return false;
         }
+        return enableModule(module);
+    }
+
+    public boolean enableModule(VEModule module) {
         try {
-            if(!module.shouldEnable()) {
+            Debug.MODULES.log("Enabling module {}...", module.getModuleKey());
+            if (!module.shouldEnable()) {
                 Debug.MODULES.log("Module {} should not be enabled, skipping...", module.getModuleKey());
                 return false;
             }
             module.onEnable();
             enabledModules.add(module);
             Bukkit.getPluginManager().registerEvents(module, VanillaEnhancements.getPlugin());
-            Debug.MODULES.log("Module {} enabled!", module.getModuleKey());
+            Debug.MODULES.log("Enabled module {}!", module.getModuleKey());
             return true;
         } catch (Throwable throwable) {
             logger.log(Level.SEVERE, "The module " + module.getName() + " couldn't be loaded due to an error:");
@@ -53,6 +59,13 @@ public class ModuleRegistry {
             }
             return false;
         }
+    }
+
+    public void disableModule(VEModule module) {
+        module.onDisable();
+        HandlerList.unregisterAll(module);
+        enabledModules.remove(module);
+        Debug.MODULES.log("Disabled module {}!", module.getModuleKey());
     }
 
     private void registerTickServices(VEModule module) {
