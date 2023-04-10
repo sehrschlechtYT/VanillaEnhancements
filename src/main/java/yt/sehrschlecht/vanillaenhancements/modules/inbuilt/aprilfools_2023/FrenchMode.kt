@@ -23,6 +23,7 @@ class FrenchMode : CustomItemModule(
     INBUILT,
     ModuleTag.APRIL_FOOLS_2023,
     ModuleTag.CUSTOM_ITEMS,
+    ModuleTag.FUN,
 ) {
     private val laBaguette = LaBaguette()
     private val leTricolore = LeTricolore()

@@ -22,7 +22,8 @@ class BedPVP : VEModule(
     "1.0",
     INBUILT,
     ModuleTag.APRIL_FOOLS_2023,
-    ModuleTag.ITEMS
+    ModuleTag.ITEMS,
+    ModuleTag.FUN,
 ) {
 
     val attackDamage = DoubleOption(7.0, "The attack damage of beds", 0.0, Int.MAX_VALUE.toDouble())

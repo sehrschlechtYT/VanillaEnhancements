@@ -24,6 +24,7 @@ class AlwaysFlying : VEModule(
     INBUILT,
     ModuleTag.APRIL_FOOLS_2023,
     ModuleTag.ENTITIES,
+    ModuleTag.FUN,
 ) {
     val applyToMobs = BooleanOption(true, "Controls whether mobs should forced to fly too.")
 

@@ -28,6 +28,7 @@ class Beeloons : VEModule(
     INBUILT,
     ModuleTag.APRIL_FOOLS_2023,
     ModuleTag.ENTITIES,
+    ModuleTag.FUN,
 ) {
 
     private val bees = mutableMapOf<UUID, MutableList<Bee>>()
