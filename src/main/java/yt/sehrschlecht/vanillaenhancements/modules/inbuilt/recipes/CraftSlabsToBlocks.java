@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
@@ -25,7 +26,7 @@ public class CraftSlabsToBlocks extends RecipeModule {
             "Exclude recipes for slabs from being registered");
 
     public CraftSlabsToBlocks() {
-        super("Allows players to craft two slabs into a block.");
+        super("Allows players to craft two slabs into a block.", INBUILT);
     }
 
     @Override
@@ -83,4 +84,10 @@ public class CraftSlabsToBlocks extends RecipeModule {
             }
         };
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

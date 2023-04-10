@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.SmithingRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
@@ -44,17 +45,17 @@ public class CraftNetheriteGearWithoutDiamonds extends RecipeModule {
             "Controls if the recipe for crafting a netherite boots is enabled.");
 
     public CraftNetheriteGearWithoutDiamonds() {
-        super("Allows players to craft netherite gear by using netherite ingots in a crafting table.");
+        super("Allows players to craft netherite gear by using netherite ingots in a crafting table.", INBUILT);
     }
 
     @Override
     public void registerRecipes() {
-        if(removeVanillaRecipes.get()) {
+        if (removeVanillaRecipes.get()) {
             Iterator<Recipe> iterator = Bukkit.recipeIterator();
             while (iterator.hasNext()) {
                 Recipe recipe = iterator.next();
-                if(recipe instanceof SmithingRecipe smithingRecipe) {
-                    if(List.of(
+                if (recipe instanceof SmithingRecipe smithingRecipe) {
+                    if (List.of(
                             Material.NETHERITE_SWORD,
                             Material.NETHERITE_SHOVEL,
                             Material.NETHERITE_PICKAXE,
@@ -72,15 +73,15 @@ public class CraftNetheriteGearWithoutDiamonds extends RecipeModule {
             }
         }
 
-        if(craftNetheriteSword.get()) addNetheriteSword();
-        if(craftNetheriteShovel.get()) addNetheriteShovel();
-        if(craftNetheritePickaxe.get()) addNetheritePickaxe();
-        if(craftNetheriteAxe.get()) addNetheriteAxe();
-        if(craftNetheriteHoe.get()) addNetheriteHoe();
-        if(craftNetheriteHelmet.get()) addNetheriteHelmet();
-        if(craftNetheriteChestplate.get()) addNetheriteChestplate();
-        if(craftNetheriteLeggings.get()) addNetheriteLeggings();
-        if(craftNetheriteBoots.get()) addNetheriteBoots();
+        if (craftNetheriteSword.get()) addNetheriteSword();
+        if (craftNetheriteShovel.get()) addNetheriteShovel();
+        if (craftNetheritePickaxe.get()) addNetheritePickaxe();
+        if (craftNetheriteAxe.get()) addNetheriteAxe();
+        if (craftNetheriteHoe.get()) addNetheriteHoe();
+        if (craftNetheriteHelmet.get()) addNetheriteHelmet();
+        if (craftNetheriteChestplate.get()) addNetheriteChestplate();
+        if (craftNetheriteLeggings.get()) addNetheriteLeggings();
+        if (craftNetheriteBoots.get()) addNetheriteBoots();
     }
 
     private void addNetheriteSword() {
@@ -164,4 +165,10 @@ public class CraftNetheriteGearWithoutDiamonds extends RecipeModule {
     public @NotNull String getKey() {
         return "craft_netherite_gear_without_diamonds";
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

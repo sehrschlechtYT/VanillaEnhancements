@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.FloatOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
@@ -26,7 +27,7 @@ public class SmeltConcretePowderToGlass extends RecipeModule {
             "The cooking time of the recipe in ticks", 1, null);
 
     public SmeltConcretePowderToGlass() {
-        super("Allows players to smelt concrete powder into stained glass.");
+        super("Allows players to smelt concrete powder into stained glass.", INBUILT);
     }
 
     @Override
@@ -56,4 +57,10 @@ public class SmeltConcretePowderToGlass extends RecipeModule {
                 addRecipe(recipeKey, recipe, powder);
             });
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

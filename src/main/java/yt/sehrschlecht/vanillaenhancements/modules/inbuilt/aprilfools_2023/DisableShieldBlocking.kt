@@ -5,6 +5,7 @@ import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -16,7 +17,8 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 @Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
 class DisableShieldBlocking : VEModule(
     "Makes players unable to block with shields.",
-    "DisableShieldBlocking"
+    "DisableShieldBlocking",
+    INBUILT
 ) {
 
     override fun getKey(): String {
@@ -38,6 +40,10 @@ class DisableShieldBlocking : VEModule(
         loopPlayers {
             it.setCooldown(Material.SHIELD, 1200)
         }
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

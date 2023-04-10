@@ -6,6 +6,7 @@ import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.PlayerLeashEntityEvent
 import org.bukkit.event.player.PlayerUnleashEntityEvent
+import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
@@ -22,7 +23,8 @@ import java.util.*
 @Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
 class Beeloons : VEModule(
     "Players who are holding at least 3 bees with leashes will be dragged into the air",
-    "1.0"
+    "1.0",
+    INBUILT
 ) {
 
     private val bees = mutableMapOf<UUID, MutableList<Bee>>()
@@ -73,6 +75,10 @@ class Beeloons : VEModule(
                 player.addPotionEffect(PotionEffect(PotionEffectType.SLOW_FALLING, 40, list.size - 1))
             }
         }
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +25,7 @@ public class PumpkinNametags extends VEModule {
     private Scoreboard scoreboard;
 
     public PumpkinNametags() {
-        super("Hides the nametags of players wearing a pumpkin on their head.");
+        super("Hides the nametags of players wearing a pumpkin on their head.", INBUILT);
     }
 
     @Override
@@ -47,12 +48,12 @@ public class PumpkinNametags extends VEModule {
         //ToDo testing required
         for (Player player : Bukkit.getOnlinePlayers()) {
             Team team = scoreboard.getTeam(player.getName());
-            if(team == null) continue;
-            if(player.getEquipment().getItem(EquipmentSlot.HEAD).getType().equals(Material.CARVED_PUMPKIN)) {
-                if(!team.hasEntry(player.getName())) {
+            if (team == null) continue;
+            if (player.getEquipment().getItem(EquipmentSlot.HEAD).getType().equals(Material.CARVED_PUMPKIN)) {
+                if (!team.hasEntry(player.getName())) {
                     team.addEntry(player.getName());
                 }
-            } else if(team.hasEntry(player.getName())) {
+            } else if (team.hasEntry(player.getName())) {
                 team.removeEntry(player.getName());
             }
         }
@@ -71,4 +72,10 @@ public class PumpkinNametags extends VEModule {
         Team team = scoreboard.getTeam(player.getName());
         team.unregister();
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

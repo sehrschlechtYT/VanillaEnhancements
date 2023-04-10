@@ -1,6 +1,7 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import org.bukkit.Material
+import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.modules.GenReplaceModule
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 
@@ -13,6 +14,7 @@ class BasaltGenReplace : GenReplaceModule(
     blockToReplace = Material.BASALT,
     description = "Replaces generated basalt (lava + soul soil + blue ice) with the set block",
     since = "1.0",
+    category = INBUILT
 ) {
 
     override fun getKey(): String {
@@ -21,6 +23,10 @@ class BasaltGenReplace : GenReplaceModule(
 
     override fun getName(): String {
         return "Replace generated basalt"
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

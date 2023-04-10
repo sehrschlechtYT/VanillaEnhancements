@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.FloatOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
@@ -22,7 +23,7 @@ public class SmeltConcreteToConcretePowder extends RecipeModule {
             "The cooking time of the recipe in ticks", 1, null);
 
     public SmeltConcreteToConcretePowder() {
-        super("Allows players to smelt concrete to concrete powder.");
+        super("Allows players to smelt concrete to concrete powder.", INBUILT);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class SmeltConcreteToConcretePowder extends RecipeModule {
         registerRecipe(Material.MAGENTA_CONCRETE, Material.MAGENTA_CONCRETE_POWDER);
         registerRecipe(Material.ORANGE_CONCRETE, Material.ORANGE_CONCRETE_POWDER);
         registerRecipe(Material.WHITE_CONCRETE, Material.WHITE_CONCRETE_POWDER);
-    }
+    } // ToDo replace this with a loop that iterates over all materials that end with "_CONCRETE"
 
     private void registerRecipe(Material concrete, Material powder) {
         NamespacedKey key = new NamespacedKey(getPlugin(), "smelt_" + concrete.name().toLowerCase());
@@ -66,4 +67,10 @@ public class SmeltConcreteToConcretePowder extends RecipeModule {
         );
         addRecipe(key, recipe, concrete);
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

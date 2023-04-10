@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.config.Config
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
@@ -22,6 +23,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 @Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
 class AttackKnockback : VEModule(
     "Multiplies the knockback of attacks by a percentage",
+    INBUILT,
 ), CommandExecutor {
 
     val percentage = IntegerOption(100, "Multiply the knockback by this percentage", 0, 1000)
@@ -75,6 +77,10 @@ class AttackKnockback : VEModule(
         sender.sendMessage(Config.getInstance().message("knockback.success")
             .replace("%percentage%", input.toString()))
         return true
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

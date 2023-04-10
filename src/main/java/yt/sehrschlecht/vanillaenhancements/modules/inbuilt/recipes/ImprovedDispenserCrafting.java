@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
@@ -24,13 +25,13 @@ public class ImprovedDispenserCrafting extends RecipeModule {
             "Controls if the dropper + strings + sticks crafting recipe will be registered");
 
     public ImprovedDispenserCrafting() {
-        super("Simplifies crafting of dispensers.");
+        super("Simplifies crafting of dispensers.", INBUILT);
     }
 
     @Override
     public void registerRecipes() {
-        if(dropperAndBow.get()) createDropperAndBowRecipe();
-        if(dropperAndStringsAndSticks.get()) createDropperAndStringsAndSticksRecipe();
+        if (dropperAndBow.get()) createDropperAndBowRecipe();
+        if (dropperAndStringsAndSticks.get()) createDropperAndStringsAndSticksRecipe();
     }
 
     public void createDropperAndBowRecipe() {
@@ -55,4 +56,10 @@ public class ImprovedDispenserCrafting extends RecipeModule {
     public @NotNull String getKey() {
         return "improved_dispenser_crafting";
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

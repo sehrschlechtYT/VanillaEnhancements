@@ -12,8 +12,9 @@ import yt.sehrschlecht.vanillaenhancements.config.options.MaterialOption
 abstract class GenReplaceModule(
     private val blockToReplace: Material,
     description: String? = null,
-    since: String? = null
-) : VEModule(description, since) {
+    since: String? = null,
+    category: ModuleCategory,
+) : VEModule(description, since, category) {
 
     val block = MaterialOption(Material.BASALT, "Block to replace generated basalt with")
 

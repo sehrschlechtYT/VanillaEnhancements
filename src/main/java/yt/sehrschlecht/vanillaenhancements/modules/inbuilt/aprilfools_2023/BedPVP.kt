@@ -4,6 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.inventory.EquipmentSlot
+import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.config.options.DoubleOption
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
@@ -17,7 +18,8 @@ import java.util.*
 @Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
 class BedPVP : VEModule(
     "Gives beds attack damage and speed",
-    "1.0"
+    "1.0",
+    INBUILT
 ) {
 
     val attackDamage = DoubleOption(7.0, "The attack damage of beds", 0.0, Int.MAX_VALUE.toDouble())
@@ -49,6 +51,10 @@ class BedPVP : VEModule(
                 }
             }
         }
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

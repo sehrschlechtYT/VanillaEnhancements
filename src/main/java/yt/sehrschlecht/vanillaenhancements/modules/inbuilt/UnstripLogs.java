@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
@@ -24,7 +25,7 @@ public class UnstripLogs extends VEModule {
             "Controls if the axe will be damaged.");
 
     public UnstripLogs() {
-        super("Allows players to unstrip logs by right clicking them with an axe.");
+        super("Allows players to unstrip logs by right clicking them with an axe.", INBUILT);
     }
 
     @Override
@@ -34,16 +35,22 @@ public class UnstripLogs extends VEModule {
 
     @EventHandler(ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
-        if(!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
-        if(!event.hasBlock() || !event.hasItem()) return;
+        if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
+        if (!event.hasBlock() || !event.hasItem()) return;
         Block clickedBlock = event.getClickedBlock();
-        if(!BlockUtils.checkName(clickedBlock, "STRIPPED") || !ItemUtils.checkName(event.getItem(), "AXE")) return;
+        if (!BlockUtils.checkName(clickedBlock, "STRIPPED") || !ItemUtils.checkName(event.getItem(), "AXE")) return;
         event.setCancelled(true);
         Material newBlock = Material.valueOf(clickedBlock.getType().name().replace("STRIPPED_", ""));
         clickedBlock.setType(newBlock);
         clickedBlock.getWorld().playSound(clickedBlock.getLocation(), Sound.ITEM_AXE_STRIP, 1, 1);
-        if(!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && damageTools.get()) {
+        if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE) && damageTools.get()) {
             ItemUtils.damageItem(event.getItem());
         }
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

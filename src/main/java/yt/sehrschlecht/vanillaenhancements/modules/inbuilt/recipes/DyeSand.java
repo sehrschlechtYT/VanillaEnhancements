@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
@@ -28,15 +29,15 @@ public class DyeSand extends RecipeModule {
             "Controls if the craft red sandstone to sandstone crafting recipe will be registered");
 
     public DyeSand() {
-        super("Allows players to dye sand and sandstone red or white.");
+        super("Allows players to dye sand and sandstone red or white.", INBUILT);
     }
 
     @Override
     public void registerRecipes() {
-        if(dyeSandRed.get()) addDyeSandRedRecipe();
-        if(dyeSandstoneRed.get()) addDyeSandstoneRedRecipe();
-        if(dyeRedSandWhite.get()) addDyeRedSandWhiteRecipe();
-        if(dyeRedSandstoneWhite.get()) addDyeRedSandstoneWhiteRecipe();
+        if (dyeSandRed.get()) addDyeSandRedRecipe();
+        if (dyeSandstoneRed.get()) addDyeSandstoneRedRecipe();
+        if (dyeRedSandWhite.get()) addDyeRedSandWhiteRecipe();
+        if (dyeRedSandstoneWhite.get()) addDyeRedSandstoneWhiteRecipe();
     }
 
     private void addDyeSandRedRecipe() {
@@ -79,4 +80,10 @@ public class DyeSand extends RecipeModule {
     public @NotNull String getKey() {
         return "dye_sand";
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

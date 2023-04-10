@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
@@ -30,15 +31,15 @@ public class CraftStairsToBlocks extends RecipeModule {
             "The amount of blocks that players will receive", 1, 64);
 
     public CraftStairsToBlocks() {
-        super("Allows players to craft stairs back into blocks.");
+        super("Allows players to craft stairs back into blocks.", INBUILT);
     }
 
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).filter(m -> m.name().endsWith("_STAIRS")).forEach(stairs -> {
-            if(excludedStairs.get().contains(stairs)) return;
+            if (excludedStairs.get().contains(stairs)) return;
             String blockName = getBlockName(stairs);
-            if(blockName == null) return;
+            if (blockName == null) return;
             Material block = Material.valueOf(blockName);
             NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "stairs_blocks_" + block.name());
             ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(block, blockAmount.get()));
@@ -86,4 +87,10 @@ public class CraftStairsToBlocks extends RecipeModule {
             }
         };
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

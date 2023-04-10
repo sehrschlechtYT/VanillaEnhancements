@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
@@ -23,13 +24,13 @@ public class CraftCoalToBlackDye extends RecipeModule {
             "Controls if the coal to black dye crafting recipe will be registered");
 
     public CraftCoalToBlackDye() {
-        super("Allows players to craft black dye from coal and charcoal.");
+        super("Allows players to craft black dye from coal and charcoal.", INBUILT);
     }
 
     @Override
     public void registerRecipes() {
-        if(charCoalToBlackDye.get()) registerCharcoalRecipe();
-        if(coalToBlackDye.get()) registerCoalRecipe();
+        if (charCoalToBlackDye.get()) registerCharcoalRecipe();
+        if (coalToBlackDye.get()) registerCoalRecipe();
     }
 
     private void registerCharcoalRecipe() {
@@ -50,4 +51,10 @@ public class CraftCoalToBlackDye extends RecipeModule {
     public @NotNull String getKey() {
         return "craft_coal_to_black_dye";
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
@@ -26,7 +27,7 @@ public class CraftChainArmor extends RecipeModule {
             "Controls if the chain boots crafting recipe will be registered");
 
     public CraftChainArmor() {
-        super("Allows players to craft chain armor using chains.");
+        super("Allows players to craft chain armor using chains.", INBUILT);
     }
 
     @Override
@@ -36,10 +37,10 @@ public class CraftChainArmor extends RecipeModule {
 
     @Override
     public void registerRecipes() {
-        if(chainHelmet.get()) addChainRecipe("chain_helmet", Material.CHAINMAIL_HELMET, "CCC", "C C");
-        if(chainChestplate.get()) addChainRecipe("chain_chestplate", Material.CHAINMAIL_CHESTPLATE, "C C", "CCC", "CCC");
-        if(chainLeggings.get()) addChainRecipe("chain_leggings", Material.CHAINMAIL_LEGGINGS, "CCC", "C C", "C C");
-        if(chainBoots.get()) addChainRecipe("chain_boots", Material.CHAINMAIL_BOOTS, "C C", "C C");
+        if (chainHelmet.get()) addChainRecipe("chain_helmet", Material.CHAINMAIL_HELMET, "CCC", "C C");
+        if (chainChestplate.get()) addChainRecipe("chain_chestplate", Material.CHAINMAIL_CHESTPLATE, "C C", "CCC", "CCC");
+        if (chainLeggings.get()) addChainRecipe("chain_leggings", Material.CHAINMAIL_LEGGINGS, "CCC", "C C", "C C");
+        if (chainBoots.get()) addChainRecipe("chain_boots", Material.CHAINMAIL_BOOTS, "C C", "C C");
     }
 
     private void addChainRecipe(String key, Material result, String... shape) {
@@ -49,4 +50,10 @@ public class CraftChainArmor extends RecipeModule {
         recipe.setIngredient('C', Material.CHAIN);
         addRecipe(recipeKey, recipe, Material.CHAIN);
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }

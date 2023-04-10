@@ -4,6 +4,7 @@ import com.google.gson.annotations.Since;
 import org.bukkit.Material;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.FloatOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
@@ -25,7 +26,7 @@ public class RottenFleshSmelting extends RecipeModule {
             "The amount of leather that is produced", 1, 64);
 
     public RottenFleshSmelting() {
-        super("Allows players to smelt rotten flesh into leather.");
+        super("Allows players to smelt rotten flesh into leather.", INBUILT);
     }
 
     @Override
@@ -47,4 +48,10 @@ public class RottenFleshSmelting extends RecipeModule {
             Material.ROTTEN_FLESH
         );
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
 }
