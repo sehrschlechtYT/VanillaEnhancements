@@ -25,6 +25,8 @@ public class ModuleUtils {
     public static String beautifyLowerCamelCase(@NotNull String key) {
         key = key.replaceAll("([a-z])([A-Z])", "$1 $2");
         key = key.replaceAll("([A-Z])([A-Z][a-z])", "$1 $2");
+        // uppercase first letter
+        key = key.substring(0, 1).toUpperCase() + key.substring(1);
         return key;
     }
 

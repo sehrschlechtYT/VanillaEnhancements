@@ -11,6 +11,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -31,13 +32,19 @@ class ModuleRecipesMenu(private val plugin: VanillaEnhancements, private val mod
 
     override fun init(player: Player, contents: InventoryContents) {
         val recipes = plugin.recipeManager.getRecipes(module)
-        recipes.forEach { // ToDo: Add pagination
-            contents.add(ClickableItem.of(ItemCreator(it.recipe.result) {
+        val items = recipes.map {
+            ClickableItem.of(ItemCreator(it.recipe.result) {
                 displayName("§f§l${ModuleUtils.getNameFromKey(it.key)}")
                 addLore("§fItem required for discovery: ${ModuleUtils.getNameFromKey(it.discoverItem?.name ?: "§cNone")}")
                 addLore(if (it.isRegistered) "§aRegistered" else "§cNot registered")
-            }.build()) { _ -> player.sendMessage("Clicked on recipe ${it.key}. TODO") })
+            }.build()) { _ -> player.sendMessage("Clicked on recipe ${it.key}. TODO") }
         }
+
+        contents.paginateItems(items, player = player, noneItem = {
+            displayName("§c§lNo recipes found")
+            addLore("§cThis module has no recipes")
+        }, inventoryGetter = { getInventory(plugin, module, sourceTag) })
+
         contents.addBackButton{_ -> ModuleMenu.getInventory(plugin, module, sourceTag) }
         contents.fillBackground()
     }

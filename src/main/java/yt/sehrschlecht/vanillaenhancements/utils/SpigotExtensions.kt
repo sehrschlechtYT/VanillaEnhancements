@@ -61,7 +61,7 @@ class SpigotExtensions {
                     VanillaEnhancements.getPlugin().logger.severe("SpigotExtensions: List<ClickableItem>.center(): Received a list with more than 7 items! This is not supported! Please report this to the developer!")
                     mapOf()
                 }
-            }.mapKeys { SlotPos(it.key, row) }
+            }.mapKeys { SlotPos(row, it.key) }
         }
 
         fun InventoryContents.paginateItems(items: List<ClickableItem>, row: Int = 1, player: Player,
@@ -80,8 +80,7 @@ class SpigotExtensions {
 
                 if (!pagination.isLast) {
                     set(row, 7, ClickableItem.of(
-                        ItemCreator(Material.PLAYER_HEAD) {
-                            skullOwner("MHF_ArrowRight")
+                        ItemCreator(Material.ARROW) {
                             displayName("§fNext Page")
                         }.build()
                     ) { _ -> inventoryGetter().open(player, pagination.next().page) })
@@ -89,8 +88,7 @@ class SpigotExtensions {
 
                 if (!pagination.isFirst) {
                     set(row, 1, ClickableItem.of(
-                        ItemCreator(Material.PLAYER_HEAD) {
-                            skullOwner("MHF_ArrowLeft")
+                        ItemCreator(Material.ARROW) {
                             displayName("§fPrevious Page")
                         }.build()
                     ) { _ -> inventoryGetter().open(player, pagination.previous().page) })

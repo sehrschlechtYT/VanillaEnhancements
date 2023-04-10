@@ -3,7 +3,6 @@ package yt.sehrschlecht.vanillaenhancements.gui
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
-import fr.minuskube.inv.content.SlotIterator
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
@@ -16,7 +15,7 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
-import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.center
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.removeColorCodes
 
 /**
@@ -85,39 +84,10 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
             ) { player.sendMessage("You clicked on option ${option.key}. TODO make option changeable") }
         }
 
-        if (options.isEmpty()) {
-            contents.set(3, 4, ClickableItem.empty(
-                ItemCreator(Material.BARRIER) {
-                    displayName("§c§lNo config options")
-                    addLore("§cThere are no configurable options for this module!")
-                }.build()
-            ))
-        } else if (options.size <= 5) {
-            items.center(3).forEach { (slot, item) -> contents.set(slot, item) }
-        } else {
-            val pagination = contents.pagination()
-            pagination.setItems(*items.toTypedArray())
-            pagination.setItemsPerPage(5)
-            pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 3, 2))
-
-            if (!pagination.isLast) {
-                contents.set(3, 7, ClickableItem.of(
-                    ItemCreator(Material.PLAYER_HEAD) {
-                        skullOwner("MHF_ArrowRight")
-                        displayName("§fNext Page")
-                    }.build()
-                ) { _ -> getInventory(plugin, module, sourceTag).open(player, pagination.next().page) })
-            }
-
-            if (!pagination.isFirst) {
-                contents.set(3, 1, ClickableItem.of(
-                    ItemCreator(Material.PLAYER_HEAD) {
-                        skullOwner("MHF_ArrowLeft")
-                        displayName("§fPrevious Page")
-                    }.build()
-                ) { _ -> getInventory(plugin, module, sourceTag).open(player, pagination.previous().page) })
-            }
-        }
+        contents.paginateItems(items, row = 3, player, noneItem = {
+            displayName("§c§lNo config options")
+            addLore("§cThere are no configurable options for this module!")
+        }, inventoryGetter = { getInventory(plugin, module, sourceTag) })
 
         contents.addBackButton { _ -> ModuleListMenu.getInventory(plugin, sourceTag) }
     }

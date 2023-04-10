@@ -3,16 +3,15 @@ package yt.sehrschlecht.vanillaenhancements.gui
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
-import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.CustomItemModule
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
-import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -32,17 +31,9 @@ class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val
     }
 
     override fun init(player: Player, contents: InventoryContents) {
-        val items = module.getItems()
-        if (items.isEmpty()) {
-            contents.set(1, 4, ClickableItem.of(
-                ItemCreator(Material.BARRIER) {
-                    displayName("§c§lNo items found")
-                    addLore("§cThis module has no items")
-                }.build()
-            ) { _ -> })
-        }
-        items.forEach { // ToDo: Add pagination
-            contents.add(ClickableItem.of(it.createItem {
+        val customItems = module.getItems()
+        val items = customItems.map {
+            ClickableItem.of(it.createItem {
                 displayName("§f§l${it.displayName}")
                 addLore("§fBased off of ${ModuleUtils.getNameFromKey(it.vanillaItem.name)}")
                 addLore("§9Right click to get")
@@ -53,8 +44,14 @@ class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val
                     return@of
                 }
                 player.sendMessage("Clicked on item ${it.key}. TODO")
-            })
+            }
         }
+
+        contents.paginateItems(items, player = player, noneItem = {
+            displayName("§c§lNo items found")
+            addLore("§cThis module has no items")
+        }, inventoryGetter = { getInventory(plugin, module, sourceTag) })
+
         contents.addBackButton{_ -> ModuleMenu.getInventory(plugin, module, sourceTag) }
         contents.fillBackground()
     }
