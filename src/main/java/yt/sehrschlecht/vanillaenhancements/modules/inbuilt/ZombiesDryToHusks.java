@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.Arrays;
@@ -32,7 +33,8 @@ public class ZombiesDryToHusks extends VEModule {
             "Controls if zombies will be converted to husks when dying of fire, lava or magma block damage.");
 
     public ZombiesDryToHusks() {
-        super("Converts zombies to husks when they die of fire, lava or magma block damage or when they enter a nether portal.", INBUILT);
+        super("Converts zombies to husks when they die of fire, lava or magma block damage or when they enter a nether portal.",
+                INBUILT, ModuleTag.ENTITIES);
     }
 
     @Override

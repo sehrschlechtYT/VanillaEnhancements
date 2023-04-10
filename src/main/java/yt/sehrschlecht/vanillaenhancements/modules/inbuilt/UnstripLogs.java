@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.utils.BlockUtils;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
@@ -25,7 +26,8 @@ public class UnstripLogs extends VEModule {
             "Controls if the axe will be damaged.");
 
     public UnstripLogs() {
-        super("Allows players to unstrip logs by right clicking them with an axe.", INBUILT);
+        super("Allows players to unstrip logs by right clicking them with an axe.",
+                INBUILT, ModuleTag.BLOCKS, ModuleTag.ITEMS);
     }
 
     @Override

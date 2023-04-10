@@ -72,6 +72,7 @@ class ItemCreator {
 
     fun skullOwner(owner: String) {
         if (meta !is SkullMeta) throw IllegalArgumentException("ItemMeta is not a SkullMeta!")
+        @Suppress("DEPRECATION")
         meta.owner = owner
     }
 

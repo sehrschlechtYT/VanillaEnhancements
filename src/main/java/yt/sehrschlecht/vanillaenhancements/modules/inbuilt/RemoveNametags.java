@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.schlechteutils.items.ItemBuilder;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
@@ -30,7 +31,8 @@ public class RemoveNametags extends VEModule {
             "Controls if a nametag with the corresponding name will be dropped.");
 
     public RemoveNametags() {
-        super("Removes nametags from mobs when shearing them while sneaking.", INBUILT);
+        super("Removes nametags from mobs when shearing them while sneaking.",
+                INBUILT, ModuleTag.ENTITIES, ModuleTag.ITEMS);
     }
 
     @Override

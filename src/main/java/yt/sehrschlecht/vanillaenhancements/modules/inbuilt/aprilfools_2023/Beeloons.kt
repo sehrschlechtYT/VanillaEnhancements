@@ -11,6 +11,7 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -24,7 +25,9 @@ import java.util.*
 class Beeloons : VEModule(
     "Players who are holding at least 3 bees with leashes will be dragged into the air",
     "1.0",
-    INBUILT
+    INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.ENTITIES,
 ) {
 
     private val bees = mutableMapOf<UUID, MutableList<Bee>>()

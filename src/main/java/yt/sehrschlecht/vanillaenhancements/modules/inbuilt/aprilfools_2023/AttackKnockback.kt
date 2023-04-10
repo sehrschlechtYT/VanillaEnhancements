@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.config.Config
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 
@@ -24,6 +25,8 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 class AttackKnockback : VEModule(
     "Multiplies the knockback of attacks by a percentage",
     INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.ENTITIES,
 ), CommandExecutor {
 
     val percentage = IntegerOption(100, "Multiply the knockback by this percentage", 0, 1000)

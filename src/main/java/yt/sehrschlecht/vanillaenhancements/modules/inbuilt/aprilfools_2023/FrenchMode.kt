@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.items.VEItem
 import yt.sehrschlecht.vanillaenhancements.items.resourcepack.*
 import yt.sehrschlecht.vanillaenhancements.modules.CustomItemModule
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.items.LaBaguette
 import yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023.items.LeTricolore
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -19,7 +20,9 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 class FrenchMode : CustomItemModule(
     "Adds the joke items \"La Baguette\" and \"Le Tricolore\" from the april fools snapshot 2023.",
     "1.0",
-    INBUILT
+    INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.CUSTOM_ITEMS,
 ) {
     private val laBaguette = LaBaguette()
     private val leTricolore = LeTricolore()

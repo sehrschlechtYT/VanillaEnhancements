@@ -10,6 +10,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -34,7 +35,8 @@ public class MoreBlackstoneRecipes extends RecipeModule {
             "Controls if the piston recipe will be registered.");
 
     public MoreBlackstoneRecipes() {
-        super("Makes all recipes that use cobblestone allow blackstone as well.", INBUILT);
+        super("Makes all recipes that use cobblestone allow blackstone as well.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override

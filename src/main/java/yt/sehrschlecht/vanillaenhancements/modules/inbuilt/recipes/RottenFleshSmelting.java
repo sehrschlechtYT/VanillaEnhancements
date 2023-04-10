@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.FloatOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -26,7 +27,8 @@ public class RottenFleshSmelting extends RecipeModule {
             "The amount of leather that is produced", 1, 64);
 
     public RottenFleshSmelting() {
-        super("Allows players to smelt rotten flesh into leather.", INBUILT);
+        super("Allows players to smelt rotten flesh into leather.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override

@@ -31,6 +31,7 @@ public abstract class RecipeModule extends VEModule {
      */
     public RecipeModule(@Nullable String description, @Nullable String since, @NotNull ModuleCategory category, ModuleTag... tags) {
         super(description, since, category, tags);
+        this.tags.add(ModuleTag.RECIPES);
     }
 
     /**
@@ -38,10 +39,12 @@ public abstract class RecipeModule extends VEModule {
      */
     public RecipeModule(@Nullable String description, @NotNull ModuleCategory category, ModuleTag... tags) {
         super(description, category, tags);
+        this.tags.add(ModuleTag.RECIPES);
     }
 
     public RecipeModule(@NotNull ModuleCategory category, ModuleTag... tags) {
         super(category, tags);
+        this.tags.add(ModuleTag.RECIPES);
     }
 
     @Override

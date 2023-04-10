@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityToggleGlideEvent
 import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -21,6 +22,8 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 class AlwaysFlying : VEModule(
     "Makes all entities always fly/glide like with an elytra.",
     INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.ENTITIES,
 ) {
     val applyToMobs = BooleanOption(true, "Controls whether mobs should forced to fly too.")
 

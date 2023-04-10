@@ -13,7 +13,7 @@ abstract class CustomItemModule(
     category: ModuleCategory,
     vararg tags: ModuleTag
 ) : RecipeModule(
-    description, since, category, *tags
+    description, since, category, *tags, ModuleTag.CUSTOM_ITEMS
 ), CustomTextureProvider {
 
     abstract fun getItems(): List<VEItem>

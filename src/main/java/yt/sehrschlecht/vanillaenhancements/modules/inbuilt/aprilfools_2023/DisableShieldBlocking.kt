@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.java.JavaPlugin
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -18,7 +19,9 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 class DisableShieldBlocking : VEModule(
     "Makes players unable to block with shields.",
     "DisableShieldBlocking",
-    INBUILT
+    INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.ITEMS,
 ) {
 
     override fun getKey(): String {

@@ -8,6 +8,7 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -24,7 +25,8 @@ public class CraftCoalToBlackDye extends RecipeModule {
             "Controls if the coal to black dye crafting recipe will be registered");
 
     public CraftCoalToBlackDye() {
-        super("Allows players to craft black dye from coal and charcoal.", INBUILT);
+        super("Allows players to craft black dye from coal and charcoal.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override

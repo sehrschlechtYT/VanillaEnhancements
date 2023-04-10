@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -28,7 +29,8 @@ public class CraftBlocksToTwoSlabs extends RecipeModule {
     ), "Exclude recipes for blocks from being registered");
 
     public CraftBlocksToTwoSlabs() {
-        super("Allows players to craft two slabs from one block.", INBUILT);
+        super("Allows players to craft two slabs from one block.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override

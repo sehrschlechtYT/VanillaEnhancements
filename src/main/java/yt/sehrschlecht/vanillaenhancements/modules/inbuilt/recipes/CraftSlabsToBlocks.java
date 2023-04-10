@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -26,15 +27,16 @@ public class CraftSlabsToBlocks extends RecipeModule {
             "Exclude recipes for slabs from being registered");
 
     public CraftSlabsToBlocks() {
-        super("Allows players to craft two slabs into a block.", INBUILT);
+        super("Allows players to craft two slabs into a block.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).filter(m -> m.name().endsWith("_SLAB")).forEach(slab -> {
-            if(excludedSlabs.get().contains(slab)) return;
+            if (excludedSlabs.get().contains(slab)) return;
             String blockName = getBlockName(slab);
-            if(blockName == null) return;
+            if (blockName == null) return;
             Material block = Material.valueOf(blockName);
             NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "slabs_blocks_" + block.name());
             ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(block));

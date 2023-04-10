@@ -3,6 +3,7 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 import com.google.gson.annotations.Since;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 /**
@@ -22,7 +23,8 @@ public class ChatCoordinates extends VEModule {
     }
 
     public ChatCoordinates() {
-        super("Allows players to send their coordinates in chat by typing \"~ ~ ~\".", INBUILT);
+        super("Allows players to send their coordinates in chat by typing \"~ ~ ~\".",
+                INBUILT, ModuleTag.CHAT);
     }
 
     /*@Override

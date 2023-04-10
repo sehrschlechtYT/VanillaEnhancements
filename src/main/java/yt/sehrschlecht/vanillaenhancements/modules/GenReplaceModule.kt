@@ -15,7 +15,7 @@ abstract class GenReplaceModule(
     since: String? = null,
     category: ModuleCategory,
     vararg tags: ModuleTag
-) : VEModule(description, since, category, *tags) {
+) : VEModule(description, since, category, *tags, ModuleTag.GEN_REPLACE) {
 
     val block = MaterialOption(Material.BASALT, "Block to replace generated basalt with")
 

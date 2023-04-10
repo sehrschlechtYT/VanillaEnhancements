@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.NotNull;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick;
 
@@ -25,7 +26,8 @@ public class PumpkinNametags extends VEModule {
     private Scoreboard scoreboard;
 
     public PumpkinNametags() {
-        super("Hides the nametags of players wearing a pumpkin on their head.", INBUILT);
+        super("Hides the nametags of players wearing a pumpkin on their head.",
+                INBUILT, ModuleTag.MISC);
     }
 
     @Override

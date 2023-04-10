@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.DoubleOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -22,7 +23,8 @@ public class GlowSacFishing extends VEModule {
     public DoubleOption chance = new DoubleOption(0.01D, "The chance for a glow inc sac to drop when fishing", 0D, 1D);
 
     public GlowSacFishing() {
-        super("Adds a chance for a glow ink sac to drop when fishing.", INBUILT);
+        super("Adds a chance for a glow ink sac to drop when fishing.",
+                INBUILT, ModuleTag.WORLD);
     }
 
     @Override

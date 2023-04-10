@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.StringOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 /**
@@ -25,7 +26,8 @@ public class CreativeKeepInventory extends VEModule {
     // ToDo add keepLevel option
 
     public CreativeKeepInventory() {
-        super("Makes players keep their inventory when they die in creative mode.", INBUILT);
+        super("Makes players keep their inventory when they die in creative mode.",
+                INBUILT, ModuleTag.MISC, ModuleTag.UTILITY);
     }
 
     @Override

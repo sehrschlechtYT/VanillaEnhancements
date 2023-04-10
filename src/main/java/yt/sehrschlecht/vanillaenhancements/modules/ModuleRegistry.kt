@@ -25,6 +25,10 @@ class ModuleRegistry {
             if (inbuilt) "inbuilt" else "external",
             if (inbuilt) module.moduleKey.key else module.moduleKey
         )
+        if (module.tags.isEmpty()) {
+            Debug.MODULES.log("Module ${module.moduleKey} has no tags, adding misc tag...")
+            module.tags.add(ModuleTag.MISC)
+        }
         registeredModules.add(module)
         module.initialize()
         registerTickServices(module)

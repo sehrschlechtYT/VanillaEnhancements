@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -31,7 +32,8 @@ public class CraftStairsToBlocks extends RecipeModule {
             "The amount of blocks that players will receive", 1, 64);
 
     public CraftStairsToBlocks() {
-        super("Allows players to craft stairs back into blocks.", INBUILT);
+        super("Allows players to craft stairs back into blocks.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override

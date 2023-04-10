@@ -27,7 +27,7 @@ public abstract class VEModule implements Listener {
     private final @Nullable String description;
     private final @Nullable String since;
     private final @NotNull ModuleCategory category;
-    private final @NotNull List<ModuleTag> tags = new ArrayList<>();
+    protected final @NotNull List<ModuleTag> tags = new ArrayList<>();
 
     public final BooleanOption enabled = new BooleanOption(false, null);
 

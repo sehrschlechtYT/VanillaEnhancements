@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntitySpawnEvent
 import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.config.options.DyeColorOption
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 
@@ -17,7 +18,9 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 class DefaultSheepColor : VEModule(
     "Makes all sheep spawn with the set color.",
     "1.0",
-    INBUILT
+    INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.ENTITIES,
 ) {
 
     val color = DyeColorOption(DyeColor.WHITE, "The color all sheep will spawn with.")

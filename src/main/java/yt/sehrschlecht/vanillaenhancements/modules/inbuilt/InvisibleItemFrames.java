@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 /**
@@ -26,7 +27,8 @@ public class InvisibleItemFrames extends VEModule {
             "Controls if players can use milk buckets to make item frames visible again.");
 
     public InvisibleItemFrames() {
-        super("Allows players to make item frames invisible by using invisibility potions on them.", INBUILT);
+        super("Allows players to make item frames invisible by using invisibility potions on them.",
+                INBUILT, ModuleTag.ENTITIES, ModuleTag.BLOCKS);
     }
 
     @Override

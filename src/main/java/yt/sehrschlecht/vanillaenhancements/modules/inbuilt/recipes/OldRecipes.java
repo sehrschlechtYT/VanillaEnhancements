@@ -10,6 +10,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -26,7 +27,8 @@ public class OldRecipes extends RecipeModule {
             "Controls if the horse armor crafting recipes will be registered");
 
     public OldRecipes() {
-        super("Adds some crafting recipes that existed in older versions of Minecraft.", INBUILT);
+        super("Adds some crafting recipes that existed in older versions of Minecraft.",
+                INBUILT, ModuleTag.OLD_FEATURES);
     }
 
     private RecipeChoice.MaterialChoice woolChoice;
