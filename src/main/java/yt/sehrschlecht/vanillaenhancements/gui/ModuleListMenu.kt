@@ -7,8 +7,10 @@ import fr.minuskube.inv.content.InventoryProvider
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
+import yt.sehrschlecht.vanillaenhancements.utils.PaginationType
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.removeColorCodes
 
 /**
@@ -28,14 +30,20 @@ class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: M
 
     override fun init(player: Player, contents: InventoryContents) {
         val modules = plugin.moduleRegistry.getModulesByTag(tag)
-        modules.forEach { // ToDo: Add pagination
-            contents.add(ClickableItem.of(it.buildIcon().apply {
+        val items = modules.map {
+            ClickableItem.of(it.buildIcon().apply {
                 val color = if (it.isEnabled) "§a" else "§c"
                 displayName("$color§l${getDisplayName().removeColorCodes()}")
                 it.description?.let { desc -> addLongLore(desc, lineStart = "§f§o") }
                 addLore("§fCategory: ${it.category.displayName}")
-            }.build()) { _ -> ModuleMenu.getInventory(plugin, module = it, tag).open(player) })
+            }.build()) { _ -> ModuleMenu.getInventory(plugin, module = it, tag).open(player) }
         }
+
+        contents.paginateItems(items, player = player, paginationType = PaginationType.HORIZONTAL_7, noneItem = {
+            displayName("§c§lNo modules found")
+            addLongLore("This should not be the case. Please report this bug to the discord server (see SpigotMC page of the VanillaEnhancements plugin)!", lineStart = "§c")
+        }, inventoryGetter = { getInventory(plugin, tag) })
+
         contents.addBackButton { _ -> ModuleTagsMenu.getInventory(plugin) }
         contents.fillBackground()
     }
