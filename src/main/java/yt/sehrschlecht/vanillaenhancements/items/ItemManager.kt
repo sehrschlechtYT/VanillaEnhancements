@@ -10,9 +10,8 @@ import yt.sehrschlecht.vanillaenhancements.modules.CustomItemModule
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ItemManager(
-    val plugin: VanillaEnhancements
-) {
+class ItemManager(val plugin: VanillaEnhancements) {
+
     val items = mutableListOf<VEItem>()
     val key = NamespacedKey(plugin, "ve_custom_item")
 
