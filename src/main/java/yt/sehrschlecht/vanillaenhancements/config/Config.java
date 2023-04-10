@@ -152,7 +152,7 @@ public class Config {
             Debug.CONFIG.log(e.getMessage());
         }
         document.set(option.toPath(), value);
-        save();
+        save(); // ToDo do not immediately save the config but only on certain events
     }
 
     public String message(String key) {

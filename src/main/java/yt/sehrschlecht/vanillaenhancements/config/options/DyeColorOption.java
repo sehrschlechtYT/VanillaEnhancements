@@ -1,8 +1,14 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
+import yt.sehrschlecht.vanillaenhancements.gui.ChooseDyeColorMenu;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 /**
@@ -32,6 +38,12 @@ public class DyeColorOption extends EnumConfigOption<DyeColor> {
             color = ChatColor.WHITE;
         }
         return color + ModuleUtils.getNameFromKey(value.name());
+    }
+
+    @Override
+    public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        creator.addLore("§9Left click to change the value.");
+        return ClickableItem.of(creator.build(), event -> ChooseDyeColorMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked()));
     }
 
 }

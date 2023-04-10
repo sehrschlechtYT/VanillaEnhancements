@@ -5,6 +5,8 @@ import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.SlotIterator
 import fr.minuskube.inv.content.SlotPos
+import org.bukkit.ChatColor
+import org.bukkit.DyeColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
@@ -97,6 +99,27 @@ class SpigotExtensions {
                         }.build()
                     ) { _ -> inventoryGetter().open(player, pagination.previous().page) })
                 }
+            }
+        }
+
+        fun DyeColor.asChatColor(): ChatColor {
+            return when(this) {
+                DyeColor.BLACK -> ChatColor.BLACK
+                DyeColor.BLUE -> ChatColor.BLUE
+                DyeColor.BROWN -> ChatColor.DARK_RED
+                DyeColor.CYAN -> ChatColor.AQUA
+                DyeColor.GRAY -> ChatColor.GRAY
+                DyeColor.GREEN -> ChatColor.GREEN
+                DyeColor.LIGHT_BLUE -> ChatColor.AQUA
+                DyeColor.LIME -> ChatColor.GREEN
+                DyeColor.MAGENTA -> ChatColor.LIGHT_PURPLE
+                DyeColor.ORANGE -> ChatColor.GOLD
+                DyeColor.PINK -> ChatColor.LIGHT_PURPLE
+                DyeColor.PURPLE -> ChatColor.DARK_PURPLE
+                DyeColor.RED -> ChatColor.RED
+                DyeColor.LIGHT_GRAY -> ChatColor.GRAY
+                DyeColor.WHITE -> ChatColor.WHITE
+                DyeColor.YELLOW -> ChatColor.YELLOW
             }
         }
     }

@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 
@@ -14,12 +15,23 @@ public class IntegerOption extends NumberOption<Integer> {
      * @param min          The minimum value of the option.
      * @param max          The maximum value of the option.
      */
-    public IntegerOption(Integer defaultValue, @Nullable String description, Integer min, Integer max) {
-        super(defaultValue, description, min, max);
+    public IntegerOption(int defaultValue, @Nullable String description, Integer min, Integer max, int step) {
+        super(defaultValue, description, min, max, step);
     }
 
     @Override
     public Integer getFromConfig() {
         return Config.getInstance().getDocument().getInt(toPath());
     }
+
+    @Override
+    protected @NotNull Integer add(Integer first, Integer second) {
+        return first + second;
+    }
+
+    @Override
+    protected @NotNull Integer subtract(Integer first, Integer second) {
+        return first - second;
+    }
+
 }

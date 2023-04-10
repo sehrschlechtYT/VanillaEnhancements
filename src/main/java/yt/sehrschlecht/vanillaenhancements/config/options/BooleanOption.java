@@ -1,8 +1,11 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -41,4 +44,11 @@ public class BooleanOption extends ConfigOption<Boolean> {
     public @Nullable String validate(Boolean value) {
         return null;
     }
+
+    @Override
+    public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        creator.addLore("§9Click to toggle");
+        return ClickableItem.of(creator.build(), e -> set(!get()));
+    }
+
 }

@@ -1,7 +1,11 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -11,6 +15,7 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
 
     private final T min;
     private final T max;
+    private final T step;
 
     /**
      * @param defaultValue The default value of the option.
@@ -18,10 +23,14 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
      * @param min          The minimum value of the option.
      * @param max          The maximum value of the option.
      */
-    public NumberOption(T defaultValue, @Nullable String description, T min, T max) {
+    public NumberOption(T defaultValue, @Nullable String description, T min, T max, @NotNull T step) {
         super(defaultValue, description);
         this.min = min;
         this.max = max;
+        this.step = step;
+        if (((Number) step).intValue() <= 0) {
+            throw new IllegalArgumentException("Step must be greater than 0");
+        }
     }
 
     @Override
@@ -73,9 +82,49 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
         return max;
     }
 
+    public T getStep() {
+        return step;
+    }
+
     @Override
     public String valueToDisplayString(T value) {
         return value.toString();
     }
+
+    @Override
+    public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        T diff = subtract(max, min);
+        boolean enableGreaterStep = ((Number) diff).doubleValue() > ((Number) step).doubleValue() * 5;
+        creator.addLore("§9Right click: -" + step);
+        creator.addLore("§9Left click: +" + step);
+        if (enableGreaterStep) {
+            creator.addLore("§9Shift right click: -" + ((Number) step).doubleValue() * 5);
+            creator.addLore("§9Shift left click: +" + ((Number) step).doubleValue() * 5);
+        }
+        return ClickableItem.of(creator.build(), event -> {
+            T step;
+            if (event.isShiftClick()) {
+                step = (T) Double.valueOf(((Number) this.step).doubleValue() * 5);
+            } else {
+                step = this.step;
+            }
+            if (event.isRightClick()) {
+                T newValue = subtract(get(), step);
+                if (((Number) newValue).doubleValue() < ((Number) min).doubleValue()) {
+                    newValue = min;
+                }
+                set(newValue);
+            } else if (event.isLeftClick()) {
+                T newValue = add(get(), step);
+                if (((Number) newValue).doubleValue() > ((Number) max).doubleValue()) {
+                    newValue = max;
+                }
+                set(newValue);
+            }
+        });
+    }
+
+    protected abstract @NotNull T add(T first, T second); // ToDo find a better way for this
+    protected abstract @NotNull T subtract(T first, T second);
 
 }

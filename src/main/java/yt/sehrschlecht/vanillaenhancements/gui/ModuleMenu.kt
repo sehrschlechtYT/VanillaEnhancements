@@ -74,14 +74,14 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
         val options: MutableList<ConfigOption<*>> = Config.getInstance().getModuleOptions(module)
         options.removeIf { option -> option.key == "enabled" }
         val items = options.map { option ->
-            ClickableItem.of(
+            option.buildClickableItem(
                 ItemCreator(Material.PAPER) {
                     displayName("§f§l${ModuleUtils.beautifyLowerCamelCase(option.key)}")
                     addLongLore("§fDescription: ${option.description}", lineStart = "§f§o")
                     addLongLore("§fCurrent value: ${option.valueToDisplayString()}")
-                    lore("§fClick to change!")
-                }.build()
-            ) { player.sendMessage("You clicked on option ${option.key}. TODO make option changeable") }
+                    addLore("")
+                }
+            )
         }
 
         contents.paginateItems(items, row = 3, player, noneItem = {

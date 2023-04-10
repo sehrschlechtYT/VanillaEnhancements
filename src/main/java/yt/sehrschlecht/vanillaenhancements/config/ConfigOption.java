@@ -1,7 +1,10 @@
 package yt.sehrschlecht.vanillaenhancements.config;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.Nullable;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug;
 
 /**
@@ -90,5 +93,7 @@ public abstract class ConfigOption<T> {
     public @Nullable String getDescription() {
         return description;
     }
+
+    public abstract ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin);
 
 }
