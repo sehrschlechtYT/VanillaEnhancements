@@ -30,7 +30,7 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
             .id("moduleMenu")
             .provider(ModuleMenu(plugin, module, sourceTag))
             .size(5, 9)
-            .title("§lVE - Module \"${module.name}\"")
+            .title("§lVE - ${module.name}")
             .manager(plugin.inventoryManager)
             .build()
     }
@@ -71,21 +71,24 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
             ) { _ -> ModuleCustomItemsMenu.getInventory(plugin, module, sourceTag).open(player) })
         }
 
-        val options: List<ConfigOption<*>> = Config.getInstance().getModuleOptions(module)
+        val options: MutableList<ConfigOption<*>> = Config.getInstance().getModuleOptions(module)
+        options.removeIf { option -> option.key == "enabled" }
         val items = options.map { option ->
             ClickableItem.of(
                 ItemCreator(Material.PAPER) {
-                    displayName("§f§l${ModuleUtils.getNameFromKey(option.key)}}")
+                    displayName("§f§l${ModuleUtils.beautifyLowerCamelCase(option.key)}")
                     addLongLore("§fDescription: ${option.description}", lineStart = "§f§o")
                     addLongLore("§fCurrent value: ${option.valueToDisplayString()}")
                     lore("§fClick to change!")
                 }.build()
             ) { player.sendMessage("You clicked on option ${option.key}. TODO make option changeable") }
         }
+
         if (options.isEmpty()) {
             contents.set(3, 4, ClickableItem.empty(
                 ItemCreator(Material.BARRIER) {
-                    displayName("§c§lNo config options available!")
+                    displayName("§c§lNo config options")
+                    addLore("§fThere are no configurable options for this module!")
                 }.build()
             ))
         } else if (options.size <= 5) {
@@ -97,16 +100,18 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
             pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 3, 2))
 
             if (!pagination.isLast) {
-                contents.set(3, 8, ClickableItem.of(
+                contents.set(3, 7, ClickableItem.of(
                     ItemCreator(Material.PLAYER_HEAD) {
+                        skullOwner("MHF_ArrowRight")
                         displayName("§fNext Page")
                     }.build()
                 ) { _ -> getInventory(plugin, module, sourceTag).open(player, pagination.next().page) })
             }
 
             if (!pagination.isFirst) {
-                contents.set(3, 0, ClickableItem.of(
+                contents.set(3, 1, ClickableItem.of(
                     ItemCreator(Material.PLAYER_HEAD) {
+                        skullOwner("MHF_ArrowLeft")
                         displayName("§fPrevious Page")
                     }.build()
                 ) { _ -> getInventory(plugin, module, sourceTag).open(player, pagination.previous().page) })

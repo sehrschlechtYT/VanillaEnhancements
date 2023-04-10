@@ -3,6 +3,7 @@ package yt.sehrschlecht.vanillaenhancements.gui
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.CustomItemModule
@@ -34,7 +35,15 @@ class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val
             contents.add(ClickableItem.of(it.createItem {
                 displayName("§f§l${it.displayName}")
                 addLore("§fBased off of ${ModuleUtils.getNameFromKey(it.vanillaItem.name)}")
-            }.build()) { _ -> player.sendMessage("Clicked on item ${it.key}. TODO") })
+                addLore("§9Right click to get")
+            }.build()) { event ->
+                if (event.isRightClick) {
+                    player.inventory.addItem(it.createItem().build())
+                    player.playSound(player.location, Sound.ENTITY_ITEM_PICKUP, 1f, 1f)
+                    return@of
+                }
+                player.sendMessage("Clicked on item ${it.key}. TODO")
+            })
         }
         contents.addBackButton{_ -> ModuleMenu.getInventory(plugin, module, sourceTag) }
         contents.fillBackground()

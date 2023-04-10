@@ -50,7 +50,7 @@ public class MoreBlackstoneRecipes extends RecipeModule {
     }
 
     private void addBrewingStandRecipe() {
-        NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "blackstone_brerwing_stand");
+        NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "blackstone_brewing_stand");
         ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.BREWING_STAND));
         recipe.shape(" R ", "BBB");
         recipe.setIngredient('R', Material.BLAZE_ROD);
