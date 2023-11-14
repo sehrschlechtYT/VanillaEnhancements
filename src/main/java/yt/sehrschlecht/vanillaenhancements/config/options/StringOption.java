@@ -2,12 +2,14 @@ package yt.sehrschlecht.vanillaenhancements.config.options;
 
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
+import org.bukkit.Sound;
+import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
-import yt.sehrschlecht.vanillaenhancements.gui.ChooseStringMenu;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
 import java.util.function.BiConsumer;
@@ -73,15 +75,77 @@ public class StringOption extends ConfigOption<String> {
      */
     @Override
     public @Nullable String validate(String value) {
-        if(!allowEmpty && value.isEmpty()) return "The value can't be empty";
+        if (!allowEmpty && value.isEmpty()) return "The value can't be empty";
         return null;
     }
 
     @Override
     public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        // todo find a solution for inputting colored messages
+        // todo add middle click or sth to reset
         creator.addLore("§9Click to change the value");
         return ClickableItem.of(creator.build(), event -> {
-            ChooseStringMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked());
+            Player player = (Player) event.getWhoClicked();
+            ConversationFactory conversationFactory = new ConversationFactory(VanillaEnhancements.getPlugin());
+            Prompt input = new ValidatingPrompt() {
+                @NotNull
+                @Override
+                public String getPromptText(@NotNull ConversationContext context) {
+                    return "§lPlease input the new option value in the chat. Type §r§ocancel §r§f§lto cancel the process. §r§oThis prompt will time out after 30 seconds.";
+                }
+
+                /**
+                 * Override this method to check the validity of the player's input.
+                 *
+                 * @param context Context information about the conversation.
+                 * @param input   The player's raw console input.
+                 * @return True or false depending on the validity of the input.
+                 */
+                @Override
+                protected boolean isInputValid(@NotNull ConversationContext context, @NotNull String input) {
+                    return allowEmpty || !input.isBlank();
+                }
+
+                /**
+                 * Override this method to accept and processes the validated input from
+                 * the user. Using the input, the next Prompt in the prompt graph should
+                 * be returned.
+                 *
+                 * @param context Context information about the conversation.
+                 * @param input   The validated input text from the user.
+                 * @return The next Prompt in the prompt graph.
+                 */
+                @Nullable
+                @Override
+                protected Prompt acceptValidatedInput(@NotNull ConversationContext context, @NotNull String input) {
+                    set(input);
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    origin.open(player);
+                    return null;
+                }
+            };
+            conversationFactory.withFirstPrompt(input);
+            conversationFactory.withTimeout(30);
+            conversationFactory.withEscapeSequence("cancel");
+            conversationFactory.addConversationAbandonedListener(abandonedEvent -> {
+                origin.open(player);
+                if (!abandonedEvent.gracefulExit()) {
+                    player.sendMessage("§cCancelled input.");
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                } else {
+                    player.sendMessage("§aSaved value.");
+                }
+            });
+
+            player.closeInventory();
+
+            Conversation conversation = conversationFactory
+                    .withLocalEcho(true)
+                    .buildConversation(player);
+            conversation.begin();
+
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 2, 0);
+            player.sendTitle("§lUpdate option", "Please enter a value in the chat.", 5, 100, 20);
         });
     }
 }
