@@ -38,7 +38,7 @@ class MainMenu(private val plugin: VanillaEnhancements) : InventoryProvider {
         contents.set(1, 5, ClickableItem.of(
             ItemCreator(Material.REPEATER) {
                 displayName("§c§lVE Settings")
-                lore("§c§oNot available yet") // Todo add settings menu with reset settings button
+                lore("§c§oNot available yet") // Todo add settings menu with reset settings button and disable all settings button
             }.build()
         ) { _ -> player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f)})
         contents.addBackButton()

@@ -12,6 +12,8 @@ import yt.sehrschlecht.vanillaenhancements.gui.ChooseDyeColorMenu;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
+import java.util.function.BiConsumer;
+
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
@@ -25,6 +27,16 @@ public class DyeColorOption extends EnumConfigOption<DyeColor> {
     public DyeColorOption(DyeColor defaultValue, @Nullable String description) {
         super(defaultValue, description, DyeColor.class);
     }
+
+    /**
+     * @param defaultValue  The default value of the option.
+     * @param description   A markdown formatted description of the option.
+     * @param updateHandler A consumer that takes the old and the new value of the option after an update (e.g. through the UI)
+     */
+    public DyeColorOption(DyeColor defaultValue, @Nullable String description, @Nullable BiConsumer<DyeColor, DyeColor> updateHandler) {
+        super(defaultValue, description, updateHandler, DyeColor.class);
+    }
+
     @Override
     public String getPossibleValues() {
         return "[List of materials](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/DyeColor.html#enum-constant-summary)";

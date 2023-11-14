@@ -63,7 +63,7 @@ public class MaterialListOption extends ConfigOption<List<Material>> { // ToDo m
 
     @Override
     public void set(List<Material> value) {
-        Config.getInstance().set(this, toStringList(value));
+        setToObject(toStringList(value), value);
     }
 
     public List<String> toStringList(List<Material> list) {

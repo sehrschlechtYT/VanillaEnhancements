@@ -24,7 +24,11 @@ class DefaultSheepColor : VEModule(
     ModuleTag.ENTITIES,
 ) {
 
-    val color = DyeColorOption(DyeColor.WHITE, "The color all sheep will spawn with.")
+    val color = DyeColorOption(DyeColor.WHITE, "The color all sheep will spawn with.") { _, newValue ->
+        updateSheeps(
+            newValue
+        )
+    }
 
     override fun getKey(): String {
         return "default_sheep_color"
@@ -35,9 +39,13 @@ class DefaultSheepColor : VEModule(
     }
 
     override fun onEnable() {
+        updateSheeps(color.get())
+    }
+
+    fun updateSheeps(dyeColor: DyeColor) {
         loopEntities {
             if (it !is Sheep) return@loopEntities
-            it.color = color.get()
+            it.color = dyeColor
         }
     }
 

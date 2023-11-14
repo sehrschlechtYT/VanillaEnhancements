@@ -38,7 +38,7 @@ public abstract class EnumConfigOption<T extends Enum<T>> extends ConfigOption<T
 
     @Override
     public void set(T value) {
-        Config.getInstance().set(this, value.name());
+        setToObject(value.name(), value);
     }
 
     @Override
