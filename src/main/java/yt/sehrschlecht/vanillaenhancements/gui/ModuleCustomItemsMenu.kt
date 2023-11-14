@@ -43,7 +43,7 @@ class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val
                     player.playSound(player.location, Sound.ENTITY_ITEM_PICKUP, 1f, 1f)
                     return@of
                 }
-                player.sendMessage("Clicked on item ${it.key}. TODO")
+                player.sendMessage("Clicked on item ${it.key}. TODO") //ToDo
             }
         }
 

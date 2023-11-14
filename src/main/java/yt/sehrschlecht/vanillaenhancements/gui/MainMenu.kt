@@ -5,6 +5,7 @@ import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.InventoryProvider
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
@@ -29,11 +30,17 @@ class MainMenu(private val plugin: VanillaEnhancements) : InventoryProvider {
 
     override fun init(player: Player, contents: InventoryContents) {
         contents.fillBackground()
-        contents.set(1, 4, ClickableItem.of(
+        contents.set(1, 3, ClickableItem.of(
             ItemCreator(Material.COMMAND_BLOCK_MINECART) {
                 displayName("§f§lManage Modules")
             }.build()
         ) { _ -> ModuleTagsMenu.getInventory(plugin).open(player) })
+        contents.set(1, 5, ClickableItem.of(
+            ItemCreator(Material.REPEATER) {
+                displayName("§c§lVE Settings")
+                lore("§c§oNot available yet") // Todo add settings menu with reset settings button
+            }.build()
+        ) { _ -> player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f)})
         contents.addBackButton()
     }
 

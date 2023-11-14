@@ -7,11 +7,14 @@ import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
+import java.util.function.BiConsumer;
+
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
 public class BooleanOption extends ConfigOption<Boolean> {
+
 
     /**
      * @param defaultValue The default value of the option.
@@ -19,6 +22,15 @@ public class BooleanOption extends ConfigOption<Boolean> {
      */
     public BooleanOption(Boolean defaultValue, @Nullable String description) {
         super(defaultValue, description);
+    }
+
+    /**
+     * @param defaultValue  The default value of the option.
+     * @param description   A markdown formatted description of the option.
+     * @param updateHandler A consumer that takes the old and the new value of the option after an update (e.g. through the UI)
+     */
+    public BooleanOption(Boolean defaultValue, @Nullable String description, @Nullable BiConsumer<Boolean, Boolean> updateHandler) {
+        super(defaultValue, description, updateHandler);
     }
 
     @Override

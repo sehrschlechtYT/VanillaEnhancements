@@ -12,6 +12,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +27,15 @@ public class MaterialListOption extends ConfigOption<List<Material>> { // ToDo m
      */
     public MaterialListOption(List<Material> defaultValue, @Nullable String description) {
         super(defaultValue, description);
+    }
+
+    /**
+     * @param defaultValue  The default value of the option.
+     * @param description   A markdown formatted description of the option.
+     * @param updateHandler A consumer that takes the old and the new value of the option after an update (e.g. through the UI)
+     */
+    public MaterialListOption(List<Material> defaultValue, @Nullable String description, @Nullable BiConsumer<List<Material>, List<Material>> updateHandler) {
+        super(defaultValue, description, updateHandler);
     }
 
     public static MaterialListOption fromStrings(List<String> strings, String description) {

@@ -11,6 +11,7 @@ import yt.sehrschlecht.vanillaenhancements.gui.ModifyStringListMenu;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -23,6 +24,15 @@ public class StringListOption extends ConfigOption<List<String>> {
      */
     public StringListOption(List<String> defaultValue, @Nullable String description) {
         super(defaultValue, description);
+    }
+
+    /**
+     * @param defaultValue  The default value of the option.
+     * @param description   A markdown formatted description of the option.
+     * @param updateHandler A consumer that takes the old and the new value of the option after an update (e.g. through the UI)
+     */
+    public StringListOption(List<String> defaultValue, @Nullable String description, @Nullable BiConsumer<List<String>, List<String>> updateHandler) {
+        super(defaultValue, description, updateHandler);
     }
 
     @Override

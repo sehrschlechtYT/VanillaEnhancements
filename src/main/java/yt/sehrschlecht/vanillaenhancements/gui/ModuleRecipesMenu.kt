@@ -37,7 +37,7 @@ class ModuleRecipesMenu(private val plugin: VanillaEnhancements, private val mod
                 displayName("§f§l${ModuleUtils.getNameFromKey(it.key)}")
                 addLore("§fItem required for discovery: ${ModuleUtils.getNameFromKey(it.discoverItem?.name ?: "§cNone")}")
                 addLore(if (it.isRegistered) "§aRegistered" else "§cNot registered")
-            }.build()) { _ -> player.sendMessage("Clicked on recipe ${it.key}. TODO") }
+            }.build()) { _ -> player.sendMessage("Clicked on recipe ${it.key}. TODO") } //ToDo
         }
 
         contents.paginateItems(items, player = player, noneItem = {

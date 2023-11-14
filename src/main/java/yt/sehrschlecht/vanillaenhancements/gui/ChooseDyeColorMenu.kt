@@ -32,7 +32,6 @@ class ChooseDyeColorMenu(private val option: DyeColorOption, private val origin:
     }
 
     override fun init(player: Player, contents: InventoryContents) {
-        contents.fillBackground()
         for (color in DyeColor.values()) {
             contents.add(ClickableItem.of(
                 ItemCreator(Material.valueOf(color.name + "_WOOL")) {
@@ -45,7 +44,8 @@ class ChooseDyeColorMenu(private val option: DyeColorOption, private val origin:
             })
         }
         contents.addBackButton { origin }
-    }
+        contents.fillBackground()
+    } // ToDo: After selecting the value, the options are not reloaded!!
 
     override fun update(player: Player, contents: InventoryContents) {
 

@@ -10,6 +10,8 @@ import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.gui.ChooseStringMenu;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
+import java.util.function.BiConsumer;
+
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
@@ -29,6 +31,25 @@ public class StringOption extends ConfigOption<String> {
 
     public StringOption(String defaultValue, String description) {
         this(defaultValue, description, false);
+    }
+
+    /**
+     * @param defaultValue  The default value of the option.
+     * @param description   A markdown formatted description of the option.
+     * @param updateHandler A consumer that takes the old and the new value of the option after an update (e.g. through the UI)
+     */
+    public StringOption(String defaultValue, @Nullable String description, @Nullable BiConsumer<String, String> updateHandler, boolean allowEmpty) {
+        super(defaultValue, description, updateHandler);
+        this.allowEmpty = allowEmpty;
+    }
+
+    /**
+     * @param defaultValue  The default value of the option.
+     * @param description   A markdown formatted description of the option.
+     * @param updateHandler A consumer that takes the old and the new value of the option after an update (e.g. through the UI)
+     */
+    public StringOption(String defaultValue, @Nullable String description, @Nullable BiConsumer<String, String> updateHandler) {
+        this(defaultValue, description, updateHandler, false);
     }
 
     @Override

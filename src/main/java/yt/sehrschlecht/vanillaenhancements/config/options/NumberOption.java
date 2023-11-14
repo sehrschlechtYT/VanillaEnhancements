@@ -7,6 +7,8 @@ import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 
+import java.util.function.BiConsumer;
+
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
@@ -25,6 +27,24 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
      */
     public NumberOption(T defaultValue, @Nullable String description, T min, T max, @NotNull T step) {
         super(defaultValue, description);
+        this.min = min;
+        this.max = max;
+        this.step = step;
+        if (((Number) step).doubleValue() <= 0) {
+            throw new IllegalArgumentException("Step must be greater than 0");
+        }
+    }
+
+    /**
+     * @param defaultValue  The default value of the option.
+     * @param description   A markdown formatted description of the option.
+     * @param min           The minimum value of the option.
+     * @param max           The maximum value of the option.
+     * @param step          The value the option should be changed by when clicking on the option item in the GUI
+     * @param updateHandler A consumer that takes the old and the new value of the option after an update (e.g. through the UI)
+     */
+    public NumberOption(T defaultValue, @Nullable String description, T min, T max, @NotNull T step, @Nullable BiConsumer<T, T> updateHandler) {
+        super(defaultValue, description, updateHandler);
         this.min = min;
         this.max = max;
         this.step = step;
