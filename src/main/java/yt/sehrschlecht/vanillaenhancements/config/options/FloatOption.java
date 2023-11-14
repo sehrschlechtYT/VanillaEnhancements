@@ -35,4 +35,8 @@ public class FloatOption extends NumberOption<Float> {
         return first - second;
     }
 
+    @Override
+    protected @NotNull Float convertFromDouble(Double doubleObject) {
+        return doubleObject.floatValue();
+    }
 }

@@ -28,7 +28,7 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
         this.min = min;
         this.max = max;
         this.step = step;
-        if (((Number) step).intValue() <= 0) {
+        if (((Number) step).doubleValue() <= 0) {
             throw new IllegalArgumentException("Step must be greater than 0");
         }
     }
@@ -96,8 +96,13 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
         creator.amount(
                 Math.min(Math.max(((Number) get()).intValue(), 1), 64)
         );
-        T diff = subtract(max, min);
-        boolean enableGreaterStep = ((Number) diff).doubleValue() > ((Number) step).doubleValue() * 5;
+        boolean enableGreaterStep;
+        if (min != null && max != null) {
+            T diff = subtract(max, min);
+            enableGreaterStep = ((Number) diff).doubleValue() > ((Number) step).doubleValue() * 5;
+        } else {
+            enableGreaterStep = false;
+        }
         creator.addLore("§9Right click: -" + step);
         creator.addLore("§9Left click: +" + step);
         if (enableGreaterStep) {
@@ -107,7 +112,7 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
         return ClickableItem.of(creator.build(), event -> {
             T step;
             if (event.isShiftClick()) {
-                step = (T) Double.valueOf(((Number) this.step).doubleValue() * 5);
+                step = convertFromDouble(((Number) this.step).doubleValue() * 5);
             } else {
                 step = this.step;
             }
@@ -129,5 +134,8 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
 
     protected abstract @NotNull T add(T first, T second); // ToDo find a better way for this
     protected abstract @NotNull T subtract(T first, T second);
+
+    // temporary (at least I hope so) solution for making shift clicks work
+    protected abstract @NotNull T convertFromDouble(Double doubleObject);
 
 }

@@ -31,6 +31,11 @@ public class DoubleOption extends NumberOption<Double> {
     }
 
     @Override
+    protected @NotNull Double convertFromDouble(Double doubleObject) {
+        return doubleObject;
+    }
+
+    @Override
     public Double getFromConfig() {
         return Config.getInstance().getDocument().getDouble(toPath());
     }

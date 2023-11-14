@@ -34,4 +34,8 @@ public class IntegerOption extends NumberOption<Integer> {
         return first - second;
     }
 
+    @Override
+    protected @NotNull Integer convertFromDouble(Double doubleObject) {
+        return doubleObject.intValue();
+    }
 }
