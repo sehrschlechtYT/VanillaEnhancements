@@ -128,9 +128,9 @@ public abstract class VEModule implements Listener {
         ModuleRegistry moduleRegistry = getVEInstance().getModuleRegistry();
         enabled.set(!enabled.get());
         if (isEnabled()) {
-            moduleRegistry.disableModule(this);
-        } else {
             moduleRegistry.enableModule(this);
+        } else {
+            moduleRegistry.disableModule(this);
         }
     }
 
