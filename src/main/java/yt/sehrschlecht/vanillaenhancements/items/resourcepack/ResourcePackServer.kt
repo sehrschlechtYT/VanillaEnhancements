@@ -35,7 +35,7 @@ class ResourcePackServer {
     }
 
     fun stop() {
-        server.stop() // ToDo - Doesn't work
+        server.stop() // ToDo - Doesn't work because the shutdown takes some time and the plugin is disabled instantly
     }
 
 }
