@@ -84,7 +84,7 @@ public class StringOption extends ConfigOption<String> {
     public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
         // todo find a solution for inputting colored messages
         creator.addLore("§9§oLeft click §r§9to change the value");
-        creator.addLore("§9Use §oshift + right click §r§9to reset the value.");
+        creator.addLore("§9Use §oshift + right click §r§9to reset the value");
         return ClickableItem.of(creator.build(), event -> {
             Player player = (Player) event.getWhoClicked();
 

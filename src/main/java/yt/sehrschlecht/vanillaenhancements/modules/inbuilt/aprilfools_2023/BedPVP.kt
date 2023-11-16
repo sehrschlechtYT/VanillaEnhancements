@@ -27,8 +27,8 @@ class BedPVP : VEModule(
     ModuleTag.FUN,
 ) {
 
-    val attackDamage = DoubleOption(7.0, "The attack damage of beds", 0.0, null, 0.5)
-    val attackSpeed = DoubleOption(1.6, "The attack speed of beds", 0.0, null, 0.1)
+    val attackDamage = DoubleOption(7.0, "The attack damage of beds", 0.0, 5000.0, 0.5)
+    val attackSpeed = DoubleOption(1.6, "The attack speed of beds", 0.0, 1000.0, 0.1)
 
     private val damageUUID = UUID.randomUUID()
     private val speedUUID = UUID.randomUUID()

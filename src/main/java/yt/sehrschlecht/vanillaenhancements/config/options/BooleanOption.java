@@ -2,6 +2,9 @@ package yt.sehrschlecht.vanillaenhancements.config.options;
 
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
@@ -59,8 +62,18 @@ public class BooleanOption extends ConfigOption<Boolean> {
 
     @Override
     public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
-        creator.addLore("§9Click to toggle");
-        return ClickableItem.of(creator.build(), e -> set(!get()));
+        creator.addLore("§9§oLeft click §r§9to toggle");
+        creator.addLore("§9Use §oshift + right click §r§9to reset the value");
+        return ClickableItem.of(creator.build(), event -> {
+            Player player = (Player) event.getWhoClicked();
+            if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
+                reset();
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1f, 1f);
+            } else if (event.getClick().equals(ClickType.LEFT)) {
+                set(!get());
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, get() ? 2f : 0f);
+            }
+        });
     }
 
 }

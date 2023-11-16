@@ -48,6 +48,7 @@ class ModifyStringListMenu(private val plugin: VanillaEnhancements, private val 
                 if (!event.isRightClick) return@of
                 val list = option.get().toMutableList()
                 list.remove(it)
+                player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 0f)
                 option.set(list)
                 init(player, contents)
             }

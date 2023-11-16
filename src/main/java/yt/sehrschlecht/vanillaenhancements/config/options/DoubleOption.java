@@ -19,7 +19,7 @@ public class DoubleOption extends NumberOption<Double> {
      * @param max          The maximum value of the option.
      * @param step         The value the option should be changed by when clicking on the option item in the GUI
      */
-    public DoubleOption(double defaultValue, @Nullable String description, Double min, Double max, double step) {
+    public DoubleOption(double defaultValue, @Nullable String description, @NotNull Double min, @NotNull Double max, double step) {
         super(defaultValue, description, min, max, step);
     }
 

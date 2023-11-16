@@ -5,7 +5,9 @@ import fr.minuskube.inv.SmartInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.gui.ChooseDyeColorMenu;
@@ -56,8 +58,17 @@ public class DyeColorOption extends EnumConfigOption<DyeColor> {
     @Override
     public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
         creator.type(asWool());
-        creator.addLore("§9Left click to change the value.");
-        return ClickableItem.of(creator.build(), event -> ChooseDyeColorMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked()));
+        creator.addLore("§9§oLeft click §r§9to change the value");
+        creator.addLore("§9Use §oshift + right click §r§9to reset the value");
+        return ClickableItem.of(creator.build(), event -> {
+            Player player = (Player) event.getWhoClicked();
+            if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
+                reset();
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1f, 1f);
+            } else if (event.getClick().equals(ClickType.LEFT)) {
+                ChooseDyeColorMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked());
+            }
+        });
     }
 
     protected Material asWool() {

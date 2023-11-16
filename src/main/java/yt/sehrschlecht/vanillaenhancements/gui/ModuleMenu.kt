@@ -4,6 +4,7 @@ import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.config.Config
@@ -17,6 +18,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.removeColorCodes
+
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -36,6 +38,7 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
     }
 
     override fun init(player: Player, contents: InventoryContents) {
+        // todo add reset module settings button
         val enabled = module.isEnabled
         contents.fillBorders(ClickableItem.of(
             ItemCreator(if (enabled) Material.LIME_STAINED_GLASS_PANE else Material.RED_STAINED_GLASS_PANE) {
@@ -43,6 +46,7 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
                 lore("Click to toggle!")
             }.build()
         ) { _ ->
+            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 1f, if (module.isEnabled) 0f else 2f)
             module.toggle()
         })
         contents.set(1, 4, ClickableItem.of(

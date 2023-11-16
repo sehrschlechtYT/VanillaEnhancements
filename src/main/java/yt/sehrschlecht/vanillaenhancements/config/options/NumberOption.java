@@ -2,6 +2,9 @@ package yt.sehrschlecht.vanillaenhancements.config.options;
 
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
@@ -129,7 +132,14 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
             creator.addLore("§9Shift right click: -" + ((Number) step).doubleValue() * 5);
             creator.addLore("§9Shift left click: +" + ((Number) step).doubleValue() * 5);
         }
+        creator.addLore("§9Use the §odrop item button §r§9to reset the value");
         return ClickableItem.of(creator.build(), event -> {
+            Player player = (Player) event.getWhoClicked();
+            if (event.getClick().equals(ClickType.DROP)) { // todo not working
+                reset();
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1f, 1f);
+                return;
+            }
             T step;
             if (event.isShiftClick()) {
                 step = convertFromDouble(((Number) this.step).doubleValue() * 5);
@@ -142,12 +152,14 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
                     newValue = min;
                 }
                 set(newValue);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 0f);
             } else if (event.isLeftClick()) {
                 T newValue = add(get(), step);
                 if (((Number) newValue).doubleValue() > ((Number) max).doubleValue()) {
                     newValue = max;
                 }
                 set(newValue);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 2f);
             }
         });
     }
