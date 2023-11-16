@@ -56,8 +56,8 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
         if (module is RecipeModule) {
             contents.set(1, 7, ClickableItem.of(
                 ItemCreator(Material.CRAFTING_TABLE) {
-                    displayName("§f§lCrafting Recipe")
-                    lore("§fClick to view the crafting recipe!")
+                    displayName("§f§lCrafting Recipes")
+                    lore("§fClick to view the crafting recipes of this module!")
                 }.build()
             ) { _ -> ModuleRecipesMenu.getInventory(plugin, module, sourceTag).open(player) })
         }
@@ -65,8 +65,8 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
         if (module is CustomItemModule) {
             contents.set(1, 1, ClickableItem.of(
                 ItemCreator(Material.CHEST) {
-                    displayName("§f§lCustom Item")
-                    lore("§fClick to view the custom item!")
+                    displayName("§f§lCustom Items")
+                    lore("§fClick to view the custom items of this module!")
                 }.build()
             ) { _ -> ModuleCustomItemsMenu.getInventory(plugin, module, sourceTag).open(player) })
         }

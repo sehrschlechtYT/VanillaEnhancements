@@ -128,8 +128,9 @@ public final class VanillaEnhancements extends JavaPlugin {
         getCommand("ve-debug").setExecutor(new DebugCommand());
         getCommand("ve-debug").setTabCompleter(new DebugCommand());
 
-        getCommand("ve").setExecutor(new VECommand());
-        getCommand("ve").setTabCompleter(new VECommand());
+        VECommand veCommand = new VECommand(this);
+        getCommand("ve").setExecutor(veCommand);
+        getCommand("ve").setTabCompleter(veCommand);
 
         registerListeners(
                 new VEItemListener()
