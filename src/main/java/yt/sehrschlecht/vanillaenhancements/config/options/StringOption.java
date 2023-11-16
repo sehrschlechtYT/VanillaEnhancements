@@ -5,6 +5,7 @@ import fr.minuskube.inv.SmartInventory;
 import org.bukkit.Sound;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
@@ -82,10 +83,17 @@ public class StringOption extends ConfigOption<String> {
     @Override
     public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
         // todo find a solution for inputting colored messages
-        // todo add middle click or sth to reset
-        creator.addLore("§9Click to change the value");
+        creator.addLore("§9§oLeft click §r§9to change the value");
+        creator.addLore("§9Use §oshift + right click §r§9to reset the value.");
         return ClickableItem.of(creator.build(), event -> {
             Player player = (Player) event.getWhoClicked();
+
+            if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
+                reset();
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1, 1);
+                return;
+            }
+
             ConversationFactory conversationFactory = new ConversationFactory(VanillaEnhancements.getPlugin());
             Prompt input = new ValidatingPrompt() {
                 @NotNull
