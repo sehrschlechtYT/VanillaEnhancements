@@ -61,7 +61,7 @@ public class StringListOption extends ConfigOption<List<String>> {
 
     @Override
     public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
-        creator.addLore("§9Click to modify the list");
+        creator.addLore("§9Click to add/remove items");
         return ClickableItem.of(creator.build(), event -> ModifyStringListMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked()));
     }
 
