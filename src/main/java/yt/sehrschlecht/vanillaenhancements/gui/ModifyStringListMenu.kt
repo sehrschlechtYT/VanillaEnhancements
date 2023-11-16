@@ -5,6 +5,11 @@ import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.InventoryProvider
 import org.bukkit.Material
+import org.bukkit.Sound
+import org.bukkit.conversations.ConversationContext
+import org.bukkit.conversations.ConversationFactory
+import org.bukkit.conversations.Prompt
+import org.bukkit.conversations.ValidatingPrompt
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.config.options.StringListOption
@@ -31,6 +36,7 @@ class ModifyStringListMenu(private val plugin: VanillaEnhancements, private val 
     }
 
     override fun init(player: Player, contents: InventoryContents) {
+        contents.fill(null)
         contents.fillBackground()
         val items = option.get().map {
             ClickableItem.of(
@@ -55,7 +61,49 @@ class ModifyStringListMenu(private val plugin: VanillaEnhancements, private val 
                 displayName("§a§lAdd value")
                 addLongLore("§fClick to add a new value to this option.")
             }.build()
-        ) { AddToStringListMenu.getInventory(plugin, option, origin).open(player) })
+        ) {
+            val input = object: ValidatingPrompt() {
+                override fun getPromptText(context: ConversationContext): String {
+                    return "§lPlease input the value you want to add in the chat. Type §r§ocancel §r§f§lto cancel the process. §r§oThis prompt will time out after 30 seconds."
+                }
+
+                override fun isInputValid(context: ConversationContext, input: String): Boolean {
+                    return input.isNotBlank()
+                }
+
+                override fun acceptValidatedInput(context: ConversationContext, input: String): Prompt? {
+                    val list = option.get().toMutableList()
+                    list.add(input)
+                    option.set(list)
+                    player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f)
+                    origin.open(player)
+                    return null
+                }
+            }
+
+            val conversationFactory = ConversationFactory(plugin)
+                .withFirstPrompt(input)
+                .withTimeout(30)
+                .withEscapeSequence("cancel")
+                .addConversationAbandonedListener { abandonedEvent ->
+                    contents.inventory().open(player)
+                    if (!abandonedEvent.gracefulExit()) {
+                        player.sendMessage("§cCancelled input.")
+                        player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f)
+                    } else {
+                        player.sendMessage("§aSaved value.")
+                    }
+                }
+                .withLocalEcho(true)
+
+            player.closeInventory()
+
+            val conversation = conversationFactory.buildConversation(player)
+            conversation.begin()
+
+            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BELL, 2f, 0f);
+            player.sendTitle("§lAdd value", "Please enter a value in the chat.", 5, 100, 20)
+        })
         contents.addBackButton { origin }
     }
 
