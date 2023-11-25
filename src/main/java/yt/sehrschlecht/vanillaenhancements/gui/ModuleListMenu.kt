@@ -4,7 +4,9 @@ import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.InventoryProvider
+import org.bukkit.Sound
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.utils.PaginationType
@@ -36,8 +38,18 @@ class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: M
                 displayName("$color§l${getDisplayName().removeColorCodes()}")
                 it.description?.let { desc -> addLongLore(desc, lineStart = "§f§o") }
                 addLore("§fCategory: ${it.category.displayName}")
+                addLore("§9§oLeft click to open menu")
+                addLore("§9§oShift + Left click to toggle")
                 glow(it.isEnabled)
-            }.build()) { _ -> ModuleMenu.getInventory(plugin, module = it, tag).open(player) }
+                itemFlag(*ItemFlag.values())
+            }.build()) listener@{ event ->
+                if (event.isShiftClick) {
+                    player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 1f, if (it.isEnabled) 0f else 2f)
+                    it.toggle()
+                    return@listener
+                }
+                ModuleMenu.getInventory(plugin, module = it, tag).open(player)
+            }
         }
 
         contents.paginateItems(items, player = player, paginationType = PaginationType.HORIZONTAL_7, noneItem = {
