@@ -35,15 +35,16 @@ class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val
         val items = customItems.map {
             ClickableItem.of(it.createItem {
                 displayName("§f§l${it.displayName}")
-                addLore("§fBased off of ${ModuleUtils.getNameFromKey(it.vanillaItem.name)}")
-                addLore("§9Right click to get")
+                addLore("§f§oBased off of ${ModuleUtils.getNameFromKey(it.vanillaItem.name)}")
+                addLore("§9§oLeft click for more information")
+                addLore("§9§oRight click to get")
             }.build()) { event ->
                 if (event.isRightClick) {
                     player.inventory.addItem(it.createItem().build())
                     player.playSound(player.location, Sound.ENTITY_ITEM_PICKUP, 1f, 1f)
                     return@of
                 }
-                player.sendMessage("Clicked on item ${it.key}. TODO") //ToDo
+                CustomItemMenu.getInventory(plugin, it, contents.inventory()).open(player)
             }
         }
 
