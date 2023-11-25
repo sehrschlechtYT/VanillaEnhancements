@@ -36,6 +36,7 @@ class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: M
                 displayName("$color§l${getDisplayName().removeColorCodes()}")
                 it.description?.let { desc -> addLongLore(desc, lineStart = "§f§o") }
                 addLore("§fCategory: ${it.category.displayName}")
+                glow(it.isEnabled)
             }.build()) { _ -> ModuleMenu.getInventory(plugin, module = it, tag).open(player) }
         }
 
