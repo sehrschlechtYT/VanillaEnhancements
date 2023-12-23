@@ -7,6 +7,8 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.FurnaceRecipe
 import org.bukkit.inventory.ShapedRecipe
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
+import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.FurnaceRecipePreviewMenu
+import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.ShapedRecipePreviewMenu
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule
 import yt.sehrschlecht.vanillaenhancements.modules.VERecipe
