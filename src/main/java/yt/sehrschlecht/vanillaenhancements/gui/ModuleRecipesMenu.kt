@@ -4,6 +4,7 @@ import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import org.bukkit.entity.Player
+import org.bukkit.inventory.FurnaceRecipe
 import org.bukkit.inventory.ShapedRecipe
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
@@ -57,11 +58,12 @@ class ModuleRecipesMenu(private val plugin: VanillaEnhancements, private val mod
     }
 
     private fun isRecipePreviewSupported(recipe: VERecipe): Boolean {
-        return recipe.recipe is ShapedRecipe
+        return recipe.recipe is ShapedRecipe || recipe.recipe is FurnaceRecipe
     }
 
     private fun getPreviewGUIForRecipe(recipe: VERecipe): SmartInventory? {
         if (recipe.recipe is ShapedRecipe) return ShapedRecipePreviewMenu.getInventory(plugin, recipe, getInventory(plugin, module, sourceTag))
+        else if (recipe.recipe is FurnaceRecipe) return FurnaceRecipePreviewMenu.getInventory(plugin, recipe, getInventory(plugin, module, sourceTag))
         return null
     }
 
