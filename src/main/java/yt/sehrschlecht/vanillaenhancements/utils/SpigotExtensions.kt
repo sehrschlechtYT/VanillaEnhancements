@@ -9,6 +9,7 @@ import org.bukkit.ChatColor
 import org.bukkit.DyeColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 
 /**
@@ -121,6 +122,14 @@ class SpigotExtensions {
                 DyeColor.WHITE -> ChatColor.WHITE
                 DyeColor.YELLOW -> ChatColor.YELLOW
             }
+        }
+
+        fun ItemStack.toEmptyClickableItem(): ClickableItem {
+            return ClickableItem.empty(this)
+        }
+
+        fun Material.toEmptyClickableItem(): ClickableItem {
+            return ItemStack(this).toEmptyClickableItem()
         }
     }
 

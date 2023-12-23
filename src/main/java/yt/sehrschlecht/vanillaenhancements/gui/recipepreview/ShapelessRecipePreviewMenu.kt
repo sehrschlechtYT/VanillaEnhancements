@@ -6,7 +6,6 @@ import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.SlotPos
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapelessRecipe
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.VERecipe
@@ -51,16 +50,16 @@ class ShapelessRecipePreviewMenu(plugin: VanillaEnhancements, recipe: VERecipe, 
 
     override fun fillIngredients(player: Player, contents: InventoryContents) {
         val shapelessRecipe = recipe.recipe as ShapelessRecipe
-        val ingredients = shapelessRecipe.ingredientList
+        val ingredients = shapelessRecipe.choiceList
         repeat(9) {
             val column: Int = (it % 3) + 1
             val row: Int = (it / 3) + 1
-            val itemStack = if (it >= ingredients.size) {
-                ItemStack(Material.AIR)
+            val recipeChoice = if (it >= ingredients.size) {
+                null
             } else {
                 ingredients[it]
             }
-            contents.set(row, column, ClickableItem.empty(itemStack))
+            setIngredient(contents, SlotPos.of(row, column), recipeChoice)
         }
     }
 }

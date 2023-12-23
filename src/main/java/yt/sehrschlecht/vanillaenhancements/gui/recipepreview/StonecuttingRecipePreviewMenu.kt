@@ -45,6 +45,6 @@ class StonecuttingRecipePreviewMenu(plugin: VanillaEnhancements, recipe: VERecip
     }
 
     override fun fillIngredients(player: Player, contents: InventoryContents) {
-        setSingleInput(contents, (recipe.recipe as StonecuttingRecipe).input)
+        setSingleInput(contents, (recipe.recipe as StonecuttingRecipe).inputChoice)
     }
 }

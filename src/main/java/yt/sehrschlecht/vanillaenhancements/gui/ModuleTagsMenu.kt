@@ -16,7 +16,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.remo
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ModuleTagsMenu(private val plugin: VanillaEnhancements) : UpdatingInventoryProvider(20) {
+class ModuleTagsMenu(private val plugin: VanillaEnhancements) : RecurrentInventoryInitializer(20) {
 
     companion object {
         fun getInventory(plugin: VanillaEnhancements): SmartInventory = SmartInventory.builder()

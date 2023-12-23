@@ -45,6 +45,6 @@ class FurnaceRecipePreviewMenu(plugin: VanillaEnhancements, recipe: VERecipe, or
     }
 
     override fun fillIngredients(player: Player, contents: InventoryContents) {
-        setSingleInput(contents, (recipe.recipe as FurnaceRecipe).input)
+        setSingleInput(contents, (recipe.recipe as FurnaceRecipe).inputChoice)
     }
 }

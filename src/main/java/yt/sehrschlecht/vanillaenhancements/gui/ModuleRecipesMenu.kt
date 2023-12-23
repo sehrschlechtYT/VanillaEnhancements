@@ -30,7 +30,7 @@ class ModuleRecipesMenu(
     private val plugin: VanillaEnhancements,
     private val module: RecipeModule,
     private val sourceTag: ModuleTag
-) : UpdatingInventoryProvider(20) {
+) : RecurrentInventoryInitializer(20) {
 
     companion object {
         fun getInventory(plugin: VanillaEnhancements, module: RecipeModule, sourceTag: ModuleTag): SmartInventory =

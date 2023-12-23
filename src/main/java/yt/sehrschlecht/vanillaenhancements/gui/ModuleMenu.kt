@@ -25,7 +25,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.remo
  * @since 1.0
  */
 class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VEModule, private val sourceTag: ModuleTag) :
-    UpdatingInventoryProvider(5) {
+    RecurrentInventoryInitializer(5) {
 
     companion object {
         fun getInventory(plugin: VanillaEnhancements, module: VEModule, sourceTag: ModuleTag): SmartInventory = SmartInventory.builder()
