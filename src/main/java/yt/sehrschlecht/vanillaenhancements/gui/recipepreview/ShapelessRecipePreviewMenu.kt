@@ -7,20 +7,20 @@ import fr.minuskube.inv.content.SlotPos
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.ShapedRecipe
+import org.bukkit.inventory.ShapelessRecipe
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.VERecipe
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 
-class ShapedRecipePreviewMenu(plugin: VanillaEnhancements, recipe: VERecipe, origin: SmartInventory) :
+class ShapelessRecipePreviewMenu(plugin: VanillaEnhancements, recipe: VERecipe, origin: SmartInventory) :
     AbstractRecipePreviewMenu(
         plugin,
         recipe,
         origin,
         ClickableItem.empty(ItemCreator(Material.CRAFTING_TABLE) {
             displayName("§f§l§oUse this recipe in a crafting table.")
-            addLore("§7§oThis is a shaped recipe.")
+            addLore("§7§oThis is a shapeless recipe.")
         }.build()),
         resultPos = SlotPos.of(2, 7),
         arrowPos = SlotPos.of(2, 5)
@@ -29,8 +29,8 @@ class ShapedRecipePreviewMenu(plugin: VanillaEnhancements, recipe: VERecipe, ori
     companion object {
         fun getInventory(plugin: VanillaEnhancements, recipe: VERecipe, origin: SmartInventory): SmartInventory =
             SmartInventory.builder()
-                .id("shapedRecipePreview")
-                .provider(ShapedRecipePreviewMenu(plugin, recipe, origin))
+                .id("shapelessRecipePreview")
+                .provider(ShapelessRecipePreviewMenu(plugin, recipe, origin))
                 .size(5, 9)
                 .title("§lRecipe preview: ${ModuleUtils.getNameFromKey(recipe.key)}")
                 .manager(plugin.inventoryManager)
@@ -50,17 +50,17 @@ class ShapedRecipePreviewMenu(plugin: VanillaEnhancements, recipe: VERecipe, ori
     }
 
     override fun fillIngredients(player: Player, contents: InventoryContents) {
-        val shapedRecipe = recipe.recipe as ShapedRecipe
-        val ingredientMap = shapedRecipe.ingredientMap
-        val shape = shapedRecipe.shape
-        shape.forEachIndexed { rowIndex, row ->
-            row.toCharArray().forEachIndexed { column, char ->
-                contents.set(
-                    rowIndex + 1, column + 1, ClickableItem.empty(
-                        ingredientMap[char] ?: ItemStack(Material.AIR)
-                    )
-                )
+        val shapelessRecipe = recipe.recipe as ShapelessRecipe
+        val ingredients = shapelessRecipe.ingredientList
+        repeat(9) {
+            val column: Int = (it % 3) + 1
+            val row: Int = (it / 3) + 1
+            val itemStack = if (it >= ingredients.size) {
+                ItemStack(Material.AIR)
+            } else {
+                ingredients[it]
             }
+            contents.set(row, column, ClickableItem.empty(itemStack))
         }
     }
 }

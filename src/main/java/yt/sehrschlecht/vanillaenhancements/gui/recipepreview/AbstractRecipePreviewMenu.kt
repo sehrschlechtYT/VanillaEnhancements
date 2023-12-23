@@ -19,7 +19,8 @@ abstract class AbstractRecipePreviewMenu(
     protected val recipe: VERecipe,
     protected val origin: SmartInventory,
     private val recipeTypeIndicator: ClickableItem,
-    private val resultPos: SlotPos = SlotPos.of(2, 7),
+    private val resultPos: SlotPos = SlotPos.of(2, 6),
+    private val arrowPos: SlotPos = SlotPos.of(2, 4)
 ) : InventoryProvider {
     protected val whiteGlassPane: ClickableItem = ClickableItem.empty(ItemCreator(Material.WHITE_STAINED_GLASS_PANE) {
         displayName("§0")
@@ -30,7 +31,7 @@ abstract class AbstractRecipePreviewMenu(
 
         postInit(player, contents)
         fillOutlines(player, contents)
-        contents.set(2, 5, ClickableItem.empty(ItemCreator(Material.ARROW, buildArrow(player)).build()))
+        contents.set(arrowPos, ClickableItem.empty(ItemCreator(Material.ARROW, buildArrow(player)).build()))
         fillIngredients(player, contents)
 
         // set recipe type indicator
@@ -54,13 +55,19 @@ abstract class AbstractRecipePreviewMenu(
         // fill input slot with air
         contents.set(2, 2, ClickableItem.empty(ItemStack(Material.AIR)))
         // result outline
-        contents.fillRect(SlotPos.of(1, 6), SlotPos.of(3, 8), whiteGlassPane)
+        contents.fillRect(SlotPos.of(1, 5), SlotPos.of(3, 7), whiteGlassPane)
     }
 
     fun setSingleInput(contents: InventoryContents, input: ItemStack) {
         contents.set(2, 2, ClickableItem.empty(input))
     }
 
+    /**
+     * Set the following values in the constructor to make this layout work:
+     * ```
+     * resultPos = SlotPos.of(2, 7),
+     * arrowPos = SlotPos.of(2, 5)```
+     */
     fun fill3x3InputOutlines(contents: InventoryContents) {
         // ingredients outline
         contents.fillRect(SlotPos.of(0, 0), SlotPos.of(4, 4), whiteGlassPane)

@@ -38,7 +38,7 @@ class StonecuttingRecipePreviewMenu(plugin: VanillaEnhancements, recipe: VERecip
 
     override fun buildArrow(player: Player): ItemCreator.() -> Unit {
         return {
-            displayName("§f§lSmelting in furnace")
+            displayName("§f§lCutting in stonecutter")
             addLore("§f<-- Input")
             addLore("§fOutput -->")
         }
