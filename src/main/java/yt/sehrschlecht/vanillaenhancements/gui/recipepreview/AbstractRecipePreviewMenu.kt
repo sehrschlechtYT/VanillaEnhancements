@@ -8,6 +8,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.RecipeChoice
+import org.bukkit.inventory.RecipeChoice.ExactChoice
 import org.bukkit.inventory.RecipeChoice.MaterialChoice
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.gui.InventoryTickUpdater
@@ -28,7 +29,7 @@ abstract class AbstractRecipePreviewMenu(
     private val whiteGlassPane: ClickableItem = ClickableItem.empty(ItemCreator(Material.WHITE_STAINED_GLASS_PANE) {
         displayName("§0")
     }.build())
-    private val animatedRecipeChoices = mutableMapOf<SlotPos, MaterialChoice>()
+    private val animatedRecipeChoices = mutableMapOf<SlotPos, RecipeChoice>()
 
     override fun init(player: Player, contents: InventoryContents) {
         contents.fillBackground()
@@ -90,14 +91,31 @@ abstract class AbstractRecipePreviewMenu(
             if (contents.get(pos) == null) {
                 return@forEach
             }
-            val currentMaterial = contents.get(pos).get().item.type
-            val choices = choice.choices
-            val index = choices.indexOf(currentMaterial)
-            var nextIndex = index + 1
-            if (nextIndex == choices.size) {
-                nextIndex = 0
+            if (choice is MaterialChoice) {
+                val currentMaterial = contents.get(pos).get().item.type
+                val choices = choice.choices
+                if (currentMaterial !in choices) {
+                    return@forEach
+                }
+                val index = choices.indexOf(currentMaterial)
+                var nextIndex = index + 1
+                if (nextIndex == choices.size) {
+                    nextIndex = 0
+                }
+                contents.set(pos, choices[nextIndex].toEmptyClickableItem())
+            } else if (choice is ExactChoice) {
+                val currentItem = contents.get(pos).get().item
+                val choices = choice.choices
+                if (currentItem !in choices) {
+                    return@forEach
+                }
+                val index = choices.indexOf(currentItem)
+                var nextIndex = index + 1
+                if (nextIndex == choices.size) {
+                    nextIndex = 0
+                }
+                contents.set(pos, choices[nextIndex].toEmptyClickableItem())
             }
-            contents.set(pos, choices[nextIndex].toEmptyClickableItem())
         }
     }
 
@@ -110,9 +128,11 @@ abstract class AbstractRecipePreviewMenu(
                 if (recipeChoice.choices.size > 1) {
                     animatedRecipeChoices[pos] = recipeChoice
                 }
-            } else if (recipeChoice is RecipeChoice.ExactChoice) {
-                // ToDo implement animation for ExactChoice
+            } else if (recipeChoice is ExactChoice) {
                 contents.set(pos, recipeChoice.itemStack.toEmptyClickableItem())
+                if (recipeChoice.choices.size > 1) {
+                    animatedRecipeChoices[pos] = recipeChoice
+                }
             }
         }
     }
