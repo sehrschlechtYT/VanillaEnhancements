@@ -25,10 +25,10 @@ abstract class AbstractRecipePreviewMenu(
     private val resultPos: SlotPos = SlotPos.of(2, 6),
     private val arrowPos: SlotPos = SlotPos.of(2, 4)
 ) : InventoryTickUpdater(tickInterval = 20) {
-    protected val whiteGlassPane: ClickableItem = ClickableItem.empty(ItemCreator(Material.WHITE_STAINED_GLASS_PANE) {
+    private val whiteGlassPane: ClickableItem = ClickableItem.empty(ItemCreator(Material.WHITE_STAINED_GLASS_PANE) {
         displayName("§0")
     }.build())
-    protected val animatedRecipeChoices = mutableMapOf<SlotPos, MaterialChoice>()
+    private val animatedRecipeChoices = mutableMapOf<SlotPos, MaterialChoice>()
 
     override fun init(player: Player, contents: InventoryContents) {
         contents.fillBackground()
@@ -82,6 +82,10 @@ abstract class AbstractRecipePreviewMenu(
     }
 
     override fun tick(player: Player, contents: InventoryContents) {
+        if (animatedRecipeChoices.isEmpty()) {
+            cancel() // stop ticking if there are no animated choices to improve performance
+            return
+        }
         animatedRecipeChoices.forEach { (pos, choice) ->
             if (contents.get(pos) == null) {
                 return@forEach
