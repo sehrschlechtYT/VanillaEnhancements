@@ -6,9 +6,11 @@ import fr.minuskube.inv.content.InventoryContents
 import org.bukkit.entity.Player
 import org.bukkit.inventory.FurnaceRecipe
 import org.bukkit.inventory.ShapedRecipe
+import org.bukkit.inventory.StonecuttingRecipe
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.FurnaceRecipePreviewMenu
 import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.ShapedRecipePreviewMenu
+import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.StonecuttingRecipePreviewMenu
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule
 import yt.sehrschlecht.vanillaenhancements.modules.VERecipe
@@ -60,13 +62,16 @@ class ModuleRecipesMenu(private val plugin: VanillaEnhancements, private val mod
     }
 
     private fun isRecipePreviewSupported(recipe: VERecipe): Boolean {
-        return recipe.recipe is ShapedRecipe || recipe.recipe is FurnaceRecipe
+        return recipe.recipe is ShapedRecipe || recipe.recipe is FurnaceRecipe || recipe.recipe is StonecuttingRecipe
     }
 
     private fun getPreviewGUIForRecipe(recipe: VERecipe): SmartInventory? {
-        if (recipe.recipe is ShapedRecipe) return ShapedRecipePreviewMenu.getInventory(plugin, recipe, getInventory(plugin, module, sourceTag))
-        else if (recipe.recipe is FurnaceRecipe) return FurnaceRecipePreviewMenu.getInventory(plugin, recipe, getInventory(plugin, module, sourceTag))
-        return null
+        return when (recipe.recipe) {
+            is ShapedRecipe -> ShapedRecipePreviewMenu.getInventory(plugin, recipe, getInventory(plugin, module, sourceTag))
+            is FurnaceRecipe -> FurnaceRecipePreviewMenu.getInventory(plugin, recipe, getInventory(plugin, module, sourceTag))
+            is StonecuttingRecipe -> StonecuttingRecipePreviewMenu.getInventory(plugin, recipe, getInventory(plugin, module, sourceTag))
+            else -> null
+        }
     }
 
 }
