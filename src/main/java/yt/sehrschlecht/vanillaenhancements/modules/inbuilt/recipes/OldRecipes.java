@@ -7,8 +7,10 @@ import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 
 /**
@@ -25,7 +27,8 @@ public class OldRecipes extends RecipeModule {
             "Controls if the horse armor crafting recipes will be registered");
 
     public OldRecipes() {
-        super("Adds some crafting recipes that existed in older versions of Minecraft.");
+        super("Adds some crafting recipes that existed in older versions of Minecraft.",
+                INBUILT, ModuleTag.OLD_FEATURES);
     }
 
     private RecipeChoice.MaterialChoice woolChoice;
@@ -34,13 +37,13 @@ public class OldRecipes extends RecipeModule {
     public void registerRecipes() {
         woolChoice = new RecipeChoice.MaterialChoice(Tag.WOOL);
 
-        if(enchantedGoldenAppleRecipe.get()) {
+        if (enchantedGoldenAppleRecipe.get()) {
             initEnchantedGoldenAppleRecipe();
         }
-        if(oldGoldenAppleRecipe.get()) {
+        if (oldGoldenAppleRecipe.get()) {
             initOldGoldenAppleRecipe();
         }
-        if(horseArmorRecipes.get()) {
+        if (horseArmorRecipes.get()) {
             initLeatherHorseArmorRecipe();
             initIronHorseArmorRecipe();
             initGoldenHorseArmorRecipe();
@@ -100,4 +103,15 @@ public class OldRecipes extends RecipeModule {
         recipe.setIngredient('W', woolChoice);
         addRecipe(new NamespacedKey(getPlugin(), "diamond_horse_armor"), recipe, Material.DIAMOND);
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.ENCHANTED_GOLDEN_APPLE;
+    }
+
 }

@@ -16,11 +16,10 @@ public class TickServiceExecutor {
 
     public void startTicking() {
         for (TickService tickService : tickServices) {
-            VEModule instance = tickService.moduleInstance();
             long period = tickService.period();
             boolean executeNow = tickService.shouldExecuteNow();
             Bukkit.getScheduler().scheduleSyncRepeatingTask(VanillaEnhancements.getPlugin(), () -> {
-                if (!instance.isEnabled()) return;
+                if (!tickService.isEnabled()) return;
                 tickService.run();
             }, executeNow ? 0 : period, period);
         }

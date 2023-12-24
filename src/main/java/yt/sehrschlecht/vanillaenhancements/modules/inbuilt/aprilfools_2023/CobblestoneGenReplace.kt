@@ -1,7 +1,9 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import org.bukkit.Material
+import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.modules.GenReplaceModule
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 
 /**
@@ -13,6 +15,8 @@ class CobblestoneGenReplace : GenReplaceModule(
     blockToReplace = Material.COBBLESTONE,
     description = "Replaces generated cobblestone (water + lava) with the set block",
     since = "1.0",
+    category = INBUILT,
+    tags = arrayOf(ModuleTag.APRIL_FOOLS_2023),
 ) {
 
     override fun getKey(): String {
@@ -21,6 +25,10 @@ class CobblestoneGenReplace : GenReplaceModule(
 
     override fun getName(): String {
         return "Replace generated cobblestone"
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

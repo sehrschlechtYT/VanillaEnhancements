@@ -2,14 +2,17 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import com.google.gson.annotations.Since
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.config.Config
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 
@@ -22,15 +25,22 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 @Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
 class AttackKnockback : VEModule(
     "Multiplies the knockback of attacks by a percentage",
+    INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.ENTITIES,
 ), CommandExecutor {
 
-    val percentage = IntegerOption(100, "Multiply the knockback by this percentage", 0, 1000)
+    val percentage = IntegerOption(100, "Multiply the knockback by this percentage", 0, 1000, 10)
     val randomizePercentage = BooleanOption(false, "Randomize the knockback percentage (${percentage.min}-${percentage.max}%)")
     val enableCommand = BooleanOption(true, "Enable a command to set the percentage")
     val applyToVerticalVelocity = BooleanOption(false, "Apply the knockback multiplier to the vertical velocity too")
 
     override fun getKey(): String {
         return "attack_knockback"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.WOODEN_SWORD
     }
 
     override fun onEnable() {
@@ -75,6 +85,10 @@ class AttackKnockback : VEModule(
         sender.sendMessage(Config.getInstance().message("knockback.success")
             .replace("%percentage%", input.toString()))
         return true
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

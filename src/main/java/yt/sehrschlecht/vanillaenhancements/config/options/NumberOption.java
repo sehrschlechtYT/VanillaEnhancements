@@ -1,7 +1,16 @@
 package yt.sehrschlecht.vanillaenhancements.config.options;
 
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
+import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
+
+import java.util.function.BiConsumer;
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -11,6 +20,7 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
 
     private final T min;
     private final T max;
+    private final T step;
 
     /**
      * @param defaultValue The default value of the option.
@@ -18,10 +28,32 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
      * @param min          The minimum value of the option.
      * @param max          The maximum value of the option.
      */
-    public NumberOption(T defaultValue, @Nullable String description, T min, T max) {
+    public NumberOption(T defaultValue, @Nullable String description, T min, T max, @NotNull T step) {
         super(defaultValue, description);
         this.min = min;
         this.max = max;
+        this.step = step;
+        if (((Number) step).doubleValue() <= 0) {
+            throw new IllegalArgumentException("Step must be greater than 0");
+        }
+    }
+
+    /**
+     * @param defaultValue  The default value of the option.
+     * @param description   A markdown formatted description of the option.
+     * @param min           The minimum value of the option.
+     * @param max           The maximum value of the option.
+     * @param step          The value the option should be changed by when clicking on the option item in the GUI
+     * @param updateHandler A consumer that takes the old and the new value of the option after an update (e.g. through the UI)
+     */
+    public NumberOption(T defaultValue, @Nullable String description, T min, T max, @NotNull T step, @Nullable BiConsumer<T, T> updateHandler) {
+        super(defaultValue, description, updateHandler);
+        this.min = min;
+        this.max = max;
+        this.step = step;
+        if (((Number) step).doubleValue() <= 0) {
+            throw new IllegalArgumentException("Step must be greater than 0");
+        }
     }
 
     @Override
@@ -72,5 +104,70 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
     public T getMax() {
         return max;
     }
+
+    public T getStep() {
+        return step;
+    }
+
+    @Override
+    public String valueToDisplayString(T value) {
+        return value.toString();
+    }
+
+    @Override
+    public ClickableItem buildClickableItem(ItemCreator creator, SmartInventory origin) {
+        creator.amount(
+                Math.min(Math.max(((Number) get()).intValue(), 1), 64)
+        );
+        boolean enableGreaterStep;
+        if (min != null && max != null) {
+            T diff = subtract(max, min);
+            enableGreaterStep = ((Number) diff).doubleValue() > ((Number) step).doubleValue() * 5;
+        } else {
+            enableGreaterStep = false;
+        }
+        creator.addLore("§9Right click: -" + step);
+        creator.addLore("§9Left click: +" + step);
+        if (enableGreaterStep) {
+            creator.addLore("§9Shift right click: -" + ((Number) step).doubleValue() * 5);
+            creator.addLore("§9Shift left click: +" + ((Number) step).doubleValue() * 5);
+        }
+        creator.addLore("§9Use the §odrop item button §r§9to reset the value");
+        return ClickableItem.of(creator.build(), event -> {
+            Player player = (Player) event.getWhoClicked();
+            if (event.getClick().equals(ClickType.DROP)) { // todo not working
+                reset();
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1f, 1f);
+                return;
+            }
+            T step;
+            if (event.isShiftClick()) {
+                step = convertFromDouble(((Number) this.step).doubleValue() * 5);
+            } else {
+                step = this.step;
+            }
+            if (event.isRightClick()) {
+                T newValue = subtract(get(), step);
+                if (((Number) newValue).doubleValue() < ((Number) min).doubleValue()) {
+                    newValue = min;
+                }
+                set(newValue);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 0f);
+            } else if (event.isLeftClick()) {
+                T newValue = add(get(), step);
+                if (((Number) newValue).doubleValue() > ((Number) max).doubleValue()) {
+                    newValue = max;
+                }
+                set(newValue);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 2f);
+            }
+        });
+    }
+
+    protected abstract @NotNull T add(T first, T second); // ToDo find a better way for this
+    protected abstract @NotNull T subtract(T first, T second);
+
+    // temporary (at least I hope so) solution for making shift clicks work
+    protected abstract @NotNull T convertFromDouble(Double doubleObject);
 
 }

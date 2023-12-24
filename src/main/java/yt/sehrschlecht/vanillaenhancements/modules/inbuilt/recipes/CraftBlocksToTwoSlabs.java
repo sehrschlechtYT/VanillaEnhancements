@@ -5,9 +5,11 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -27,15 +29,16 @@ public class CraftBlocksToTwoSlabs extends RecipeModule {
     ), "Exclude recipes for blocks from being registered");
 
     public CraftBlocksToTwoSlabs() {
-        super("Allows players to craft two slabs from one block.");
+        super("Allows players to craft two slabs from one block.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).forEach(block -> {
-            if(excludedBlocks.get().contains(block)) return;
+            if (excludedBlocks.get().contains(block)) return;
             String blockName = getSlabName(block);
-            if(blockName == null) return;
+            if (blockName == null) return;
             Material slab = Material.valueOf(blockName);
             NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "block_to_slabs_" + block.name());
             ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(slab, 2));
@@ -83,4 +86,15 @@ public class CraftBlocksToTwoSlabs extends RecipeModule {
             }
         };
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.OAK_SLAB;
+    }
+
 }

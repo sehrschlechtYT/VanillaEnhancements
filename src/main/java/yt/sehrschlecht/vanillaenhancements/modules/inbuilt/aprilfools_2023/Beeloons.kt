@@ -1,15 +1,18 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Bee
 import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.PlayerLeashEntityEvent
 import org.bukkit.event.player.PlayerUnleashEntityEvent
+import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -22,14 +25,22 @@ import java.util.*
 @Source("Minecraft 23w13a_or_b (april fools snapshot 2023)")
 class Beeloons : VEModule(
     "Players who are holding at least 3 bees with leashes will be dragged into the air",
-    "1.0"
+    "1.0",
+    INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.ENTITIES,
+    ModuleTag.FUN,
 ) {
 
     private val bees = mutableMapOf<UUID, MutableList<Bee>>()
-    val minBeesForLevitation = IntegerOption(3, "The minimum amount of bees a player needs to be dragged into the air", 1, 1000)
+    val minBeesForLevitation = IntegerOption(3, "The minimum amount of bees a player needs to be dragged into the air", 1, 1000, 1)
 
     override fun getKey(): String {
         return "beeloons"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.BEE_SPAWN_EGG
     }
 
     @EventHandler
@@ -50,6 +61,7 @@ class Beeloons : VEModule(
         val newList = beeList.toMutableList()
         newList.remove(event.entity as Bee)
         bees[player.uniqueId] = newList
+        player.removePotionEffect(PotionEffectType.LEVITATION)
     }
 
     @Tick(period = 10)
@@ -68,11 +80,15 @@ class Beeloons : VEModule(
                 bee.velocity = Vector(0.0, (y - bee.location.y) / 10, 0.0)
             }
             if (list.size >= minBeesForLevitation.get()) {
-                player.addPotionEffect(PotionEffect(PotionEffectType.LEVITATION, 40, list.size - minBeesForLevitation.get()))
+                player.addPotionEffect(PotionEffect(PotionEffectType.LEVITATION, 40, list.size - minBeesForLevitation.get(), false))
             } else if (list.size >= 1) {
-                player.addPotionEffect(PotionEffect(PotionEffectType.SLOW_FALLING, 40, list.size - 1))
+                player.addPotionEffect(PotionEffect(PotionEffectType.SLOW_FALLING, 40, list.size - 1, false))
             }
         }
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

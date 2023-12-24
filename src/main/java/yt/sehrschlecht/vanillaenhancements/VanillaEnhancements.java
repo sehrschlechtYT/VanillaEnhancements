@@ -6,9 +6,11 @@ import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import fr.minuskube.inv.InventoryManager;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.gui.VECommand;
 import yt.sehrschlecht.vanillaenhancements.items.ItemManager;
 import yt.sehrschlecht.vanillaenhancements.items.VEItemListener;
 import yt.sehrschlecht.vanillaenhancements.items.resourcepack.ResourcePackManager;
@@ -44,6 +46,7 @@ public final class VanillaEnhancements extends JavaPlugin {
     private RecipeManager recipeManager;
     private ResourcePackManager resourcePackManager;
     private ItemManager itemManager;
+    private InventoryManager inventoryManager;
 
     @Override
     public void onEnable() {
@@ -68,6 +71,7 @@ public final class VanillaEnhancements extends JavaPlugin {
         recipeManager = new RecipeManager();
         tickServiceExecutor = new TickServiceExecutor();
         resourcePackManager = new ResourcePackManager(this);
+        inventoryManager = new InventoryManager(this);
 
         inbuiltModules = Arrays.asList(
                 new UnstripLogs(),
@@ -119,9 +123,14 @@ public final class VanillaEnhancements extends JavaPlugin {
         recipeManager.discoverRecipes();
         resourcePackManager.initialize();
         itemManager.initialize();
+        inventoryManager.init();
 
         getCommand("ve-debug").setExecutor(new DebugCommand());
         getCommand("ve-debug").setTabCompleter(new DebugCommand());
+
+        VECommand veCommand = new VECommand(this);
+        getCommand("ve").setExecutor(veCommand);
+        getCommand("ve").setTabCompleter(veCommand);
 
         registerListeners(
                 new VEItemListener()
@@ -194,6 +203,10 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public ItemManager getItemManager() {
         return itemManager;
+    }
+
+    public InventoryManager getInventoryManager() {
+        return inventoryManager;
     }
 
     public Debug getDebug() {

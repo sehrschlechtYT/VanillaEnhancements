@@ -2,6 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 
 import com.google.gson.annotations.Since;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
@@ -12,9 +13,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 import java.util.Arrays;
@@ -31,7 +34,8 @@ public class ZombiesDryToHusks extends VEModule {
             "Controls if zombies will be converted to husks when dying of fire, lava or magma block damage.");
 
     public ZombiesDryToHusks() {
-        super("Converts zombies to husks when they die of fire, lava or magma block damage or when they enter a nether portal.");
+        super("Converts zombies to husks when they die of fire, lava or magma block damage or when they enter a nether portal.",
+                INBUILT, ModuleTag.ENTITIES);
     }
 
     @Override
@@ -42,10 +46,10 @@ public class ZombiesDryToHusks extends VEModule {
     //ToDo broken
     @EventHandler(ignoreCancelled = true)
     public void onPortal(EntityPortalEvent event) {
-        if(!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
-        if(event.getTo() == null) return;
-        if(!event.getTo().getWorld().getEnvironment().equals(World.Environment.NETHER)) return;
-        if(!dryZombiesInNether.get()) return;
+        if (!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
+        if (event.getTo() == null) return;
+        if (!event.getTo().getWorld().getEnvironment().equals(World.Environment.NETHER)) return;
+        if (!dryZombiesInNether.get()) return;
         //Clone the zombie
         Zombie zombie = (Zombie) event.getEntity();
         replace(zombie, event.getTo());
@@ -53,12 +57,12 @@ public class ZombiesDryToHusks extends VEModule {
 
     @EventHandler(ignoreCancelled = true)
     public void onDamage(EntityDamageEvent event) {
-        if(!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
-        if(!(event.getEntity() instanceof LivingEntity)) return;
+        if (!event.getEntity().getType().equals(EntityType.ZOMBIE)) return;
+        if (!(event.getEntity() instanceof LivingEntity)) return;
         LivingEntity livingEntity = (LivingEntity) event.getEntity();
-        if(!(event.getFinalDamage() >= livingEntity.getHealth())) return;
-        if(!Arrays.asList(EntityDamageEvent.DamageCause.LAVA, EntityDamageEvent.DamageCause.FIRE, EntityDamageEvent.DamageCause.FIRE_TICK, EntityDamageEvent.DamageCause.HOT_FLOOR).contains(event.getCause())) return;
-        if(!dryZombiesOnHotDeath.get()) return;
+        if (!(event.getFinalDamage() >= livingEntity.getHealth())) return;
+        if (!Arrays.asList(EntityDamageEvent.DamageCause.LAVA, EntityDamageEvent.DamageCause.FIRE, EntityDamageEvent.DamageCause.FIRE_TICK, EntityDamageEvent.DamageCause.HOT_FLOOR).contains(event.getCause())) return;
+        if (!dryZombiesOnHotDeath.get()) return;
         Zombie zombie = (Zombie) event.getEntity();
         replace(zombie, zombie.getLocation());
     }
@@ -70,7 +74,7 @@ public class ZombiesDryToHusks extends VEModule {
             husk.addPotionEffect(effect);
         }
         try {
-            if(zombie.getMemory(MemoryKey.ANGRY_AT) != null) {
+            if (zombie.getMemory(MemoryKey.ANGRY_AT) != null) {
                 husk.setMemory(MemoryKey.ANGRY_AT, zombie.getMemory(MemoryKey.ANGRY_AT));
             }
         } catch (IllegalStateException ignored) {
@@ -84,7 +88,7 @@ public class ZombiesDryToHusks extends VEModule {
         husk.setCustomName(zombie.getCustomName());
         husk.setCustomNameVisible(zombie.isCustomNameVisible());
         husk.setFireTicks(zombie.getFireTicks());
-        if(husk.getEquipment() != null && zombie.getEquipment() != null) {
+        if (husk.getEquipment() != null && zombie.getEquipment() != null) {
             for (EquipmentSlot slot : EquipmentSlot.values()) {
                 husk.getEquipment().setItem(slot, zombie.getEquipment().getItem(slot));
             }
@@ -92,4 +96,15 @@ public class ZombiesDryToHusks extends VEModule {
         zombie.remove();
         return husk;
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.HUSK_SPAWN_EGG;
+    }
+
 }

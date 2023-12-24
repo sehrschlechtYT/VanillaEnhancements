@@ -5,10 +5,12 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.MaterialListOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -25,20 +27,21 @@ public class CraftStairsToBlocks extends RecipeModule {
     public MaterialListOption excludedStairs = new MaterialListOption(Collections.emptyList(),
             "Exclude recipes for stairs from being registered");
     public IntegerOption requiredStairsAmount = new IntegerOption(4,
-            "The required amount of stairs to craft the blocks", 1, 9);
+            "The required amount of stairs to craft the blocks", 1, 9, 1);
     public IntegerOption blockAmount = new IntegerOption(3,
-            "The amount of blocks that players will receive", 1, 64);
+            "The amount of blocks that players will receive", 1, 64, 1);
 
     public CraftStairsToBlocks() {
-        super("Allows players to craft stairs back into blocks.");
+        super("Allows players to craft stairs back into blocks.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override
     public void registerRecipes() {
         Arrays.stream(Material.values()).filter(m -> m.name().endsWith("_STAIRS")).forEach(stairs -> {
-            if(excludedStairs.get().contains(stairs)) return;
+            if (excludedStairs.get().contains(stairs)) return;
             String blockName = getBlockName(stairs);
-            if(blockName == null) return;
+            if (blockName == null) return;
             Material block = Material.valueOf(blockName);
             NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "stairs_blocks_" + block.name());
             ShapelessRecipe recipe = new ShapelessRecipe(recipeKey, new ItemStack(block, blockAmount.get()));
@@ -86,4 +89,15 @@ public class CraftStairsToBlocks extends RecipeModule {
             }
         };
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.OAK_STAIRS;
+    }
+
 }

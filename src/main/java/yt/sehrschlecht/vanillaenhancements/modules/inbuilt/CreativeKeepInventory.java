@@ -3,12 +3,15 @@ package yt.sehrschlecht.vanillaenhancements.modules.inbuilt;
 import com.google.gson.annotations.Since;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.StringOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 
 /**
@@ -24,7 +27,8 @@ public class CreativeKeepInventory extends VEModule {
     // ToDo add keepLevel option
 
     public CreativeKeepInventory() {
-        super("Makes players keep their inventory when they die in creative mode.");
+        super("Makes players keep their inventory when they die in creative mode.",
+                INBUILT, ModuleTag.MISC, ModuleTag.UTILITY);
     }
 
     @Override
@@ -40,14 +44,25 @@ public class CreativeKeepInventory extends VEModule {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        if(!player.getGameMode().equals(GameMode.CREATIVE)) return;
-        if(Boolean.TRUE.equals(player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY))) return;
-        if(requirePermission.get()) {
-            if(!player.hasPermission(permission.get())) return;
+        if (!player.getGameMode().equals(GameMode.CREATIVE)) return;
+        if (Boolean.TRUE.equals(player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY))) return;
+        if (requirePermission.get()) {
+            if (!player.hasPermission(permission.get())) return;
         }
         event.setKeepInventory(true);
         event.setKeepLevel(true);
         event.getDrops().clear();
         event.setDroppedExp(0);
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.CHEST;
+    }
+
 }

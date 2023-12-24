@@ -12,6 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
@@ -275,7 +276,13 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§7Recipe: §e" + recipe.key().toString());
                 sender.sendMessage("§7Registered: " + (registered ? "§a" : "§c") + registered);
                 sender.sendMessage("§7DiscoverItem: §e" + (recipe.discoverItem() == null ? "Not set" : recipe.discoverItem().toString()));
-                sender.sendMessage("§7Result: §e" + recipe.recipe().getResult().getType().name() + " x" + recipe.recipe().getResult().getAmount());
+                ItemStack result = recipe.recipe().getResult();
+                VEItem customItem = VanillaEnhancements.getPlugin().getItemManager().findItem(result);
+                if (customItem == null) {
+                    sender.sendMessage("§7Result: §e" + recipe.recipe().getResult().getType().name() + " x" + recipe.recipe().getResult().getAmount());
+                } else {
+                    sender.sendMessage("§7Result: §e" + customItem.getDisplayName() + " §ex" + recipe.recipe().getResult().getAmount() + " §7(VEItem " + customItem.getKey() + ")");
+                }
                 if (module == null) {
                     sender.sendMessage("§7Module: §cNot found!");
                 } else {

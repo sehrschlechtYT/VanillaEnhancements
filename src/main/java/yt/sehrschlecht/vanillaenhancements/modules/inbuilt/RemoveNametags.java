@@ -8,9 +8,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.schlechteutils.items.ItemBuilder;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemUtils;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
@@ -29,7 +31,8 @@ public class RemoveNametags extends VEModule {
             "Controls if a nametag with the corresponding name will be dropped.");
 
     public RemoveNametags() {
-        super("Removes nametags from mobs when shearing them while sneaking.");
+        super("Removes nametags from mobs when shearing them while sneaking.",
+                INBUILT, ModuleTag.ENTITIES, ModuleTag.ITEMS);
     }
 
     @Override
@@ -40,20 +43,31 @@ public class RemoveNametags extends VEModule {
     @EventHandler
     public void onInteractOnEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-        if(!player.isSneaking()) return;
-        if(!player.getEquipment().getItemInMainHand().getType().equals(Material.SHEARS)) return;
+        if (!player.isSneaking()) return;
+        if (!player.getEquipment().getItemInMainHand().getType().equals(Material.SHEARS)) return;
         Entity entity = event.getRightClicked();
-        if(entity.getCustomName() == null) return;
+        if (entity.getCustomName() == null) return;
         event.setCancelled(true);
         String customName = entity.getCustomName();
-        if(dropNametag.get()) {
+        if (dropNametag.get()) {
             entity.getWorld().dropItem(entity.getLocation(), new ItemBuilder(Material.NAME_TAG).setDisplayName(customName).build());
         }
         entity.setCustomNameVisible(false);
         entity.setCustomName(null);
-        if(!player.getGameMode().equals(GameMode.CREATIVE) && damageShears.get()) {
+        if (!player.getGameMode().equals(GameMode.CREATIVE) && damageShears.get()) {
             ItemUtils.damageItem(player.getEquipment().getItemInMainHand());
         }
         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_SHEEP_SHEAR, 1, 1);
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.NAME_TAG;
+    }
+
 }

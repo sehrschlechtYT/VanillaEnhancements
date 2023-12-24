@@ -7,8 +7,10 @@ import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -33,21 +35,22 @@ public class MoreBlackstoneRecipes extends RecipeModule {
             "Controls if the piston recipe will be registered.");
 
     public MoreBlackstoneRecipes() {
-        super("Makes all recipes that use cobblestone allow blackstone as well.");
+        super("Makes all recipes that use cobblestone allow blackstone as well.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override
     public void registerRecipes() {
-        if(brewingStandRecipe.get()) addBrewingStandRecipe();
-        if(dispenserRecipe.get()) addDispenserRecipe();
-        if(dropperRecipe.get()) addDropperRecipe();
-        if(leverRecipe.get()) addLeverRecipe();
-        if(observerRecipe.get()) addObserverRecipe();
-        if(pistonRecipe.get()) addPistonRecipe();
+        if (brewingStandRecipe.get()) addBrewingStandRecipe();
+        if (dispenserRecipe.get()) addDispenserRecipe();
+        if (dropperRecipe.get()) addDropperRecipe();
+        if (leverRecipe.get()) addLeverRecipe();
+        if (observerRecipe.get()) addObserverRecipe();
+        if (pistonRecipe.get()) addPistonRecipe();
     }
 
     private void addBrewingStandRecipe() {
-        NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "blackstone_brerwing_stand");
+        NamespacedKey recipeKey = new NamespacedKey(getPlugin(), "blackstone_brewing_stand");
         ShapedRecipe recipe = new ShapedRecipe(recipeKey, new ItemStack(Material.BREWING_STAND));
         recipe.shape(" R ", "BBB");
         recipe.setIngredient('R', Material.BLAZE_ROD);
@@ -108,4 +111,15 @@ public class MoreBlackstoneRecipes extends RecipeModule {
     public @NotNull String getKey() {
         return "more_blackstone_recipes";
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.BLACKSTONE;
+    }
+
 }

@@ -26,7 +26,7 @@ class VEItemListener : Listener {
     @EventHandler
     fun onPrepareAnvil(event: PrepareAnvilEvent) {
         if (handleEvent(event.inventory.contents, shouldBlock = { it.blockUsageInAnvilRecipe(event) })) {
-            event.inventory.setItem(2, null)
+            event.result = null
         }
     }
 

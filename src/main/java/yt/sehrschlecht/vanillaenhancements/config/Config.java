@@ -152,7 +152,7 @@ public class Config {
             Debug.CONFIG.log(e.getMessage());
         }
         document.set(option.toPath(), value);
-        save();
+        save(); // ToDo do not immediately save the config but only on certain events
     }
 
     public String message(String key) {
@@ -248,7 +248,7 @@ public class Config {
      * @return A list of all options for the given module
      */
     public List<ConfigOption<?>> getModuleOptions(VEModule module) {
-        return moduleOptions.get(module.getModuleKey());
+        return moduleOptions.computeIfAbsent(module.getModuleKey(), key -> getOptions(module));
     }
 
 }

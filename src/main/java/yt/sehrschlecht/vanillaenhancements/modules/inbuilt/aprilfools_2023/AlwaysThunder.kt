@@ -1,7 +1,10 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt.aprilfools_2023
 
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.World
+import org.bukkit.plugin.java.JavaPlugin
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
@@ -14,10 +17,17 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 class AlwaysThunder : VEModule(
     "Makes it always thunder in the world",
     "1.0",
+    INBUILT,
+    ModuleTag.APRIL_FOOLS_2023,
+    ModuleTag.WORLD
 ) {
 
     override fun getKey(): String {
         return "always_thunder"
+    }
+
+    override fun getDisplayItem(): Material {
+        return Material.LIGHTNING_ROD
     }
 
     @Tick(period = 100, executeNow = true)
@@ -27,6 +37,10 @@ class AlwaysThunder : VEModule(
             world.setStorm(true)
             world.isThundering = true
         }
+    }
+
+    override fun getPlugin(): JavaPlugin {
+        return veInstance
     }
 
 }

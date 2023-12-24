@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Recipe;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.recipes.RecipeManager;
@@ -28,19 +29,22 @@ public abstract class RecipeModule extends VEModule {
      * @param description A <b>short</b> description of the module.
      * @param since       The version since the module is available.
      */
-    public RecipeModule(@Nullable String description, @Nullable String since) {
-        super(description, since);
+    public RecipeModule(@Nullable String description, @Nullable String since, @NotNull ModuleCategory category, ModuleTag... tags) {
+        super(description, since, category, tags);
+        this.tags.add(ModuleTag.RECIPES);
     }
 
     /**
      * @param description A <b>short</b> description of the module.
      */
-    public RecipeModule(@Nullable String description) {
-        super(description);
+    public RecipeModule(@Nullable String description, @NotNull ModuleCategory category, ModuleTag... tags) {
+        super(description, category, tags);
+        this.tags.add(ModuleTag.RECIPES);
     }
 
-    public RecipeModule() {
-
+    public RecipeModule(@NotNull ModuleCategory category, ModuleTag... tags) {
+        super(category, tags);
+        this.tags.add(ModuleTag.RECIPES);
     }
 
     @Override
@@ -79,7 +83,7 @@ public abstract class RecipeModule extends VEModule {
     }
 
     protected RecipeManager getRecipeManager() {
-        return getPlugin().getRecipeManager();
+        return getVEInstance().getRecipeManager();
     }
 
     @Override
@@ -103,6 +107,5 @@ public abstract class RecipeModule extends VEModule {
     public void removeRecipe(NamespacedKey key) {
         getRecipeManager().removeRecipe(getModuleKey(), key);
     }
-
 
 }

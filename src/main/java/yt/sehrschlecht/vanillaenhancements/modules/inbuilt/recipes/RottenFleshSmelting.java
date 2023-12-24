@@ -4,9 +4,11 @@ import com.google.gson.annotations.Since;
 import org.bukkit.Material;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.FloatOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -18,14 +20,15 @@ import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 @Source("https://vanillatweaks.net")
 public class RottenFleshSmelting extends RecipeModule {
     public FloatOption experience = new FloatOption(0.1f,
-            "The experience given by the recipe", 0f, null);
+            "The experience given by the recipe", 0f, null, 0.1f);
     public IntegerOption cookingTime = new IntegerOption(200,
-            "The cooking time of the recipe in ticks", 0, null);
+            "The cooking time of the recipe in ticks", 0, null, 5);
     public IntegerOption resultAmount = new IntegerOption(1,
-            "The amount of leather that is produced", 1, 64);
+            "The amount of leather that is produced", 1, 64, 1);
 
     public RottenFleshSmelting() {
-        super("Allows players to smelt rotten flesh into leather.");
+        super("Allows players to smelt rotten flesh into leather.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override
@@ -47,4 +50,15 @@ public class RottenFleshSmelting extends RecipeModule {
             Material.ROTTEN_FLESH
         );
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.ROTTEN_FLESH;
+    }
+
 }

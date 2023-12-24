@@ -5,8 +5,10 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag;
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule;
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
@@ -25,14 +27,15 @@ public class MoreShapelessRecipes extends RecipeModule {
             "Controls if the shulker box recipe will be registered.");
 
     public MoreShapelessRecipes() {
-        super("Adds shapeless recipes for some items.");
+        super("Adds shapeless recipes for some items.",
+                INBUILT, ModuleTag.VANILLA_TWEAKS);
     }
 
     @Override
     public void registerRecipes() {
-        if(breadRecipe.get()) addBreadRecipe();
-        if(paperRecipe.get()) addPaperRecipe();
-        if(shulkerBoxRecipe.get()) addShulkerBoxRecipe();
+        if (breadRecipe.get()) addBreadRecipe();
+        if (paperRecipe.get()) addPaperRecipe();
+        if (shulkerBoxRecipe.get()) addShulkerBoxRecipe();
     }
 
     private void addBreadRecipe() {
@@ -66,4 +69,15 @@ public class MoreShapelessRecipes extends RecipeModule {
     public @NotNull String getKey() {
         return "more_shapeless_recipes";
     }
+
+    @Override
+    public JavaPlugin getPlugin() {
+        return getVEInstance();
+    }
+
+    @Override
+    public Material getDisplayItem() {
+        return Material.CRAFTING_TABLE;
+    }
+
 }

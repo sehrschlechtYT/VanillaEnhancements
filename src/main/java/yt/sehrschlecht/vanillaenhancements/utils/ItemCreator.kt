@@ -36,6 +36,10 @@ class ItemCreator {
         init(this)
     }
 
+    fun type(material: Material) {
+        stack.type = material
+    }
+
     fun color(color: Color?) {
         if (meta !is LeatherArmorMeta) throw IllegalArgumentException("ItemMeta is not a LeatherArmorMeta!")
         meta.setColor(color)
@@ -72,6 +76,7 @@ class ItemCreator {
 
     fun skullOwner(owner: String) {
         if (meta !is SkullMeta) throw IllegalArgumentException("ItemMeta is not a SkullMeta!")
+        @Suppress("DEPRECATION")
         meta.owner = owner
     }
 
@@ -84,17 +89,36 @@ class ItemCreator {
         meta.setDisplayName(name)
     }
 
+    fun getDisplayName(): String {
+        return meta.displayName
+    }
+
     fun lore(vararg lore: String) {
-        meta.lore = lore.toList()
+        meta.lore = lore.map { if (!it.startsWith("§")) "§f$it" else it }
     }
 
     fun lore(lore: List<String>) {
-        meta.lore = lore
+        meta.lore = lore.map { if (!it.startsWith("§")) "§f$it" else it }
     }
 
     fun addLore(vararg lore: String) {
         val currentLore = meta.lore ?: return lore(*lore)
         currentLore.addAll(lore)
+        lore(currentLore)
+    }
+
+    fun addLongLore(lore: String, lineStart: String = "§f", limit: Int = 45) {
+        val currentLore: MutableList<String> = meta.lore ?: mutableListOf()
+        val lines = lore.split(" ")
+        var currentLine = ""
+        for (line in lines) {
+            if (currentLine.length + line.length > limit) {
+                currentLore.add(lineStart + currentLine)
+                currentLine = ""
+            }
+            currentLine += "$line "
+        }
+        currentLore.add(lineStart + currentLine.trim())
         lore(currentLore)
     }
 

@@ -3,6 +3,7 @@ package yt.sehrschlecht.vanillaenhancements.items.resourcepack
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerCommandPreprocessEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.zeroturnaround.zip.ZipUtil
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
@@ -163,6 +164,14 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
     fun onJoin(event: PlayerJoinEvent) {
         if (!isEnabled()) return
         event.player.setResourcePack(packUrl, hash, prompt, force)
+    }
+
+    @EventHandler
+    fun onCommand(event: PlayerCommandPreprocessEvent) {
+        if (!isEnabled()) return
+        if (event.message.equals("/reload confirm", true)) {
+            event.player.sendMessage("§c§lReloading the server will break the resource pack server of VanillaEnhancements! Please restart the server instead.")
+        }
     }
 
     fun disable() {
