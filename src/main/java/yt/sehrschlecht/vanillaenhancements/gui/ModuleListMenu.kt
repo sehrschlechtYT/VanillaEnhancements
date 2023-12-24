@@ -25,7 +25,7 @@ class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: M
             .id("moduleList")
             .provider(ModuleListMenu(plugin, tag))
             .size(3, 9)
-            .title("§lVE - Modules for ${tag.displayName}")
+            .title("§lVE - ${tag.displayName} Modules")
             .manager(plugin.inventoryManager)
             .build()
     }

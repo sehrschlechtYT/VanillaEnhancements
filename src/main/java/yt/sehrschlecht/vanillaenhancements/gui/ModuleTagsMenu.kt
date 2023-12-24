@@ -23,7 +23,7 @@ class ModuleTagsMenu(private val plugin: VanillaEnhancements) : RecurrentInvento
             .id("moduleTags")
             .provider(ModuleTagsMenu(plugin))
             .size(3, 9)
-            .title("§lVE - Modules")
+            .title("§lVE - Module tags")
             .manager(plugin.inventoryManager)
             .build()
     }
