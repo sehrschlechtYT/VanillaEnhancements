@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
@@ -168,6 +169,11 @@ public abstract class VEModule implements Listener {
             itemCreator.displayName(getName());
             return null;
         });
+    }
+
+    public void resetSettings() {
+        Config.getInstance().getModuleOptions(this).forEach(ConfigOption::reset);
+        reload();
     }
 
 }

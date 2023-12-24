@@ -38,7 +38,6 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
     }
 
     override fun init(player: Player, contents: InventoryContents) {
-        // todo add reset module settings button
         val enabled = module.isEnabled
         contents.fillBorders(ClickableItem.of(
             ItemCreator(if (enabled) Material.LIME_STAINED_GLASS_PANE else Material.RED_STAINED_GLASS_PANE) {
@@ -88,6 +87,15 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
                 getInventory(plugin, module, sourceTag)
             )
         }
+
+        contents.set(4, 0, ClickableItem.of(
+            ItemCreator(Material.BARRIER) {
+                displayName("§c§lReset module settings")
+                addLongLore("Warning: This will reset all config settings for this module!", lineStart = "§c")
+            }.build()
+        ){
+            ResetConfirmationPromptMenu.getInventory(plugin, { if (this) module.resetSettings() }, contents.inventory(), "Reset settings of module").open(player)
+        })
 
         contents.paginateItems(items, row = 3, player, noneItem = {
             displayName("§c§lNo config options")
