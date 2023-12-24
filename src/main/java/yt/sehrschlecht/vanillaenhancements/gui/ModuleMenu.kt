@@ -9,10 +9,7 @@ import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.config.Config
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption
-import yt.sehrschlecht.vanillaenhancements.modules.CustomItemModule
-import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
-import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule
-import yt.sehrschlecht.vanillaenhancements.modules.VEModule
+import yt.sehrschlecht.vanillaenhancements.modules.*
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
@@ -53,6 +50,9 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
                 displayName("§f§l${getDisplayName().removeColorCodes()}")
                 module.description?.let { desc -> addLongLore(desc, lineStart = "§f§o") }
                 addLore("§fCategory: ${module.category.displayName}")
+                if (module.category == ModuleCategory.EXTERNAL) {
+                    addLore("§fProvided by §o${module.plugin.name}")
+                }
             }.build()
         ) { _ -> })
 

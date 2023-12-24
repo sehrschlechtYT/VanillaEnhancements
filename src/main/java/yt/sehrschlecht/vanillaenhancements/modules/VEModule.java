@@ -99,6 +99,9 @@ public abstract class VEModule implements Listener {
 
     }
 
+    /**
+     * @return An instance of the plugin this module belongs to.
+     */
     public abstract JavaPlugin getPlugin();
 
     /**
