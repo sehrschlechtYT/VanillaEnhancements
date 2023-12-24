@@ -61,6 +61,7 @@ class Beeloons : VEModule(
         val newList = beeList.toMutableList()
         newList.remove(event.entity as Bee)
         bees[player.uniqueId] = newList
+        player.removePotionEffect(PotionEffectType.LEVITATION)
     }
 
     @Tick(period = 10)
@@ -79,9 +80,9 @@ class Beeloons : VEModule(
                 bee.velocity = Vector(0.0, (y - bee.location.y) / 10, 0.0)
             }
             if (list.size >= minBeesForLevitation.get()) {
-                player.addPotionEffect(PotionEffect(PotionEffectType.LEVITATION, 40, list.size - minBeesForLevitation.get()))
+                player.addPotionEffect(PotionEffect(PotionEffectType.LEVITATION, 40, list.size - minBeesForLevitation.get(), false))
             } else if (list.size >= 1) {
-                player.addPotionEffect(PotionEffect(PotionEffectType.SLOW_FALLING, 40, list.size - 1))
+                player.addPotionEffect(PotionEffect(PotionEffectType.SLOW_FALLING, 40, list.size - 1, false))
             }
         }
     }
