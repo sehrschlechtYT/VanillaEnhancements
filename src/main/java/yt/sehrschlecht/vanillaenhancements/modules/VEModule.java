@@ -41,7 +41,6 @@ public abstract class VEModule implements Listener {
      * @param description A <b>short</b> description of the module.
      * @param since       The version since the module is available.
      * @param category
-     * @param displayItem
      */
     public VEModule(@Nullable String description, @Nullable String since, @NotNull ModuleCategory category, ModuleTag... tags) {
         this.description = description;
@@ -53,7 +52,6 @@ public abstract class VEModule implements Listener {
     /**
      * @param description A <b>short</b> description of the module. Best practice is to describe the functionality of the module in one sentence.
      * @param category
-     * @param displayItem
      */
     public VEModule(@Nullable String description, @NotNull ModuleCategory category, ModuleTag... tags) {
         this(description, null, category, tags);
