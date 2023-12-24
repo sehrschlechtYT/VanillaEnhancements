@@ -49,7 +49,7 @@ class CustomItemMenu(private val plugin: VanillaEnhancements, private val item: 
         contents.set(2, 5, ClickableItem.of(
             ItemCreator(Material.HOPPER) {
                 displayName("§f§lRemove item §c§lfrom all players")
-                lore("§fClick to remove this item from all players.")
+                lore("§fClick to remove this item from all §f§lonline §r§fplayers.")
                 lore("§cWarning: This can not be undone!")
             }.build()
         ) { _ -> plugin.server.onlinePlayers.forEach { p -> p.inventory.removeItem(*p.inventory.filterNotNull().filter { itemStack -> item.isItem(itemStack) }.toTypedArray()) } })
