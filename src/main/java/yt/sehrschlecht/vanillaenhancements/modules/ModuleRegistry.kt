@@ -12,14 +12,14 @@ import java.util.logging.Level
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ModuleRegistry {
+class ModuleRegistry(private val plugin: VanillaEnhancements) {
 
     val enabledModules: MutableList<VEModule> = mutableListOf()
     val registeredModules: MutableList<VEModule> = mutableListOf()
-    private val logger = VanillaEnhancements.getPlugin().logger
+    private val logger = plugin.logger
 
     fun registerModule(module: VEModule): Boolean {
-        val inbuilt = module.moduleKey.namespace.equals(VanillaEnhancements.getPlugin().name, ignoreCase = true)
+        val inbuilt = module.moduleKey.namespace.equals(plugin.name, ignoreCase = true)
         Debug.MODULES.log(
             "Registering {} module {}...",
             if (inbuilt) "inbuilt" else "external",
@@ -47,14 +47,17 @@ class ModuleRegistry {
                 return false
             }
             module.onEnable()
+            plugin.tickServiceExecutor.getTickServicesForModule(module).forEach { tickService ->
+                tickService.isEnabled = true
+            }
             enabledModules.add(module)
-            Bukkit.getPluginManager().registerEvents(module, VanillaEnhancements.getPlugin())
+            Bukkit.getPluginManager().registerEvents(module, plugin)
             Debug.MODULES.log("Enabled module ${module.moduleKey}!")
             true
         } catch (throwable: Throwable) {
             logger.log(Level.SEVERE, "The module ${module.moduleKey} couldn't be loaded due to an error:")
             logger.log(Level.SEVERE, throwable.message)
-            if (VanillaEnhancements.getPlugin().debug.isEnabled) {
+            if (plugin.debug.isEnabled) {
                 throwable.printStackTrace()
             }
             false
@@ -62,6 +65,9 @@ class ModuleRegistry {
     }
 
     fun disableModule(module: VEModule) {
+        plugin.tickServiceExecutor.getTickServicesForModule(module).forEach { tickService ->
+            tickService.isEnabled = false
+        }
         module.onDisable()
         HandlerList.unregisterAll(module)
         enabledModules.remove(module)
@@ -70,7 +76,7 @@ class ModuleRegistry {
 
     private fun registerTickServices(module: VEModule) {
         Debug.TICK_SERVICES.log("Registering tick services for module ${module.moduleKey}...")
-        val executor = VanillaEnhancements.getPlugin().tickServiceExecutor
+        val executor = plugin.tickServiceExecutor
         val clazz: Class<out VEModule> = module.javaClass
         for (method in clazz.methods) {
             Debug.TICK_SERVICES.log("Checking method ${method.name}...")
