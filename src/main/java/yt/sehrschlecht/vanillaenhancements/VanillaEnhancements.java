@@ -97,6 +97,7 @@ public final class VanillaEnhancements extends JavaPlugin {
                 new MoreBlackstoneRecipes(),
                 new SmeltConcretePowderToGlass(),
                 new CraftNetheriteGearWithoutDiamonds(),
+                new MobGriefingControl(),
 
                 // 23w13a_or_b modules
                 new AttackKnockback(),
@@ -160,7 +161,7 @@ public final class VanillaEnhancements extends JavaPlugin {
     }
 
     public void registerModules() {
-        moduleRegistry = new ModuleRegistry();
+        moduleRegistry = new ModuleRegistry(this);
         for (VEModule module : inbuiltModules) {
             moduleRegistry.registerModule(module);
             Debug.MODULES.log("Registered module {}", module.getName());
