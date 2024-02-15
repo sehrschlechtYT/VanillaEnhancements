@@ -182,6 +182,10 @@ public final class VanillaEnhancements extends JavaPlugin {
         return Config.getInstance().message("prefix");
     }
 
+    /**
+     * @deprecated The list of inbuilt modules will be removed in order to improve support for external plugins.
+     */
+    @Deprecated(forRemoval = true)
     public List<VEModule> getInbuiltModules() {
         return inbuiltModules;
     }

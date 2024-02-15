@@ -4,6 +4,7 @@ import org.bukkit.Material
 import org.bukkit.event.Listener
 import org.zeroturnaround.zip.ZipUtil
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
+import yt.sehrschlecht.vanillaenhancements.events.ResourcePackBuildCompletionEvent
 import yt.sehrschlecht.vanillaenhancements.modules.CustomTextureProvider
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
 import java.io.File
@@ -26,7 +27,11 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
         val packFile = buildPack()
         plugin.logger.info("Finished building resource pack!")
 
-        plugin.server.pluginManager.callEvent(ResourcePackBuildCompletionEvent(packFile))
+        plugin.server.pluginManager.callEvent(
+            ResourcePackBuildCompletionEvent(
+                packFile
+            )
+        )
     }
 
     private fun isEnabled(): Boolean {

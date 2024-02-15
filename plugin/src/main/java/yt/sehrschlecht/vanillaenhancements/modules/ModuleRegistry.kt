@@ -4,6 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.event.HandlerList
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
+import yt.sehrschlecht.vanillaenhancements.config.Config
 import yt.sehrschlecht.vanillaenhancements.ticking.Tick
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
 import java.util.logging.Level
@@ -30,6 +31,7 @@ class ModuleRegistry(private val plugin: VanillaEnhancements) {
             module.tags.add(ModuleTag.MISC)
         }
         registeredModules.add(module)
+        Config.getInstance().createModuleOptions(module);
         module.initialize()
         registerTickServices(module)
         if (!module.isEnabled) {
@@ -79,7 +81,7 @@ class ModuleRegistry(private val plugin: VanillaEnhancements) {
     }
 
     fun shutdown() {
-        enabledModules.forEach(this::disableModule)
+        mutableListOf(*enabledModules.toTypedArray()).forEach(this::disableModule) // prevent concurrent modification
     }
 
     private fun registerTickServices(module: VEModule) {

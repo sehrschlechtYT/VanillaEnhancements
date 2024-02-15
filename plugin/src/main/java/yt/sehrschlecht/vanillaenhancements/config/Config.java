@@ -65,62 +65,58 @@ public class Config {
                 document.remove("msg." + key);
             }
         }
+    }
 
-        for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
-            Debug.CONFIG_MODULES.log("Initializing config for module {}...", module.getModuleKey());
-            moduleOptions.put(module.getModuleKey(), getOptions(module));
-            String key = module.getModuleKey().getKey();
-            boolean found = false;
-            for (ConfigOption<?> option : moduleOptions.get(module.getModuleKey())) {
-                found = true;
-                if (!document.contains(key + "." + option.getKey())) {
-                    Debug.CONFIG.log("Creating key {}.{} with default value \"{}\".", key, option.getKey(), option.getDefaultValue());
-                    option.reset();
-                }
-            }
-            if (!found) {
-                Debug.CONFIG.log("No options found for module {}.", module.getModuleKey());
-            }
-            if (!document.contains(key + ".enabled")) {
-                Debug.CONFIG.warn("Module {} does not have a config enabled key!", key);
+    public void createModuleOptions(VEModule module) {
+        Debug.CONFIG_MODULES.log("Initializing config for module {}...", module.getModuleKey());
+        moduleOptions.put(module.getModuleKey(), getOptions(module));
+        String key = module.getModuleKey().getKey();
+        boolean found = false;
+        for (ConfigOption<?> option : moduleOptions.get(module.getModuleKey())) {
+            found = true;
+            if (!document.contains(key + "." + option.getKey())) {
+                Debug.CONFIG.log("Creating key {}.{} with default value \"{}\".", key, option.getKey(), option.getDefaultValue());
+                option.reset();
             }
         }
-        save();
-        setupComments();
+        if (!found) {
+            Debug.CONFIG.log("No options found for module {}.", module.getModuleKey());
+        }
+        if (!document.contains(key + ".enabled")) {
+            Debug.CONFIG.warn("Module {} does not have a config enabled key!", key);
+        }
+        setupComments(module);
         save();
     }
 
     @ApiStatus.Internal
-    protected void setupComments() {
+    protected void setupComments(VEModule module) {
         Debug.CONFIG.log("Setting up comments...");
-        Debug.CONFIG_COMMENTS.log("Starting comment setup for modules...");
-        for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
-            String key = module.getModuleKey().getKey();
-            Debug.CONFIG_COMMENTS.log("Checking comments for module {}...", key);
-            if (module.getDescription() != null && !module.getDescription().isBlank()) {
-                Debug.CONFIG_COMMENTS.log("Module {} has a description.", key);
-                Block<?> block = document.getBlock(key);
-                if (block.getComments() != null && block.getComments().stream().anyMatch(c -> c.trim().equalsIgnoreCase(module.getDescription().trim()))) {
-                    Debug.CONFIG_COMMENTS.log("Skipping comment for module {} because it already exists.", key);
-                } else {
-                    block.setComments(List.of(" " + module.getDescription()));
-                    Debug.CONFIG_COMMENTS.log("Added comment for module {}.", key);
-                }
+        Debug.CONFIG_COMMENTS.log("Starting comment setup for module {}...", module.getModuleKey().toString());
+
+        String key = module.getModuleKey().getKey();
+        Debug.CONFIG_COMMENTS.log("Checking comments for module {}...", key);
+        if (module.getDescription() != null && !module.getDescription().isBlank()) {
+            Debug.CONFIG_COMMENTS.log("Module {} has a description.", key);
+            Block<?> block = document.getBlock(key);
+            if (block.getComments() != null && block.getComments().stream().anyMatch(c -> c.trim().equalsIgnoreCase(module.getDescription().trim()))) {
+                Debug.CONFIG_COMMENTS.log("Skipping comment for module {} because it already exists.", key);
+            } else {
+                block.setComments(List.of(" " + module.getDescription()));
+                Debug.CONFIG_COMMENTS.log("Added comment for module {}.", key);
             }
         }
 
-        Debug.CONFIG_COMMENTS.log("Starting comment setup for options...");
-        for (VEModule module : VanillaEnhancements.getPlugin().getInbuiltModules()) {
-            for (ConfigOption<?> option : moduleOptions.get(module.getModuleKey())) {
-                Debug.CONFIG_COMMENTS.log("Checking comments for option {}...", option.toPath());
-                Block<?> block = document.getBlock(option.toPath());
-                if (option.getDescription() != null && !option.getDescription().isBlank()) {
-                    block.setComments(List.of(
-                            " Possible values: " + option.getPossibleValues(),
-                            " " + option.getDescription()
-                    ));
-                    Debug.CONFIG_COMMENTS.log("Added comment for option {}.", option.toPath());
-                }
+        Debug.CONFIG_COMMENTS.log("Starting comment setup for options of {}...", module.getModuleKey().toString());
+        for (ConfigOption<?> option : moduleOptions.get(module.getModuleKey())) {
+            Debug.CONFIG_COMMENTS.log("Checking comments for option {}...", option.toPath());
+            Block<?> block = document.getBlock(option.toPath());
+            if (option.getDescription() != null && !option.getDescription().isBlank()) {
+                block.setComments(List.of(
+                        " Possible values: " + option.getPossibleValues(),
+                        " " + option.getDescription()
+                ));
+                Debug.CONFIG_COMMENTS.log("Added comment for option {}.", option.toPath());
             }
         }
     }

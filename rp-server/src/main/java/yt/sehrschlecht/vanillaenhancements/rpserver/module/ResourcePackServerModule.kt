@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
 import yt.sehrschlecht.vanillaenhancements.config.options.StringOption
-import yt.sehrschlecht.vanillaenhancements.items.resourcepack.ResourcePackBuildCompletionEvent
+import yt.sehrschlecht.vanillaenhancements.events.ResourcePackBuildCompletionEvent
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleCategory
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
@@ -22,7 +22,7 @@ import java.security.MessageDigest
  * @since 1.0
  */
 class ResourcePackServerModule(val plugin: VERPServerPlugin, moduleCategory: ModuleCategory) : VEModule(
-    "Addon for VanillaEnhancements:",
+    "Addon for VanillaEnhancements that provides an inbuilt HTTP server for resource pack hosting.",
     moduleCategory,
     ModuleTag.MISC
 ) {
@@ -54,6 +54,10 @@ class ResourcePackServerModule(val plugin: VERPServerPlugin, moduleCategory: Mod
 
     override fun getKey(): String {
         return "rp_server"
+    }
+
+    override fun getName(): String {
+        return "Resource Pack Server"
     }
 
     /**

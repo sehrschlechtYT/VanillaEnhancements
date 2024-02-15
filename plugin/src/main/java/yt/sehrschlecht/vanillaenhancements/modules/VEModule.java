@@ -68,7 +68,7 @@ public abstract class VEModule implements Listener {
 
     @NotNull
     public NamespacedKey getModuleKey() {
-        return new NamespacedKey(VanillaEnhancements.getPlugin(), getKey());
+        return new NamespacedKey(getPlugin(), getKey());
     }
 
     public abstract @NotNull String getKey();
