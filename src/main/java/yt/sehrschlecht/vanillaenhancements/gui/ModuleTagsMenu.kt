@@ -4,6 +4,7 @@ import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.utils.PaginationType
@@ -37,6 +38,7 @@ class ModuleTagsMenu(private val plugin: VanillaEnhancements) : RecurrentInvento
             ClickableItem.of(it.buildIcon {
                 displayName("§f§l${getDisplayName().removeColorCodes()}")
                 addLore("§f$enabled/$total enabled")
+                itemFlag(*ItemFlag.values())
             }.build()) { _ -> ModuleListMenu.getInventory(plugin, it).open(player) }
         }
 
