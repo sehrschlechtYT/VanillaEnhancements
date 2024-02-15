@@ -80,7 +80,7 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
             option.buildClickableItem(
                 ItemCreator(Material.PAPER) {
                     displayName("§f§l${ModuleUtils.beautifyLowerCamelCase(option.key)}")
-                    addLongLore("§fDescription: ${option.description}", lineStart = "§f§o")
+                    addLongLore("§fDescription: §f§o${option.description}", lineStart = "§f§o")
                     addLongLore("§fCurrent value: ${option.valueToDisplayString()}")
                     addLore("")
                 },
