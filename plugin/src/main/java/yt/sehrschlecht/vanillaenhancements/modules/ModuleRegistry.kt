@@ -39,6 +39,10 @@ class ModuleRegistry(private val plugin: VanillaEnhancements) {
         return enableModule(module)
     }
 
+    fun registerModules(vararg modules: VEModule) {
+        modules.forEach(this::registerModule)
+    }
+
     fun enableModule(module: VEModule): Boolean {
         return try {
             Debug.MODULES.log("Enabling module ${module.moduleKey}...")
@@ -72,6 +76,10 @@ class ModuleRegistry(private val plugin: VanillaEnhancements) {
         HandlerList.unregisterAll(module)
         enabledModules.remove(module)
         Debug.MODULES.log("Disabled module ${module.moduleKey}!")
+    }
+
+    fun shutdown() {
+        enabledModules.forEach(this::disableModule)
     }
 
     private fun registerTickServices(module: VEModule) {

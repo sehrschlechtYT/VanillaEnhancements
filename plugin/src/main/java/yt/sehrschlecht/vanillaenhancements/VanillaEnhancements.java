@@ -140,7 +140,7 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        resourcePackManager.disable();
+        moduleRegistry.shutdown();
     }
 
     private void createConfig() {

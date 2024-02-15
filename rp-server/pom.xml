@@ -4,21 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>yt.sehrschlecht.vanillaenhancements</groupId>
-        <artifactId>root</artifactId>
-        <version>1.0</version>
-    </parent>
+    <groupId>yt.sehrschlecht.vanillaenhancements</groupId>
+    <artifactId>rp-server</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
 
-    <artifactId>plugin</artifactId>
-
-    <name>Vanilla Enhancements</name>
-    <description>Provides enhancements for the vanilla minecraft gameplay.</description>
+    <name>VE-RP-Server</name>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.8.20</kotlin.version>
+        <kotlin.version>2.0.0-Beta4</kotlin.version>
     </properties>
 
     <build>
@@ -33,9 +29,6 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -50,12 +43,6 @@
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <source>src/main/java</source>
-                                <source>target/generated-sources/annotations</source>
-                            </sourceDirs>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>test-compile</id>
@@ -75,14 +62,6 @@
                 <version>3.8.1</version>
                 <executions>
                     <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
                         <id>compile</id>
                         <phase>compile</phase>
                         <goals>
@@ -98,8 +77,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -117,8 +96,8 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -129,15 +108,18 @@
             <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Resource pack hosting -->
         <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>23.1.0</version>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-core-jvm</artifactId>
+            <version>2.3.8</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.sehrschlechtYT</groupId>
-            <artifactId>SchlechteUtils</artifactId>
-            <version>1.0.7</version>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-netty-jvm</artifactId>
+            <version>2.3.8</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -151,20 +133,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-            <version>1.8.20-RC</version>
-        </dependency>
-        <dependency>
-            <groupId>org.zeroturnaround</groupId>
-            <artifactId>zt-zip</artifactId>
-            <version>1.15</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>com.github.MinusKube</groupId>
-            <artifactId>SmartInvs</artifactId>
-            <version>master-SNAPSHOT</version>
+            <groupId>yt.sehrschlecht.vanillaenhancements</groupId>
+            <artifactId>plugin</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>

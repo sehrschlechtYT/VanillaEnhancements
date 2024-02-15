@@ -1,17 +1,12 @@
 package yt.sehrschlecht.vanillaenhancements.items.resourcepack
 
 import org.bukkit.Material
-import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.player.PlayerCommandPreprocessEvent
-import org.bukkit.event.player.PlayerJoinEvent
 import org.zeroturnaround.zip.ZipUtil
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.CustomTextureProvider
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
 import java.io.File
-import java.net.URI
-import java.security.MessageDigest
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -24,63 +19,14 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
     private val buildFolder = File(folder, "build")
     private val defaultPackFiles = mutableListOf("pack.mcmeta")
     private val customModelData = mutableMapOf<Material, Int>()
-    private lateinit var packUrl: String
-    private lateinit var hash: ByteArray
-    private val force = plugin.config.getBoolean("resource_pack.force")
-    private val prompt = plugin.config.getString("resource_pack.prompt")
-    private var server: ResourcePackServer? = null
 
     fun initialize() {
         if (!isEnabled()) return
         plugin.logger.info("Building resource pack...")
         val packFile = buildPack()
         plugin.logger.info("Finished building resource pack!")
-        if (packFile == null) {
-            plugin.logger.severe("Resource pack file is null! The resource pack server will not be started!")
-            return
-        }
 
-        if (plugin.config.getBoolean("resource_pack.3rd_party.enabled")) {
-            plugin.logger.info("Using 3rd party resource pack server.")
-            packUrl = plugin.config.getString("resource_pack.3rd_party.url") ?: ""
-            if (packUrl.isEmpty()) {
-                plugin.logger.severe("3rd party is enabled but no url is set in the config! (resource_pack.3rd_party.url)")
-                return
-            }
-            val providedHash = plugin.config.getString("resource_pack.3rd_party.hash") ?: ""
-            hash = if (providedHash.isEmpty()) {
-                calculateHash(packUrl)
-            } else {
-                providedHash.toByteArray()
-            }
-            server = null
-        } else {
-            plugin.logger.info("Starting resource pack server...")
-            server = runServer(packFile)
-            plugin.logger.info("Resource pack server started!")
-
-            val port = plugin.config.getInt("resource_pack.port")
-            val hostname = plugin.config.getString("resource_pack.hostname")
-            packUrl = "http://$hostname:$port/pack.zip" // ToDo support https
-            hash = calculateHash(packFile)
-        }
-        plugin.server.pluginManager.registerEvents(this, plugin)
-    }
-
-    private fun calculateHash(file: File): ByteArray {
-        with(file.readBytes()) {
-            return calculateHash(this)
-        }
-    }
-
-    private fun calculateHash(url: String): ByteArray {
-        with(URI(url).toURL().openStream().readBytes()) {
-            return calculateHash(this)
-        }
-    }
-
-    private fun calculateHash(bytes: ByteArray): ByteArray {
-        return MessageDigest.getInstance("SHA-1").digest(bytes)
+        plugin.server.pluginManager.callEvent(ResourcePackBuildCompletionEvent(packFile))
     }
 
     private fun isEnabled(): Boolean {
@@ -132,13 +78,6 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
         return packFile
     }
 
-    private fun runServer(file: File): ResourcePackServer {
-        val port = plugin.config.getInt("resource_pack.port")
-        val server = ResourcePackServer()
-        server.run(file, port, plugin)
-        return server
-    }
-
     private fun getBuilders() : List<ResourcePackBuilder?> {
         return VanillaEnhancements.getPlugin().moduleRegistry.registeredModules.map { module ->
             if (module !is CustomTextureProvider) return@map null
@@ -158,25 +97,6 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
         current++
         customModelData[vanillaItem] = current
         return current
-    }
-
-    @EventHandler
-    fun onJoin(event: PlayerJoinEvent) {
-        if (!isEnabled()) return
-        event.player.setResourcePack(packUrl, hash, prompt, force)
-    }
-
-    @EventHandler
-    fun onCommand(event: PlayerCommandPreprocessEvent) {
-        if (!isEnabled()) return
-        if (event.message.equals("/reload confirm", true)) {
-            event.player.sendMessage("§c§lReloading the server will break the resource pack server of VanillaEnhancements! Please restart the server instead.")
-        }
-    }
-
-    fun disable() {
-        if (!isEnabled()) return
-        server?.stop()
     }
 
 }
