@@ -4,6 +4,9 @@ import dev.dejvokep.boostedyaml.YamlDocument
 import net.kyori.adventure.text.Component
 import org.bukkit.command.CommandSender
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
+import yt.sehrschlecht.vanillaenhancements.messages.components.AbstractComponentSupport
+import yt.sehrschlecht.vanillaenhancements.messages.components.BukkitComponentSupport
+import yt.sehrschlecht.vanillaenhancements.messages.components.PaperComponentSupport
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
 
 /**
@@ -11,8 +14,17 @@ import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
  * @since 1.0
  */
 class MessageManager(private val document: YamlDocument, private val plugin: VanillaEnhancements) {
+    lateinit var componentSupport: AbstractComponentSupport
 
     fun init() {
+        if (plugin.isUsingPaper) {
+            Debug.MESSAGES.log("Initializing component support for Paper.")
+            componentSupport = PaperComponentSupport(plugin)
+        } else {
+            Debug.MESSAGES.log("Initializing component support for Bukkit.")
+            componentSupport = BukkitComponentSupport(plugin)
+        }
+
         Debug.MESSAGES.log("Initializing messages...")
         Debug.MESSAGES.log("Found {} default messages.", Message.values().size)
 
@@ -32,11 +44,7 @@ class MessageManager(private val document: YamlDocument, private val plugin: Van
 
     fun send(message: Message, receiver: CommandSender, vararg args: Any) {
         val component = asComponent(message, *args)
-        if (plugin.isUsingPaper) {
-            receiver.sendMessage(component)
-        } else {
-            plugin.adventure().sender(receiver).sendMessage(component)
-        }
+        componentSupport.send(component, receiver)
     }
 
     /**
