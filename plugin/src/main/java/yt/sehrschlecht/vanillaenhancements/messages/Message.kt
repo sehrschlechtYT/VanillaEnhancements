@@ -23,11 +23,18 @@ enum class Message(
     COMMAND_VE_MODULE_TAG_MALFORMATTED("command.ve.module_tag.malformatted", "<red>The given module key is not formatted correctly!"),
     COMMAND_VE_MODULE_NOT_FOUND("command.ve.module.not_found", "<red>Could not find a module for the given module key!"),
     COMMAND_VE_USAGE("command.ve.usage", """
-        <red>Command usage: /ve <hover:show_text:'Use this parameter to open a list of all modules that have the given tag. <i>(Optional)</i>'>[module tag]</hover> <hover:show_text:'Use this parameter to open the menu for a specific module. <i>(Optional)</i>'>[module key]</hover>
+        <red>Command usage: /ve
+        <hover:show_text:'Use this parameter to open a list of all modules that have the given tag. <i>(Optional)</i>'>[module tag]</hover>
+        <hover:show_text:'Use this parameter to open the menu for a specific module. <i>(Optional)</i>'>[module key]</hover>
     """.trimIndent().removeNewlines()),
 
     MENU_MAIN_MANAGE_MODULES_DISPLAYNAME("menu.main.manage_modules.displayname", "<white><b>Manage Modules"),
-    MENU_MAIN_MANAGE_MODULES_LORE("menu.main.manage_modules.lore", "Control the settings of the many modules in VanillaEnhancements.")
+    MENU_MAIN_MANAGE_MODULES_LORE("menu.main.manage_modules.lore", "Control the settings of the many modules in VanillaEnhancements."),
+    MENU_MAIN_SETTINGS_DISPLAYNAME("menu.main.settings.displayname", "<red><b>VE Settings"),
+    MENU_MAIN_SETTINGS_LORE("menu.main.settings.lore", "Manage various settings that affect the plugin and its modules."),
+
+    MENU_SETTINGS_DISABLE_ALL_DISPLAYNAME("menu.settings.disable_all.displayname", "<red><b>Disable all modules"),
+    MENU_SETTINGS_DISABLE_ALL_LORE("menu.settings.disable_all.lore", "Disables every single module that is currently active. This cannot be undone."),
 
     ;
 }

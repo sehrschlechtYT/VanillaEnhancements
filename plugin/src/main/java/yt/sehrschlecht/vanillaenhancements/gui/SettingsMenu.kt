@@ -6,8 +6,10 @@ import fr.minuskube.inv.content.InventoryContents
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
+import yt.sehrschlecht.vanillaenhancements.messages.Message
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.asComponent
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
 import yt.sehrschlecht.vanillaenhancements.utils.VESound
 
@@ -26,12 +28,12 @@ class SettingsMenu(private val plugin: VanillaEnhancements, private val origin: 
         contents.fillBackground()
 
         contents.set(1, 4, ClickableItem.of(
-            ItemCreator(Material.BARRIER) {
-                displayName("§c§lDisable all modules")
-                addLongLore("Disables every single module that is currently active. This cannot be undone.")
+            ItemCreator(Material.LEVER) {
+                displayName(Message.MENU_SETTINGS_DISABLE_ALL_DISPLAYNAME, plugin)
+                appendLongLore(Message.MENU_SETTINGS_DISABLE_ALL_LORE.asComponent(plugin))
             }.build()
         ) {
-            plugin.moduleRegistry.enabledModules.forEach { it.toggle() }
+            plugin.moduleRegistry.enabledModules.toList().forEach { it.toggle() }
             VESound.SUCCESS.play(player)
         })
 

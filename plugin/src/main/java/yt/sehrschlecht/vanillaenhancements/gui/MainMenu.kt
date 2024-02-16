@@ -4,7 +4,6 @@ import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.InventoryProvider
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -36,13 +35,13 @@ class MainMenu(private val plugin: VanillaEnhancements) : InventoryProvider {
         contents.set(1, 3, ClickableItem.of(
             ItemCreator(Material.COMMAND_BLOCK_MINECART) {
                 displayName(Message.MENU_MAIN_MANAGE_MODULES_DISPLAYNAME, plugin)
-                appendLongLore(Message.MENU_MAIN_MANAGE_MODULES_LORE.asComponent(plugin), lineStart = Component.empty().color(NamedTextColor.GRAY))
+                appendLongLore(Message.MENU_MAIN_MANAGE_MODULES_LORE.asComponent(plugin), lineStart = NamedTextColor.GRAY)
             }.build()
         ) { _ -> ModuleTagsMenu.getInventory(plugin, contents.inventory()).open(player) })
         contents.set(1, 5, ClickableItem.of(
             ItemCreator(Material.REPEATER) {
-                displayName("§c§lVE Settings")
-                addLongLore("Manage various settings that affect the plugin and its modules.", lineStart = "§7")
+                displayName(Message.MENU_MAIN_SETTINGS_DISPLAYNAME, plugin)
+                appendLongLore(Message.MENU_MAIN_SETTINGS_LORE.asComponent(plugin), lineStart = NamedTextColor.GRAY)
             }.build()
         ) { _ -> SettingsMenu.getInventory(plugin, contents.inventory()).open(player) })
         contents.addBackButton()
