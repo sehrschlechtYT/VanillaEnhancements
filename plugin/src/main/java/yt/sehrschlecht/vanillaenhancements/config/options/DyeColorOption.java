@@ -5,7 +5,6 @@ import fr.minuskube.inv.SmartInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.Nullable;
@@ -13,6 +12,7 @@ import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.gui.ChooseDyeColorMenu;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils;
+import yt.sehrschlecht.vanillaenhancements.utils.VESound;
 
 import java.util.function.BiConsumer;
 
@@ -64,7 +64,7 @@ public class DyeColorOption extends EnumConfigOption<DyeColor> {
             Player player = (Player) event.getWhoClicked();
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 reset();
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1f, 1f);
+                VESound.CONFIG_RESET.play(player);
             } else if (event.getClick().equals(ClickType.LEFT)) {
                 ChooseDyeColorMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked());
             }

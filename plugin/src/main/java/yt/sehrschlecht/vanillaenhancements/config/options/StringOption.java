@@ -2,7 +2,6 @@ package yt.sehrschlecht.vanillaenhancements.config.options;
 
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
-import org.bukkit.Sound;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -12,6 +11,7 @@ import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
+import yt.sehrschlecht.vanillaenhancements.utils.VESound;
 
 import java.util.function.BiConsumer;
 
@@ -90,7 +90,7 @@ public class StringOption extends ConfigOption<String> {
 
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 reset();
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1, 1);
+                VESound.CONFIG_RESET.play(player);
                 return;
             }
 
@@ -127,7 +127,7 @@ public class StringOption extends ConfigOption<String> {
                 @Override
                 protected Prompt acceptValidatedInput(@NotNull ConversationContext context, @NotNull String input) {
                     set(input);
-                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    VESound.CONFIG_PROMPT_ACCEPT.play(player);
                     origin.open(player);
                     return null;
                 }
@@ -139,7 +139,7 @@ public class StringOption extends ConfigOption<String> {
                 origin.open(player);
                 if (!abandonedEvent.gracefulExit()) {
                     player.sendMessage("§cCancelled input.");
-                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+                    VESound.CONFIG_PROMPT_CANCEL.play(player);
                 } else {
                     player.sendMessage("§aSaved value.");
                 }
@@ -152,7 +152,7 @@ public class StringOption extends ConfigOption<String> {
                     .buildConversation(player);
             conversation.begin();
 
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 2, 0);
+            VESound.CONFIG_PROMPT_ASK.play(player);
             player.sendTitle("§lUpdate option", "Please enter a value in the chat.", 5, 100, 20);
         });
     }

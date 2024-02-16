@@ -2,13 +2,13 @@ package yt.sehrschlecht.vanillaenhancements.config.options;
 
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
+import yt.sehrschlecht.vanillaenhancements.utils.VESound;
 
 import java.util.function.BiConsumer;
 
@@ -137,7 +137,7 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
             Player player = (Player) event.getWhoClicked();
             if (event.getClick().equals(ClickType.DROP)) { // todo not working
                 reset();
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1f, 1f);
+                VESound.CONFIG_RESET.play(player);
                 return;
             }
             T step;
@@ -152,14 +152,14 @@ public abstract class NumberOption<T> extends ConfigOption<T> {
                     newValue = min;
                 }
                 set(newValue);
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 0f);
+                VESound.CONFIG_DISABLE.play(player);
             } else if (event.isLeftClick()) {
                 T newValue = add(get(), step);
                 if (((Number) newValue).doubleValue() > ((Number) max).doubleValue()) {
                     newValue = max;
                 }
                 set(newValue);
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 2f);
+                VESound.CONFIG_ENABLE.play(player);
             }
         });
     }

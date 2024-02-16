@@ -2,7 +2,6 @@ package yt.sehrschlecht.vanillaenhancements.config.options;
 
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.Nullable;
@@ -11,6 +10,7 @@ import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.gui.ModifyStringListMenu;
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator;
+import yt.sehrschlecht.vanillaenhancements.utils.VESound;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -69,7 +69,7 @@ public class StringListOption extends ConfigOption<List<String>> {
             Player player = (Player) event.getWhoClicked();
             if (event.getClick().equals(ClickType.SHIFT_RIGHT)) {
                 reset();
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BANJO, 1f, 1f);
+                VESound.CONFIG_RESET.play(player);
             } else if (event.getClick().equals(ClickType.LEFT)) {
                 ModifyStringListMenu.Companion.getInventory(VanillaEnhancements.getPlugin(), this, origin).open((Player) event.getWhoClicked());
             }

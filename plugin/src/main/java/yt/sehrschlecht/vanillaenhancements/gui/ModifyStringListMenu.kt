@@ -5,7 +5,6 @@ import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.InventoryProvider
 import org.bukkit.Material
-import org.bukkit.Sound
 import org.bukkit.conversations.ConversationContext
 import org.bukkit.conversations.ConversationFactory
 import org.bukkit.conversations.Prompt
@@ -18,6 +17,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.PaginationType
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
+import yt.sehrschlecht.vanillaenhancements.utils.VESound
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -48,7 +48,7 @@ class ModifyStringListMenu(private val plugin: VanillaEnhancements, private val 
                 if (!event.isRightClick) return@of
                 val list = option.get().toMutableList()
                 list.remove(it)
-                player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 0f)
+                VESound.CONFIG_DISABLE.play(player)
                 option.set(list)
                 init(player, contents)
             }
@@ -76,7 +76,7 @@ class ModifyStringListMenu(private val plugin: VanillaEnhancements, private val 
                     val list = option.get().toMutableList()
                     list.add(input)
                     option.set(list)
-                    player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f)
+                    VESound.CONFIG_PROMPT_ACCEPT.play(player)
                     origin.open(player)
                     return null
                 }
@@ -90,7 +90,7 @@ class ModifyStringListMenu(private val plugin: VanillaEnhancements, private val 
                     contents.inventory().open(player)
                     if (!abandonedEvent.gracefulExit()) {
                         player.sendMessage("§cCancelled input.")
-                        player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f)
+                        VESound.CONFIG_PROMPT_CANCEL.play(player)
                     } else {
                         player.sendMessage("§aSaved value.")
                     }
@@ -102,7 +102,7 @@ class ModifyStringListMenu(private val plugin: VanillaEnhancements, private val 
             val conversation = conversationFactory.buildConversation(player)
             conversation.begin()
 
-            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BELL, 2f, 0f);
+            VESound.CONFIG_PROMPT_ASK.play(player)
             player.sendTitle("§lAdd value", "Please enter a value in the chat.", 5, 100, 20)
         })
         contents.addBackButton { origin }

@@ -4,7 +4,6 @@ import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.InventoryProvider
-import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
@@ -14,6 +13,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addB
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.removeColorCodes
+import yt.sehrschlecht.vanillaenhancements.utils.VESound
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -44,7 +44,7 @@ class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: M
                 itemFlag(*ItemFlag.values())
             }.build()) listener@{ event ->
                 if (event.isShiftClick) {
-                    player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 1f, if (it.isEnabled) 0f else 2f)
+                    (if (it.isEnabled) VESound.CONFIG_DISABLE else VESound.CONFIG_ENABLE).play(player)
                     it.toggle()
                     return@listener
                 }

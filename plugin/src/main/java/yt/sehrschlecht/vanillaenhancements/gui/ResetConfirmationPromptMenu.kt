@@ -5,11 +5,11 @@ import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.InventoryProvider
 import org.bukkit.Material
-import org.bukkit.Sound
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.toEmptyClickableItem
+import yt.sehrschlecht.vanillaenhancements.utils.VESound
 
 class ResetConfirmationPromptMenu(private val plugin: VanillaEnhancements, private val answer: Boolean.() -> Unit, private val origin: SmartInventory) : InventoryProvider {
     companion object {
@@ -23,7 +23,7 @@ class ResetConfirmationPromptMenu(private val plugin: VanillaEnhancements, priva
     }
 
     override fun init(player: Player, contents: InventoryContents) {
-        player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f)
+        VESound.CONFIG_PROMPT_ASK.play(player)
 
         contents.fillBorders(ItemCreator(Material.RED_STAINED_GLASS_PANE){ displayName("§0") }.build().toEmptyClickableItem())
 
@@ -36,14 +36,14 @@ class ResetConfirmationPromptMenu(private val plugin: VanillaEnhancements, priva
         contents.set(1, 2, ClickableItem.of(ItemCreator(Material.LIME_WOOL) {
             displayName("§a§lCONFIRM the action")
         }.build()) {
-            player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
+            VESound.SUCCESS.play(player)
             answer(true)
             origin.open(player)
         })
         contents.set(1, 6, ClickableItem.of(ItemCreator(Material.RED_WOOL) {
             displayName("§c§lCANCEL the action")
         }.build()) {
-            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f)
+            VESound.CONFIG_PROMPT_CANCEL.play(player)
             answer(false)
             origin.open(player)
         })

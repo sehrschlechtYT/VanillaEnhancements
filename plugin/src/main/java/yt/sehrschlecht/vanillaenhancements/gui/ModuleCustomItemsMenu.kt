@@ -3,7 +3,6 @@ package yt.sehrschlecht.vanillaenhancements.gui
 import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
-import org.bukkit.Sound
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.CustomItemModule
@@ -12,6 +11,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.paginateItems
+import yt.sehrschlecht.vanillaenhancements.utils.VESound
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -41,7 +41,7 @@ class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val
             }.build()) { event ->
                 if (event.isRightClick) {
                     player.inventory.addItem(it.createItem().build())
-                    player.playSound(player.location, Sound.ENTITY_ITEM_PICKUP, 1f, 1f)
+                    VESound.GIVE_ITEM.play(player)
                     return@of
                 }
                 CustomItemMenu.getInventory(plugin, it, contents.inventory()).open(player)

@@ -4,12 +4,12 @@ import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import org.bukkit.Material
-import org.bukkit.Sound
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
+import yt.sehrschlecht.vanillaenhancements.utils.VESound
 
 class SettingsMenu(private val plugin: VanillaEnhancements) : RecurrentInventoryInitializer(tickInterval = 20) {
     companion object {
@@ -32,7 +32,7 @@ class SettingsMenu(private val plugin: VanillaEnhancements) : RecurrentInventory
             }.build()
         ) {
             plugin.moduleRegistry.enabledModules.forEach { it.toggle() }
-            player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
+            VESound.SUCCESS.play(player)
         })
 
         contents.addBackButton { _ -> MainMenu.getInventory(plugin) }
