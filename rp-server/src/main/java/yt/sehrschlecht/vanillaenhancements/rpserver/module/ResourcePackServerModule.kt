@@ -71,8 +71,13 @@ class ResourcePackServerModule(val plugin: VERPServerPlugin, moduleCategory: Mod
         return Material.COMMAND_BLOCK_MINECART
     }
 
+    override fun onEnable() {
+        veInstance.resourcePackManager.buildPack()
+    }
+
     @EventHandler
     fun onResourcePackBuildCompletion(event: ResourcePackBuildCompletionEvent) {
+        plugin.logger.info("Received completion signal for resource pack build, initializing server...")
         val packFile = event.outputFile
         if (packFile == null) {
             plugin.logger.severe("Resource pack file is null! The resource pack server will not be started!")

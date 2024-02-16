@@ -23,15 +23,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
 
     fun initialize() {
         if (!isEnabled()) return
-        plugin.logger.info("Building resource pack...")
-        val packFile = buildPack()
-        plugin.logger.info("Finished building resource pack!")
-
-        plugin.server.pluginManager.callEvent(
-            ResourcePackBuildCompletionEvent(
-                packFile
-            )
-        )
+        // unused
     }
 
     private fun isEnabled(): Boolean {
@@ -39,6 +31,7 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
     }
 
     fun buildPack(): File? {
+        plugin.logger.info("Building resource pack...")
         Debug.RESOURCE_PACKS.log("Attempting to build resource pack...")
         if (!isEnabled()) {
             plugin.logger.warning("Tried to build resource pack but it is disabled in the config! (resource_pack.enabled=false)")
@@ -80,6 +73,14 @@ class ResourcePackManager(val plugin: VanillaEnhancements) : Listener {
         Debug.RESOURCE_PACKS.log("Zipping resource pack...")
         val packFile = zipPack()
         Debug.RESOURCE_PACKS.log("Zipping resource pack done!")
+        plugin.logger.info("Successfully built resource pack!")
+
+        plugin.server.pluginManager.callEvent(
+            ResourcePackBuildCompletionEvent(
+                packFile
+            )
+        )
+
         return packFile
     }
 
