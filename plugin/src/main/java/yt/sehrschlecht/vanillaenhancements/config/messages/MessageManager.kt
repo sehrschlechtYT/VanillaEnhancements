@@ -31,9 +31,12 @@ class MessageManager(private val document: YamlDocument, private val plugin: Van
     }
 
     fun send(message: Message, receiver: CommandSender, vararg args: Any) {
-        plugin.adventure().sender(receiver).sendMessage(
-            asComponent(message, *args)
-        )
+        val component = asComponent(message, *args)
+        if (plugin.isUsingPaper) {
+            receiver.sendMessage(component)
+        } else {
+            plugin.adventure().sender(receiver).sendMessage(component)
+        }
     }
 
     /**

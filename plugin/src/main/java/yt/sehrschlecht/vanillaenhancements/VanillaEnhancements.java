@@ -64,10 +64,22 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     // plugin states
     private boolean shuttingDown = false;
+    private boolean usingPaper = false;
 
     @Override
     public void onEnable() {
         plugin = this;
+
+        try {
+            Class.forName("com.destroystokyo.paper.utils.PaperPluginLogger");
+            usingPaper = true;
+        } catch (ClassNotFoundException ignored) {
+            usingPaper = false;
+        }
+
+        if (!usingPaper) {
+            getLogger().severe("VanillaEnhancements works better with Paper! Download Paper at https://papermc.io!");
+        }
 
         debug = new Debug();
 
@@ -82,7 +94,9 @@ public final class VanillaEnhancements extends JavaPlugin {
             }
         }
 
-        this.adventure = BukkitAudiences.create(this);
+        if (!usingPaper) {
+            this.adventure = BukkitAudiences.create(this);
+        }
         this.miniMessage = MiniMessage.builder()
             .tags(TagResolver.builder()
                     .resolver(StandardTags.defaults())
@@ -267,19 +281,26 @@ public final class VanillaEnhancements extends JavaPlugin {
         return shuttingDown;
     }
 
-    public @NotNull BukkitAudiences adventure() {
-        if (this.adventure == null) {
-            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
-        }
-        return this.adventure;
-    }
-
     public MiniMessage miniMessage() {
         return miniMessage;
     }
 
     public MessageManager getMessageManager() {
         return messageManager;
+    }
+
+    public boolean isUsingPaper() {
+        return usingPaper;
+    }
+
+    public @NotNull BukkitAudiences adventure() {
+        if (usingPaper) {
+            throw new IllegalStateException("Tried to use bukkit adventure on a paper server!");
+        }
+        if (this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
     }
 
 }
