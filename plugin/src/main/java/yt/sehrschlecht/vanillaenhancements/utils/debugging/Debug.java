@@ -138,6 +138,7 @@ public class Debug {
          * This component is not used to log anything, but to delete the config on startup.
          */
         DELETE_CONFIG_ON_STARTUP(null),
+        DELETE_MESSAGES_ON_STARTUP(null),
         MESSAGES("[Messages]"),
         MODULES("[Modules]"),
         TICK_SERVICES("[TickServices]"),

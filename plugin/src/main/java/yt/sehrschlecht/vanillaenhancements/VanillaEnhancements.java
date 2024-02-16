@@ -94,6 +94,17 @@ public final class VanillaEnhancements extends JavaPlugin {
             }
         }
 
+        if (debug.isEnabled() && debug.componentEnabled(Debug.ComponentType.DELETE_MESSAGES_ON_STARTUP)) {
+            getLogger().warning("Attempting to delete messages.yml (this behaviour was enabled in the .debug file)");
+            File configFile = new File(getDataFolder(), "messages.yml");
+            if (configFile.exists()) {
+                configFile.delete();
+                getLogger().warning("Successfully deleted messages.yml");
+            } else {
+                getLogger().warning("messages.yml does not exist (yet), skipping deletion");
+            }
+        }
+
         if (!usingPaper) {
             this.adventure = BukkitAudiences.create(this);
         }
