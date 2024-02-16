@@ -15,7 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
-import yt.sehrschlecht.vanillaenhancements.config.messages.MessageManager;
+import yt.sehrschlecht.vanillaenhancements.messages.MessageManager;
 import yt.sehrschlecht.vanillaenhancements.gui.VECommand;
 import yt.sehrschlecht.vanillaenhancements.items.ItemManager;
 import yt.sehrschlecht.vanillaenhancements.items.VEItemListener;

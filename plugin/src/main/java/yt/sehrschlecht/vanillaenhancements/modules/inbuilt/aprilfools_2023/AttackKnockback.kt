@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.plugin.java.JavaPlugin
-import yt.sehrschlecht.vanillaenhancements.config.messages.Message
+import yt.sehrschlecht.vanillaenhancements.messages.Message
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag

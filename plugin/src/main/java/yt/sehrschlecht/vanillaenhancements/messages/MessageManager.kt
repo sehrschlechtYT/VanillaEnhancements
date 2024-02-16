@@ -1,4 +1,4 @@
-package yt.sehrschlecht.vanillaenhancements.config.messages
+package yt.sehrschlecht.vanillaenhancements.messages
 
 import dev.dejvokep.boostedyaml.YamlDocument
 import net.kyori.adventure.text.Component

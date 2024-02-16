@@ -1,4 +1,4 @@
-package yt.sehrschlecht.vanillaenhancements.config.messages
+package yt.sehrschlecht.vanillaenhancements.messages
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT

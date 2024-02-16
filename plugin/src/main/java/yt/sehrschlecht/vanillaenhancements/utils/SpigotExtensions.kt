@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
-import yt.sehrschlecht.vanillaenhancements.config.messages.Message
+import yt.sehrschlecht.vanillaenhancements.messages.Message
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
