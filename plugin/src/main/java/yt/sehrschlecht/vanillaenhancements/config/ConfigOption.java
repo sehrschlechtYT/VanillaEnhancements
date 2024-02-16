@@ -84,7 +84,7 @@ public abstract class ConfigOption<T> {
     // used in #set(T value) overrides
     protected void setToObject(Object value, T typedValue) {
         if (value == null) value = defaultValue;
-        T oldValue = get();
+        T oldValue = getFromConfig();
         Config.getInstance().set(this, value);
         // notify module of update if requested
         if (updateHandler != null) updateHandler.accept(oldValue, typedValue);
