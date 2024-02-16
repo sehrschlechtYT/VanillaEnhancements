@@ -7,9 +7,15 @@ import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import fr.minuskube.inv.InventoryManager;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
+import yt.sehrschlecht.vanillaenhancements.config.messages.MessageManager;
 import yt.sehrschlecht.vanillaenhancements.gui.VECommand;
 import yt.sehrschlecht.vanillaenhancements.items.ItemManager;
 import yt.sehrschlecht.vanillaenhancements.items.VEItemListener;
@@ -36,9 +42,12 @@ import java.util.Objects;
  * @since 1.0
  */
 public final class VanillaEnhancements extends JavaPlugin {
+    // core plugin objects
     private static VanillaEnhancements plugin;
     private static YamlDocument configuration;
+    private static YamlDocument messageConfig;
 
+    // managers/registries
     private List<VEModule> inbuiltModules;
     private ModuleRegistry moduleRegistry;
     private TickServiceExecutor tickServiceExecutor;
@@ -46,8 +55,14 @@ public final class VanillaEnhancements extends JavaPlugin {
     private RecipeManager recipeManager;
     private ResourcePackManager resourcePackManager;
     private ItemManager itemManager;
-    private InventoryManager inventoryManager;
+    private MessageManager messageManager;
 
+    // external library managers
+    private InventoryManager inventoryManager;
+    private BukkitAudiences adventure;
+    private MiniMessage miniMessage;
+
+    // plugin states
     private boolean shuttingDown = false;
 
     @Override
@@ -66,6 +81,14 @@ public final class VanillaEnhancements extends JavaPlugin {
                 getLogger().warning("config.yml does not exist (yet), skipping deletion");
             }
         }
+
+        this.adventure = BukkitAudiences.create(this);
+        this.miniMessage = MiniMessage.builder()
+            .tags(TagResolver.builder()
+                    .resolver(StandardTags.defaults())
+                    .build()
+            )
+            .build();
 
         ExternalAPIs.init();
 
@@ -119,6 +142,7 @@ public final class VanillaEnhancements extends JavaPlugin {
         );
 
         createConfig();
+        createMessageConfig();
 
         registerModules();
 
@@ -144,6 +168,10 @@ public final class VanillaEnhancements extends JavaPlugin {
     public void onDisable() {
         shuttingDown = true;
         moduleRegistry.shutdown();
+        if (this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
     }
 
     private void createConfig() {
@@ -163,6 +191,24 @@ public final class VanillaEnhancements extends JavaPlugin {
         new Config(configuration).init();
     }
 
+    private void createMessageConfig() {
+        try {
+            messageConfig = YamlDocument.create(
+                    new File(getDataFolder(), "messages.yml"),
+                    Objects.requireNonNull(getResource("messages.yml")),
+                    GeneralSettings.DEFAULT,
+                    LoaderSettings.builder().setAutoUpdate(true).build(),
+                    DumperSettings.DEFAULT,
+                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version")).setKeepAll(true).build()
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.messageManager = new MessageManager(messageConfig, this);
+        messageManager.init();
+    }
+
     public void registerModules() {
         moduleRegistry = new ModuleRegistry(this);
         for (VEModule module : inbuiltModules) {
@@ -179,10 +225,6 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public static VanillaEnhancements getPlugin() {
         return plugin;
-    }
-
-    public static String getPrefix() { // ToDo: Currently unused
-        return Config.getInstance().message("prefix");
     }
 
     /**
@@ -223,6 +265,21 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     public boolean isShuttingDown() {
         return shuttingDown;
+    }
+
+    public @NotNull BukkitAudiences adventure() {
+        if (this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
+
+    public MiniMessage miniMessage() {
+        return miniMessage;
+    }
+
+    public MessageManager getMessageManager() {
+        return messageManager;
     }
 
 }

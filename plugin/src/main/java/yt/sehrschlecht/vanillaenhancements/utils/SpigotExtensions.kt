@@ -8,9 +8,11 @@ import fr.minuskube.inv.content.SlotPos
 import org.bukkit.ChatColor
 import org.bukkit.DyeColor
 import org.bukkit.Material
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
+import yt.sehrschlecht.vanillaenhancements.config.messages.Message
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -144,6 +146,10 @@ class SpigotExtensions {
 
         fun Material.toEmptyClickableItem(): ClickableItem {
             return ItemStack(this).toEmptyClickableItem()
+        }
+
+        fun Message.send(receiver: CommandSender, veInstance: VanillaEnhancements, vararg args: Any) {
+            veInstance.messageManager.send(this, receiver, *args)
         }
     }
 

@@ -9,11 +9,12 @@ import org.bukkit.command.CommandSender
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.plugin.java.JavaPlugin
-import yt.sehrschlecht.vanillaenhancements.config.Config
+import yt.sehrschlecht.vanillaenhancements.config.messages.Message
 import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.config.options.IntegerOption
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.send
 import yt.sehrschlecht.vanillaenhancements.utils.docs.Source
 
 
@@ -66,24 +67,21 @@ class AttackKnockback : VEModule(
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (!enableCommand.get() || !isEnabled) {
-            sender.sendMessage(Config.getInstance().message("commandDisabled"))
+            Message.COMMAND_DISABLED.send(sender, veInstance)
             return true
         }
         if (args?.size != 1) {
-            sender.sendMessage(Config.getInstance().message("knockback.usage"))
+            Message.COMMAND_KNOCKBACK_USAGE.send(sender, veInstance)
             return true
         }
         val input = args[0].toIntOrNull()
         if (input == null || input < percentage.min || input > percentage.max) {
-            sender.sendMessage(Config.getInstance().message("knockback.invalidInput")
-                .replace("%min%", percentage.min.toString())
-                .replace("%max%", percentage.max.toString())
-            )
+            Message.COMMAND_KNOCKBACK_INVALID_INPUT.send(sender, veInstance,
+                percentage.min, percentage.max)
             return true
         }
         percentage.set(input)
-        sender.sendMessage(Config.getInstance().message("knockback.success")
-            .replace("%percentage%", input.toString()))
+        Message.COMMAND_KNOCKBACK_SUCCESS.send(sender, veInstance, input)
         return true
     }
 

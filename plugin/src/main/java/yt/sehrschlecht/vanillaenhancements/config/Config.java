@@ -3,7 +3,6 @@ package yt.sehrschlecht.vanillaenhancements.config;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.block.Block;
 import kotlin.reflect.KProperty;
-import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -27,18 +26,6 @@ public class Config {
 
     private final Map<NamespacedKey, List<ConfigOption<?>>> moduleOptions;
 
-    /**
-     * Default messages
-     * If the value is null, the message will be removed when updating the config. This is useful for messages that have been removed.
-     */
-    public static Map<String, String> messages = new HashMap<>(){{
-        put("prefix", "&7[&cVE&7] ");
-        put("commandDisabled", "§cThis command is disabled!");
-        put("knockback.usage", "§cUsage: /knockback <percentage>");
-        put("knockback.invalidInput", "§cThe percentage must be between %min% and %max%!");
-        put("knockback.success", "Set the knockback multiplier to %percentage%%");
-    }};
-
     public Config(YamlDocument document) {
         instance = this;
         this.moduleOptions = new HashMap<>();
@@ -48,22 +35,6 @@ public class Config {
 
     public void init() {
         Debug.CONFIG.log("Initializing config...");
-
-        Debug.MESSAGES.log("Initializing messages...");
-        Debug.MESSAGES.log("Found {} default messages.", messages.size());
-
-        for (Map.Entry<String, String> entry : messages.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            Debug.MESSAGES.log("Found message {} with default value \"{}\"", key, value);
-            if (!document.contains("msg." + key)) {
-                Debug.MESSAGES.log("Creating key msg.{} with default value {}", key, value);
-                document.set("msg." + key, value);
-            } else if (value == null) {
-                Debug.MESSAGES.log("Removing message {} because it is null.", key);
-                document.remove("msg." + key);
-            }
-        }
     }
 
     public void createModuleOptions(VEModule module) {
@@ -148,14 +119,6 @@ public class Config {
         }
         document.set(option.toPath(), value);
         save(); // ToDo do not immediately save the config but only on certain events
-    }
-
-    public String message(String key) {
-        if (!document.contains("msg." + key)) {
-            Debug.CONFIG.log("Tried accessing non-existent message {}!", key);
-            return "Missing translation!";
-        }
-        return ChatColor.translateAlternateColorCodes('&', document.getString("msg." + key));
     }
 
     public void save() {
