@@ -24,7 +24,6 @@ import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
 import yt.sehrschlecht.vanillaenhancements.modules.VERecipe;
 import yt.sehrschlecht.vanillaenhancements.ticking.TickService;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -61,17 +60,6 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 sender.sendMessage("§aReloading the config...");
                 debug().reload();
                 sender.sendMessage("§aSuccessfully reloaded the config!");
-                return true;
-            } else if (args[0].equalsIgnoreCase("generate-docs")) {
-                sender.sendMessage("§aGenerating docs...");
-                try {
-                    debug().generateDocs();
-                    sender.sendMessage("§aSuccessfully generated docs!");
-                    sender.sendMessage("§aOutput: " + debug().getDocsOutput());
-                } catch (IOException e) {
-                    sender.sendMessage("§cFailed to generate docs!");
-                    throw new RuntimeException(e);
-                }
                 return true;
             } else if (args[0].equalsIgnoreCase("modules")) {
                 sender.sendMessage("-------------------------------------------------");
@@ -331,7 +319,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 return true;
             }
         }
-        sender.sendMessage("§cUsage: /ve-debug reload/generate-docs/module <Module Key>/modules/tickservice <Class>#<Field>/plugin <Name>/tickservices/recipe <Key>/recipes/runtickservice <Class>#<Field>/generate-pack/give-item <Key> [Amount]");
+        sender.sendMessage("§cUsage: /ve-debug reload/module <Module Key>/modules/tickservice <Class>#<Field>/plugin <Name>/tickservices/recipe <Key>/recipes/runtickservice <Class>#<Field>/generate-pack/give-item <Key> [Amount]");
         return true;
     }
 
@@ -357,7 +345,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!debug().isEnabled()) return null;
         if (args.length == 1) {
-            return complete(args, 0, "reload", "generate-docs", "modules", "module", "tickservice", "runtickservice", "plugin", "tickservices", "recipes", "recipe", "generate-pack", "give-item");
+            return complete(args, 0, "reload", "modules", "module", "tickservice", "runtickservice", "plugin", "tickservices", "recipes", "recipe", "generate-pack", "give-item");
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("module")) {
                 return complete(args, 1, VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules().stream().map(VEModule::getModuleKey).map(Object::toString).toArray(String[]::new));

@@ -2,13 +2,10 @@ package yt.sehrschlecht.vanillaenhancements.utils.debugging;
 
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
-import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
-import yt.sehrschlecht.vanillaenhancements.utils.docs.VEDocsGenerator;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -128,19 +125,8 @@ public class Debug {
         loadDebugSettings();
     }
 
-    public void generateDocs() throws IOException {
-        List<VEModule> modules = VanillaEnhancements.getPlugin().getModuleRegistry().getRegisteredModules();
-        logMessage("Generating documentation for " + modules.size() + " modules...");
-        new VEDocsGenerator(modules).generate();
-        logMessage("Successfully generated documentation! Output: " + getDocsOutput());
-    }
-
     public boolean isEnabled() {
         return enabled;
-    }
-
-    public String getDocsOutput() {
-        return "/plugins/VanillaEnhancements/docs/";
     }
 
     public enum ComponentType {

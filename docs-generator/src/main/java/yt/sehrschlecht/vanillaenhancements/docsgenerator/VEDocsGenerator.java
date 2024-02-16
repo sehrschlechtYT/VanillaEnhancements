@@ -1,4 +1,4 @@
-package yt.sehrschlecht.vanillaenhancements.utils.docs;
+package yt.sehrschlecht.vanillaenhancements.docsgenerator;
 
 import com.google.common.io.Files;
 import com.google.gson.annotations.Since;
@@ -6,6 +6,7 @@ import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements;
 import yt.sehrschlecht.vanillaenhancements.config.Config;
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption;
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule;
+import yt.sehrschlecht.vanillaenhancements.utils.docs.Source;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.List;
  * @since 1.0
  */
 public class VEDocsGenerator {
+
     private final List<VEModule> modules;
 
     public VEDocsGenerator(List<VEModule> modules) {
@@ -61,7 +63,7 @@ public class VEDocsGenerator {
         builder.append("| Key | Description | Default Value | Type | Possible values |\n");
         builder.append("| --- | ----------- | ------------- | ---- | --------------- |\n");
         for (ConfigOption<?> option : configOptions) {
-           builder.append(optionToString(option));
+            builder.append(optionToString(option));
         }
         builder.append("\n");
         builder.append("## Technical Information\n\n");
@@ -99,4 +101,5 @@ public class VEDocsGenerator {
     private List<ConfigOption<?>> getConfigOptions(VEModule module) {
         return Config.getInstance().getModuleOptions(module);
     }
+
 }
