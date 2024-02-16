@@ -26,6 +26,8 @@ class MessageManager(private val document: YamlDocument, private val plugin: Van
                 document.remove(message.key)
             }
         }
+
+        document.save()
     }
 
     fun send(message: Message, receiver: CommandSender, vararg args: Any) {
