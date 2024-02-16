@@ -1,9 +1,11 @@
 package yt.sehrschlecht.vanillaenhancements.modules.inbuilt
 
 import org.bukkit.Material
+import org.bukkit.block.BlockFace
 import org.bukkit.block.data.Ageable
 import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
+import org.bukkit.event.block.BlockIgniteEvent
 import org.bukkit.event.block.EntityBlockFormEvent
 import org.bukkit.event.entity.*
 import org.bukkit.plugin.java.JavaPlugin
@@ -44,7 +46,7 @@ class MobGriefingControl : VEModule(
     val witherExplosion = BooleanOption(true, "Controls if wither explosions destroy blocks.")
     val zombieBreakDoor = BooleanOption(true, "Controls if zombies can break doors.")
     val zombieItemPickup = BooleanOption(true, "Controls if zombies can pick up items.")
-    val zombieTurtleEggAttack = BooleanOption(true, "Controls if zombies can attack turtle eggs.")
+    val zombieTurtleEggAttack = BooleanOption(true, "Controls if zombies can attack turtle eggs.") // todo overwrite pathfinding goal if possible
 
     override fun getKey(): String {
         return "mob_griefing_control"
@@ -125,12 +127,24 @@ class MobGriefingControl : VEModule(
                 if (enderDragonBlockDestruction.get()) return
                 event.blockList().clear()
             }
-            EntityType.WITHER -> {
+            EntityType.WITHER -> { // wither explosion
                 if (witherExplosion.get()) return
                 event.blockList().clear()
             }
 
             else -> {}
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    fun onBlockIgnite(event: BlockIgniteEvent) {
+        if (event.cause != BlockIgniteEvent.IgniteCause.FIREBALL) return
+        if (event.ignitingEntity is Blaze && !blazeFireCreation.get()) {
+            event.isCancelled = true
+            return
+        } else if (event.ignitingEntity is Ghast && !ghastFireballExplosion.get()) {
+            event.isCancelled = true
+            return
         }
     }
 
@@ -165,7 +179,7 @@ class MobGriefingControl : VEModule(
                 event.isCancelled = true
             }
             EntityType.RAVAGER -> { // ravager crop/leaves destruction
-                if (event.block.type == Material.FARMLAND) {
+                if (event.block.type == Material.FARMLAND || event.block.getRelative(BlockFace.DOWN).type == Material.FARMLAND) {
                     if (ravagerDestroyCrops.get()) return
                     event.isCancelled = true
                 } else if (event.block.type.name.endsWith("LEAVES")) {
@@ -194,7 +208,7 @@ class MobGriefingControl : VEModule(
 
     @EventHandler(ignoreCancelled = true)
     fun onInteract(event: EntityInteractEvent) {
-        if (event.block.type == Material.FARMLAND) { // ravager crop destruction
+        if (event.block.type == Material.FARMLAND || event.block.getRelative(BlockFace.DOWN).type == Material.FARMLAND) { // ravager crop destruction
             if (event.entityType != EntityType.RAVAGER) return
             if (ravagerDestroyCrops.get()) return
             event.isCancelled = true
