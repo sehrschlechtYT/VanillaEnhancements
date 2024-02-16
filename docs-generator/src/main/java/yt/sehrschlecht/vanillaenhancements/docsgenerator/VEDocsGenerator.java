@@ -80,7 +80,7 @@ public class VEDocsGenerator {
             since = String.valueOf(module.getClass().getAnnotation(Since.class).value());
         }
         if (since != null) {
-            builder.append("| Since | `" + module.getClass().getAnnotation(Since.class).value() + "` |\n");
+            builder.append("| Since | `" + since + "` |\n");
         }
 
         return builder.toString();
