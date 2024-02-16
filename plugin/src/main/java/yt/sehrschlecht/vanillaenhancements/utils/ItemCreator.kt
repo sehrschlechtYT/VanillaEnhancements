@@ -32,14 +32,14 @@ class ItemCreator {
 
     constructor(stack: ItemStack, init: ItemCreator.() -> Unit) {
         componentSupport = VanillaEnhancements.getPlugin().messageManager.componentSupport
-        this.stack = stack;
+        this.stack = stack
         this.meta = stack.itemMeta ?: throw IllegalArgumentException("ItemStack has no ItemMeta!")
         init(this)
     }
 
     constructor(material: Material, init: ItemCreator.() -> Unit) {
         componentSupport = VanillaEnhancements.getPlugin().messageManager.componentSupport
-        this.stack = ItemStack(material);
+        this.stack = ItemStack(material)
         this.meta = stack.itemMeta ?: throw IllegalArgumentException("ItemStack has no ItemMeta!")
         init(this)
     }
