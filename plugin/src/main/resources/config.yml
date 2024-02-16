@@ -1,0 +1,10 @@
+config-version: 4 #DO NOT MODIFY THIS SETTING!
+
+recipe-discover-period: 60 #How often (in ticks) should the plugin check for new recipes? May have an impact on performance if set too low.
+
+msg:
+  prefix: "&7[&cVE&7] "
+
+resource_pack:
+  # If this option is enabled, the plugin will create a resource pack that contains custom textures and models for custom items every time it gets enabled.
+  enabled: false

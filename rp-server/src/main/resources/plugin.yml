@@ -1,0 +1,6 @@
+name: VE-RP-Server
+version: '${project.version}'
+main: yt.sehrschlecht.vanillaenhancements.rpserver.VERPServerPlugin
+api-version: '1.19'
+depend:
+  - VanillaEnhancements

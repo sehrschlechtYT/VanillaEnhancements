@@ -1,0 +1,9 @@
+name: VE-Docs-Generator
+version: '${project.version}'
+main: yt.sehrschlecht.vanillaenhancements.docsgenerator.VEDocsGeneratorPlugin
+api-version: '1.19'
+depend:
+  - VanillaEnhancements
+commands:
+  ve-docs:
+    permission: ve.command.docs
