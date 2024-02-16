@@ -96,14 +96,14 @@ public class Debug {
         if (file.exists()) {
             enabledComponents.clear();
             enabled = true;
-            warn("----------------------------------------");
+            warn("--------------------------------------------------------------------------------");
             warn("");
             warn("Warning: Debugging is enabled!");
             warn("This may spam your console and log file!");
-            warn("If you have not enabled debugging, please open a new issue on GitHub:");
+            warn("If you did not enable debugging, please open a new issue on GitHub:");
             warn("https://github.com/sehrschlechtYT/VanillaEnhancements/issues");
             warn("");
-            warn("----------------------------------------");
+            warn("--------------------------------------------------------------------------------");
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
                 while ((line = br.readLine()) != null) {
