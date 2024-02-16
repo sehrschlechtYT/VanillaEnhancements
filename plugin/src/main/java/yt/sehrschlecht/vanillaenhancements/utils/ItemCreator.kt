@@ -100,7 +100,12 @@ class ItemCreator {
         meta.setDisplayName(name)
     }
 
-    fun displayName(name: Component) = componentSupport.setDisplayName(meta, name)
+    private fun resetDecorations(component: Component): Component {
+        return component.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE) // fix display name being italic by default
+    }
+
+    fun displayName(name: Component) = componentSupport.setDisplayName(meta, resetDecorations(name))
+
     fun displayName(message: Message, veInstance: VanillaEnhancements, vararg args: Any) {
         this.displayName(message.asComponent(veInstance, *args))
     }
