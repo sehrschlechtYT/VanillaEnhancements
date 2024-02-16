@@ -13,7 +13,6 @@ import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.FurnaceRecipePrevie
 import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.ShapedRecipePreviewMenu
 import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.ShapelessRecipePreviewMenu
 import yt.sehrschlecht.vanillaenhancements.gui.recipepreview.StonecuttingRecipePreviewMenu
-import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule
 import yt.sehrschlecht.vanillaenhancements.modules.VERecipe
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
@@ -29,14 +28,14 @@ import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.pagi
 class ModuleRecipesMenu(
     private val plugin: VanillaEnhancements,
     private val module: RecipeModule,
-    private val sourceTag: ModuleTag
+    private val origin: SmartInventory
 ) : RecurrentInventoryInitializer(20) {
 
     companion object {
-        fun getInventory(plugin: VanillaEnhancements, module: RecipeModule, sourceTag: ModuleTag): SmartInventory =
+        fun getInventory(plugin: VanillaEnhancements, module: RecipeModule, origin: SmartInventory): SmartInventory =
             SmartInventory.builder()
                 .id("moduleRecipes")
-                .provider(ModuleRecipesMenu(plugin, module, sourceTag))
+                .provider(ModuleRecipesMenu(plugin, module, origin))
                 .size(3, 9)
                 .title("§lVE - Recipes of \"${module.name}\"")
                 .manager(plugin.inventoryManager)
@@ -52,7 +51,7 @@ class ModuleRecipesMenu(
                 addLore(if (it.isRegistered) "§aRegistered" else "§cNot registered")
                 addLore(if (isRecipePreviewSupported(it)) "§9§oLeft click to preview" else "§c§oPreview isn't available yet for this recipe.")
             }.build()) listener@{ _ ->
-                val gui = getPreviewGUIForRecipe(it)
+                val gui = getPreviewGUIForRecipe(it, contents.inventory())
                 gui ?: return@listener
                 gui.open(player)
             }
@@ -61,9 +60,9 @@ class ModuleRecipesMenu(
         contents.paginateItems(items, player = player, noneItem = {
             displayName("§c§lNo recipes found")
             addLore("§cThis module has no recipes")
-        }, inventoryGetter = { getInventory(plugin, module, sourceTag) })
+        }, inventoryGetter = { getInventory(plugin, module, origin) })
 
-        contents.addBackButton { _ -> ModuleMenu.getInventory(plugin, module, sourceTag) }
+        contents.addBackButton { origin }
         contents.fillBackground()
     }
 
@@ -71,30 +70,30 @@ class ModuleRecipesMenu(
         return recipe.recipe is ShapedRecipe || recipe.recipe is FurnaceRecipe || recipe.recipe is StonecuttingRecipe || recipe.recipe is ShapelessRecipe
     }
 
-    private fun getPreviewGUIForRecipe(recipe: VERecipe): SmartInventory? {
+    private fun getPreviewGUIForRecipe(recipe: VERecipe, inventory: SmartInventory): SmartInventory? {
         return when (recipe.recipe) {
             is ShapedRecipe -> ShapedRecipePreviewMenu.getInventory(
                 plugin,
                 recipe,
-                getInventory(plugin, module, sourceTag)
+                inventory
             )
 
             is FurnaceRecipe -> FurnaceRecipePreviewMenu.getInventory(
                 plugin,
                 recipe,
-                getInventory(plugin, module, sourceTag)
+                inventory
             )
 
             is StonecuttingRecipe -> StonecuttingRecipePreviewMenu.getInventory(
                 plugin,
                 recipe,
-                getInventory(plugin, module, sourceTag)
+                inventory
             )
 
             is ShapelessRecipe -> ShapelessRecipePreviewMenu.getInventory(
                 plugin,
                 recipe,
-                getInventory(plugin, module, sourceTag)
+                inventory
             )
 
             else -> null

@@ -8,7 +8,10 @@ import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.config.Config
 import yt.sehrschlecht.vanillaenhancements.config.ConfigOption
-import yt.sehrschlecht.vanillaenhancements.modules.*
+import yt.sehrschlecht.vanillaenhancements.modules.CustomItemModule
+import yt.sehrschlecht.vanillaenhancements.modules.ModuleCategory
+import yt.sehrschlecht.vanillaenhancements.modules.RecipeModule
+import yt.sehrschlecht.vanillaenhancements.modules.VEModule
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
@@ -21,13 +24,13 @@ import yt.sehrschlecht.vanillaenhancements.utils.VESound
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VEModule, private val sourceTag: ModuleTag) :
+class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VEModule, private val origin: SmartInventory) :
     RecurrentInventoryInitializer(5) {
 
     companion object {
-        fun getInventory(plugin: VanillaEnhancements, module: VEModule, sourceTag: ModuleTag): SmartInventory = SmartInventory.builder()
+        fun getInventory(plugin: VanillaEnhancements, module: VEModule, origin: SmartInventory): SmartInventory = SmartInventory.builder()
             .id("moduleMenu")
-            .provider(ModuleMenu(plugin, module, sourceTag))
+            .provider(ModuleMenu(plugin, module, origin))
             .size(5, 9)
             .title("§lVE - ${module.name}")
             .manager(plugin.inventoryManager)
@@ -62,7 +65,7 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
                     displayName("§f§lCrafting Recipes")
                     lore("§fClick to view the crafting recipes of this module!")
                 }.build()
-            ) { _ -> ModuleRecipesMenu.getInventory(plugin, module, sourceTag).open(player) })
+            ) { _ -> ModuleRecipesMenu.getInventory(plugin, module, contents.inventory()).open(player) })
         }
 
         if (module is CustomItemModule) {
@@ -71,7 +74,7 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
                     displayName("§f§lCustom Items")
                     lore("§fClick to view the custom items of this module!")
                 }.build()
-            ) { _ -> ModuleCustomItemsMenu.getInventory(plugin, module, sourceTag).open(player) })
+            ) { _ -> ModuleCustomItemsMenu.getInventory(plugin, module, contents.inventory()).open(player) })
         }
 
         val options: MutableList<ConfigOption<*>> = Config.getInstance().getModuleOptions(module)
@@ -84,7 +87,7 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
                     addLongLore("§fCurrent value: ${option.valueToDisplayString()}")
                     addLore("")
                 },
-                getInventory(plugin, module, sourceTag)
+                contents.inventory()
             )
         }
 
@@ -100,9 +103,9 @@ class ModuleMenu(private val plugin: VanillaEnhancements, private val module: VE
         contents.paginateItems(items, row = 3, player, noneItem = {
             displayName("§c§lNo config options")
             addLore("§cThere are no configurable options for this module!")
-        }, inventoryGetter = { getInventory(plugin, module, sourceTag) })
+        }, inventoryGetter = { getInventory(plugin, module, origin) })
 
-        contents.addBackButton { _ -> ModuleListMenu.getInventory(plugin, sourceTag) }
+        contents.addBackButton { origin }
     }
 
 }

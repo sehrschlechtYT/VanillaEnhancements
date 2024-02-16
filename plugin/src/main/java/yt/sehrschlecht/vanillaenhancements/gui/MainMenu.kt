@@ -34,13 +34,13 @@ class MainMenu(private val plugin: VanillaEnhancements) : InventoryProvider {
                 displayName("§f§lManage Modules")
                 addLongLore("Control the settings of the many modules in VanillaEnhancements.", lineStart = "§7")
             }.build()
-        ) { _ -> ModuleTagsMenu.getInventory(plugin).open(player) })
+        ) { _ -> ModuleTagsMenu.getInventory(plugin, contents.inventory()).open(player) })
         contents.set(1, 5, ClickableItem.of(
             ItemCreator(Material.REPEATER) {
                 displayName("§c§lVE Settings")
                 addLongLore("Manage various settings that affect the plugin and its modules.", lineStart = "§7")
             }.build()
-        ) { _ -> SettingsMenu.getInventory(plugin).open(player) })
+        ) { _ -> SettingsMenu.getInventory(plugin, contents.inventory()).open(player) })
         contents.addBackButton()
     }
 

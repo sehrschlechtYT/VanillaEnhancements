@@ -19,11 +19,11 @@ import yt.sehrschlecht.vanillaenhancements.utils.VESound
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: ModuleTag) : InventoryProvider {
+class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: ModuleTag, private val origin: SmartInventory?) : InventoryProvider {
     companion object {
-        fun getInventory(plugin: VanillaEnhancements, tag: ModuleTag): SmartInventory = SmartInventory.builder()
+        fun getInventory(plugin: VanillaEnhancements, tag: ModuleTag, origin: SmartInventory? = null): SmartInventory = SmartInventory.builder()
             .id("moduleList")
-            .provider(ModuleListMenu(plugin, tag))
+            .provider(ModuleListMenu(plugin, tag, origin))
             .size(3, 9)
             .title("§lVE - ${tag.displayName} Modules")
             .manager(plugin.inventoryManager)
@@ -48,16 +48,16 @@ class ModuleListMenu(private val plugin: VanillaEnhancements, private val tag: M
                     it.toggle()
                     return@listener
                 }
-                ModuleMenu.getInventory(plugin, module = it, tag).open(player)
+                ModuleMenu.getInventory(plugin, module = it, contents.inventory()).open(player)
             }
         }
 
         contents.paginateItems(items, player = player, paginationType = PaginationType.HORIZONTAL_7, noneItem = {
             displayName("§c§lNo modules found")
             addLongLore("This should not be the case. Please report this bug to the discord server (see SpigotMC page of the VanillaEnhancements plugin)!", lineStart = "§c")
-        }, inventoryGetter = { getInventory(plugin, tag) })
+        }, inventoryGetter = { getInventory(plugin, tag, origin) })
 
-        contents.addBackButton { _ -> ModuleTagsMenu.getInventory(plugin) }
+        contents.addBackButton { origin ?: ModuleTagsMenu.getInventory(plugin) }
         contents.fillBackground()
     }
 

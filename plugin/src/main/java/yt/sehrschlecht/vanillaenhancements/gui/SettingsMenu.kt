@@ -11,11 +11,11 @@ import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addB
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
 import yt.sehrschlecht.vanillaenhancements.utils.VESound
 
-class SettingsMenu(private val plugin: VanillaEnhancements) : RecurrentInventoryInitializer(tickInterval = 20) {
+class SettingsMenu(private val plugin: VanillaEnhancements, private val origin: SmartInventory?) : RecurrentInventoryInitializer(tickInterval = 20) {
     companion object {
-        fun getInventory(plugin: VanillaEnhancements): SmartInventory = SmartInventory.builder()
+        fun getInventory(plugin: VanillaEnhancements, origin: SmartInventory? = null): SmartInventory = SmartInventory.builder()
             .id("settings")
-            .provider(SettingsMenu(plugin))
+            .provider(SettingsMenu(plugin, origin))
             .size(3, 9)
             .title("§lVE Settings")
             .manager(plugin.inventoryManager)
@@ -35,6 +35,6 @@ class SettingsMenu(private val plugin: VanillaEnhancements) : RecurrentInventory
             VESound.SUCCESS.play(player)
         })
 
-        contents.addBackButton { _ -> MainMenu.getInventory(plugin) }
+        contents.addBackButton { origin ?: MainMenu.getInventory(plugin) }
     }
 }

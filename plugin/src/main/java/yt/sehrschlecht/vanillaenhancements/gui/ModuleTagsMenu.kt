@@ -17,12 +17,12 @@ import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.remo
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ModuleTagsMenu(private val plugin: VanillaEnhancements) : RecurrentInventoryInitializer(20) {
+class ModuleTagsMenu(private val plugin: VanillaEnhancements, private val origin: SmartInventory?) : RecurrentInventoryInitializer(20) {
 
     companion object {
-        fun getInventory(plugin: VanillaEnhancements): SmartInventory = SmartInventory.builder()
+        fun getInventory(plugin: VanillaEnhancements, origin: SmartInventory? = null): SmartInventory = SmartInventory.builder()
             .id("moduleTags")
-            .provider(ModuleTagsMenu(plugin))
+            .provider(ModuleTagsMenu(plugin, origin))
             .size(3, 9)
             .title("§lVE - Module tags")
             .manager(plugin.inventoryManager)
@@ -39,7 +39,7 @@ class ModuleTagsMenu(private val plugin: VanillaEnhancements) : RecurrentInvento
                 displayName("§f§l${getDisplayName().removeColorCodes()}")
                 addLore("§f$enabled/$total enabled")
                 itemFlag(*ItemFlag.values())
-            }.build()) { _ -> ModuleListMenu.getInventory(plugin, it).open(player) }
+            }.build()) { _ -> ModuleListMenu.getInventory(plugin, it, contents.inventory()).open(player) }
         }
 
         contents.paginateItems(items, player = player, paginationType = PaginationType.HORIZONTAL_7, noneItem = {
@@ -47,7 +47,7 @@ class ModuleTagsMenu(private val plugin: VanillaEnhancements) : RecurrentInvento
             addLongLore("This should not be the case. Please report this bug to the discord server (see SpigotMC page of the VanillaEnhancements plugin)!", lineStart = "§c")
         }, inventoryGetter = { getInventory(plugin) })
 
-        contents.addBackButton { _ -> MainMenu.getInventory(plugin) }
+        contents.addBackButton { origin ?: MainMenu.getInventory(plugin) }
         contents.fillBackground()
     }
 

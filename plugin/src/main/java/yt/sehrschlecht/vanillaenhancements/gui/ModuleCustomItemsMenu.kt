@@ -6,7 +6,6 @@ import fr.minuskube.inv.content.InventoryContents
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.modules.CustomItemModule
-import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.utils.ModuleUtils
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
@@ -17,13 +16,13 @@ import yt.sehrschlecht.vanillaenhancements.utils.VESound
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val module: CustomItemModule, private val sourceTag: ModuleTag) : RecurrentInventoryInitializer(20) {
+class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val module: CustomItemModule, private val origin: SmartInventory) : RecurrentInventoryInitializer(20) {
 
     companion object {
-        fun getInventory(plugin: VanillaEnhancements, module: CustomItemModule, sourceTag: ModuleTag): SmartInventory =
+        fun getInventory(plugin: VanillaEnhancements, module: CustomItemModule, sourceInventory: SmartInventory): SmartInventory =
             SmartInventory.builder()
                 .id("moduleCustomItems")
-                .provider(ModuleCustomItemsMenu(plugin, module, sourceTag))
+                .provider(ModuleCustomItemsMenu(plugin, module, sourceInventory))
                 .size(3, 9)
                 .title("§lVE - Items of \"${module.name}\"")
                 .manager(plugin.inventoryManager)
@@ -51,9 +50,9 @@ class ModuleCustomItemsMenu(private val plugin: VanillaEnhancements, private val
         contents.paginateItems(items, player = player, noneItem = {
             displayName("§c§lNo items found")
             addLore("§cThis module has no items")
-        }, inventoryGetter = { getInventory(plugin, module, sourceTag) })
+        }, inventoryGetter = { getInventory(plugin, module, origin) })
 
-        contents.addBackButton{_ -> ModuleMenu.getInventory(plugin, module, sourceTag) }
+        contents.addBackButton{ origin }
         contents.fillBackground()
     }
 

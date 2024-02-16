@@ -29,7 +29,7 @@ class VECommand(val plugin: VanillaEnhancements) : CommandExecutor, TabExecutor 
                 return true
             }
             if (args.size == 1) {
-                ModuleListMenu.getInventory(plugin, tag).open(sender)
+                ModuleListMenu.getInventory(plugin, tag, ModuleTagsMenu.getInventory(plugin)).open(sender)
                 return true
             }
             val moduleKeyArg = args[1]
@@ -43,7 +43,7 @@ class VECommand(val plugin: VanillaEnhancements) : CommandExecutor, TabExecutor 
                 sender.sendMessage("§cCould not find a module for the given module key!")
                 return true
             }
-            ModuleMenu.getInventory(plugin, module, tag).open(sender)
+            ModuleMenu.getInventory(plugin, module, ModuleListMenu.getInventory(plugin, tag)).open(sender)
             return true
         }
         if (args?.size != 0) {
