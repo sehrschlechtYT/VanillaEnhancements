@@ -13,6 +13,7 @@ import yt.sehrschlecht.vanillaenhancements.config.options.BooleanOption
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleCategory
 import yt.sehrschlecht.vanillaenhancements.modules.ModuleTag
 import yt.sehrschlecht.vanillaenhancements.modules.VEModule
+import yt.sehrschlecht.vanillaenhancements.utils.BlockUtils
 
 /**
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
@@ -188,7 +189,7 @@ class MobGriefingControl : VEModule(
                 }
             }
             EntityType.SHEEP -> { // sheep eating grass
-                if (event.block.type != Material.GRASS_BLOCK && event.block.type != Material.GRASS) return
+                if (event.block.type != Material.GRASS_BLOCK && !BlockUtils.isShortGrass(event.block.type)) return
                 if (sheepEatGrass.get()) return
                 event.isCancelled = true
             }
