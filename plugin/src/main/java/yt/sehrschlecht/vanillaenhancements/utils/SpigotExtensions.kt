@@ -169,7 +169,7 @@ class SpigotExtensions {
         }
 
         fun String.removeNewlines(): String {
-            return this.replace(Regex("\r*\n*"), " ")
+            return this.lines().joinToString(" ")
         }
     }
 
