@@ -52,12 +52,12 @@ class ModuleRegistry(private val plugin: VanillaEnhancements) {
                 Debug.MODULES.log("Module ${module.moduleKey} should not be enabled, skipping...")
                 return false
             }
+            Bukkit.getPluginManager().registerEvents(module, plugin)
             module.onEnable()
             plugin.tickServiceExecutor.getTickServicesForModule(module).forEach { tickService ->
                 tickService.isEnabled = true
             }
             enabledModules.add(module)
-            Bukkit.getPluginManager().registerEvents(module, plugin)
             Debug.MODULES.log("Enabled module ${module.moduleKey}!")
             true
         } catch (throwable: Throwable) {
