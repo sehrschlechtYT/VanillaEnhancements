@@ -89,16 +89,30 @@ class SpigotExtensions {
                     set(row, if (itemsPerPage == 5) 7 else 8, ClickableItem.of(
                         ItemCreator(Material.ARROW) {
                             displayName("§fNext Page")
+                            addLore("§f§oShift click: Last page")
                         }.build()
-                    ) { _ -> inventoryGetter().open(player, pagination.next().page) })
+                    ) { event ->
+                        if (event.isShiftClick) {
+                            inventoryGetter().open(player, pagination.last().page)
+                        } else {
+                            inventoryGetter().open(player, pagination.next().page)
+                        }
+                    })
                 }
 
                 if (!pagination.isFirst) {
                     set(row, if (itemsPerPage == 5) 1 else 0, ClickableItem.of(
                         ItemCreator(Material.ARROW) {
                             displayName("§fPrevious Page")
+                            addLore("§f§oShift click: First page")
                         }.build()
-                    ) { _ -> inventoryGetter().open(player, pagination.previous().page) })
+                    ) { event ->
+                        if (event.isShiftClick) {
+                            inventoryGetter().open(player, pagination.first().page)
+                        } else {
+                            inventoryGetter().open(player, pagination.previous().page)
+                        }
+                    })
                 }
             }
         }
