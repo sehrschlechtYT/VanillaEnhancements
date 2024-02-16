@@ -2,6 +2,7 @@ package yt.sehrschlecht.vanillaenhancements.utils
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Color
 import org.bukkit.Material
@@ -164,20 +165,20 @@ class ItemCreator {
     }
 
     // ToDo this may break components when splitting tags, so this should only be used on components without any special stuff
-    fun appendLongLore(lore: Component, lineStart: Component = Component.empty().color(NamedTextColor.WHITE), limit: Int = 45) {
+    fun appendLongLore(lore: Component, lineStart: TextColor = NamedTextColor.WHITE, limit: Int = 45) {
         val miniMessage = VanillaEnhancements.getPlugin().miniMessage()
         val string = miniMessage.serialize(lore)
         val lines = string.split(" ")
         var currentLine = ""
         for (line in lines) {
             if (currentLine.length + line.length > limit) {
-                appendLore(lineStart.append(miniMessage.deserialize(currentLine)))
+                appendLore(Component.empty().color(lineStart).append(miniMessage.deserialize(currentLine)))
                 currentLine = ""
             }
             currentLine += "$line "
         }
         if (currentLine.isNotBlank()) {
-            appendLore(lineStart.append(miniMessage.deserialize(currentLine)))
+            appendLore(Component.empty().color(lineStart).append(miniMessage.deserialize(currentLine)))
         }
     }
 
