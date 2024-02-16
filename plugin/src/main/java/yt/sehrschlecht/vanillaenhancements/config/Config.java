@@ -2,7 +2,6 @@ package yt.sehrschlecht.vanillaenhancements.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.block.Block;
-import kotlin.Metadata;
 import kotlin.reflect.KProperty;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -181,7 +180,9 @@ public class Config {
         Class<?> moduleClass = module.getClass();
         List<Field> fields;
         Map<Field, KProperty<?>> kotlinFields = null;
-        boolean isKotlinObject = moduleClass.isAnnotationPresent(Metadata.class);
+        boolean isKotlinObject = Arrays.stream(moduleClass.getDeclaredAnnotations()).anyMatch(annotation ->
+            annotation.annotationType().getName().equalsIgnoreCase("kotlin.Metadata")
+        );
         if (isKotlinObject) {
             Debug.CONFIG_OPTIONS.log("Module {} seems to be a Kotlin object, using Kotlin reflection...", module.getModuleKey());
             kotlinFields = KotlinConfigHelper.Companion.getFields(module.getClass());
