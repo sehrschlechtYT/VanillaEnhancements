@@ -59,6 +59,7 @@ public abstract class RecipeModule extends VEModule {
     @Override
     public void onDisable() {
         super.onDisable();
+        if (getVEInstance().isShuttingDown()) return;
         Debug.RECIPES.log("Removing all recipes of module {}...", getModuleKey());
         getRecipeManager().getRecipes(this).forEach(recipe -> Bukkit.removeRecipe(recipe.key()));
         Bukkit.resetRecipes();

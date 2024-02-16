@@ -48,6 +48,8 @@ public final class VanillaEnhancements extends JavaPlugin {
     private ItemManager itemManager;
     private InventoryManager inventoryManager;
 
+    private boolean shuttingDown = false;
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -140,6 +142,7 @@ public final class VanillaEnhancements extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        shuttingDown = true;
         moduleRegistry.shutdown();
     }
 
@@ -217,4 +220,9 @@ public final class VanillaEnhancements extends JavaPlugin {
     public Debug getDebug() {
         return debug;
     }
+
+    public boolean isShuttingDown() {
+        return shuttingDown;
+    }
+
 }
