@@ -1,12 +1,12 @@
 package yt.sehrschlecht.vanillaenhancements.messages
 
 import dev.dejvokep.boostedyaml.YamlDocument
-import net.kyori.adventure.text.Component
 import org.bukkit.command.CommandSender
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
 import yt.sehrschlecht.vanillaenhancements.messages.components.AbstractComponentSupport
 import yt.sehrschlecht.vanillaenhancements.messages.components.BukkitComponentSupport
 import yt.sehrschlecht.vanillaenhancements.messages.components.PaperComponentSupport
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.asComponent
 import yt.sehrschlecht.vanillaenhancements.utils.debugging.Debug
 
 /**
@@ -17,12 +17,12 @@ class MessageManager(private val document: YamlDocument, private val plugin: Van
     lateinit var componentSupport: AbstractComponentSupport
 
     fun init() {
-        if (plugin.isUsingPaper) {
+        componentSupport = if (plugin.isUsingPaper) {
             Debug.MESSAGES.log("Initializing component support for Paper.")
-            componentSupport = PaperComponentSupport(plugin)
+            PaperComponentSupport(plugin)
         } else {
             Debug.MESSAGES.log("Initializing component support for Bukkit.")
-            componentSupport = BukkitComponentSupport(plugin)
+            BukkitComponentSupport(plugin)
         }
 
         Debug.MESSAGES.log("Initializing messages...")
@@ -43,26 +43,11 @@ class MessageManager(private val document: YamlDocument, private val plugin: Van
     }
 
     fun send(message: Message, receiver: CommandSender, vararg args: Any) {
-        val component = asComponent(message, *args)
+        val component = message.asComponent(plugin, *args)
         componentSupport.send(component, receiver)
     }
 
-    /**
-     * Converts a message with args to a component.
-     * @param args The args for the message. Tags will be escaped for all objects that are not a [Component].
-     */
-    private fun asComponent(message: Message, vararg args: Any): Component {
-        return plugin.miniMessage().deserialize(
-            format(get(message), args.map { arg ->
-                if (arg is Component) {
-                    return@map plugin.miniMessage().serialize(arg)
-                }
-                return@map plugin.miniMessage().escapeTags(arg.toString())
-            }.toTypedArray())
-        )
-    }
-
-    private fun format(string: String, args: Array<String>): String {
+    fun format(string: String, args: Array<String>): String {
         var message = string
         for (arg in args) {
             message = message.replaceFirst("\\{}".toRegex(), arg)

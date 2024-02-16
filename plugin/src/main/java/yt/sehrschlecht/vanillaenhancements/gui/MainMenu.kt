@@ -4,11 +4,15 @@ import fr.minuskube.inv.ClickableItem
 import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.InventoryProvider
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
+import yt.sehrschlecht.vanillaenhancements.messages.Message
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.addBackButton
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.asComponent
 import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.fillBackground
 
 /**
@@ -31,8 +35,8 @@ class MainMenu(private val plugin: VanillaEnhancements) : InventoryProvider {
         contents.fillBackground()
         contents.set(1, 3, ClickableItem.of(
             ItemCreator(Material.COMMAND_BLOCK_MINECART) {
-                displayName("§f§lManage Modules")
-                addLongLore("Control the settings of the many modules in VanillaEnhancements.", lineStart = "§7")
+                displayName(Message.MENU_MAIN_MANAGE_MODULES_DISPLAYNAME, plugin)
+                appendLongLore(Message.MENU_MAIN_MANAGE_MODULES_LORE.asComponent(plugin), lineStart = Component.empty().color(NamedTextColor.GRAY))
             }.build()
         ) { _ -> ModuleTagsMenu.getInventory(plugin, contents.inventory()).open(player) })
         contents.set(1, 5, ClickableItem.of(

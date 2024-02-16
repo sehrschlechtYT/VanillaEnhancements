@@ -5,6 +5,7 @@ import fr.minuskube.inv.SmartInventory
 import fr.minuskube.inv.content.InventoryContents
 import fr.minuskube.inv.content.SlotIterator
 import fr.minuskube.inv.content.SlotPos
+import net.kyori.adventure.text.Component
 import org.bukkit.ChatColor
 import org.bukkit.DyeColor
 import org.bukkit.Material
@@ -150,6 +151,25 @@ class SpigotExtensions {
 
         fun Message.send(receiver: CommandSender, veInstance: VanillaEnhancements, vararg args: Any) {
             veInstance.messageManager.send(this, receiver, *args)
+        }
+
+        /**
+         * Converts a message with args to a component.
+         * @param args The args for the message. Tags will be escaped for all objects that are not a [Component].
+         */
+        fun Message.asComponent(veInstance: VanillaEnhancements, vararg args: Any): Component {
+            return veInstance.miniMessage().deserialize(
+                veInstance.messageManager.format(veInstance.messageManager.get(this), args.map { arg ->
+                    if (arg is Component) {
+                        return@map veInstance.miniMessage().serialize(arg)
+                    }
+                    return@map veInstance.miniMessage().escapeTags(arg.toString())
+                }.toTypedArray())
+            )
+        }
+
+        fun String.removeNewlines(): String {
+            return this.replace(Regex("\r*\n*"), " ")
         }
     }
 

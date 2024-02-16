@@ -18,7 +18,9 @@ import org.bukkit.inventory.meta.SkullMeta
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.plugin.java.JavaPlugin
 import yt.sehrschlecht.vanillaenhancements.VanillaEnhancements
+import yt.sehrschlecht.vanillaenhancements.messages.Message
 import yt.sehrschlecht.vanillaenhancements.messages.components.AbstractComponentSupport
+import yt.sehrschlecht.vanillaenhancements.utils.SpigotExtensions.Companion.asComponent
 
 /**
  * ItemBuilder using Kotlin DSLs
@@ -99,6 +101,9 @@ class ItemCreator {
     }
 
     fun displayName(name: Component) = componentSupport.setDisplayName(meta, name)
+    fun displayName(message: Message, veInstance: VanillaEnhancements, vararg args: Any) {
+        this.displayName(message.asComponent(veInstance, *args))
+    }
 
     @Deprecated(message = "Use #getDisplayNameComponent")
     fun getDisplayName(): String {
@@ -165,6 +170,9 @@ class ItemCreator {
                 currentLine = ""
             }
             currentLine += "$line "
+        }
+        if (currentLine.isNotBlank()) {
+            appendLore(lineStart.append(miniMessage.deserialize(currentLine)))
         }
     }
 
