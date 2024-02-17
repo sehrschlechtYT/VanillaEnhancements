@@ -30,7 +30,7 @@ class ResourcePackServer {
             // ToDo maybe run sync to prevent exception on reload
             // The exception is likely caused by the classloader no longer being able to find Ktor classes because they are unloaded
             server.start(wait = true)
-            plugin.logger.info("Successfully started resource pack server on port $port!")
+            plugin.logger.info("Resource pack server has shut down!")
         })
     }
 
