@@ -84,7 +84,7 @@ public class DebugCommand implements CommandExecutor, TabExecutor {
                 } else {
                     for (TickService tickService : VanillaEnhancements.getPlugin().getTickServiceExecutor().getTickServices()) {
                         boolean enabled = tickService.moduleInstance().isEnabled();
-                        TextComponent component = new TextComponent("§7- " + (enabled ? "§a" : "§c") + tickService.method().getName());
+                        TextComponent component = new TextComponent("§7- " + (enabled ? "§a" : "§c") + tickService.method().getDeclaringClass().getSimpleName() + "#" + tickService.method().getName());
                         String serviceKey = tickService.method().getDeclaringClass().getSimpleName() + "#" + tickService.method().getName();
                         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ve-debug tickservice " + serviceKey));
                         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
