@@ -130,8 +130,7 @@ class ItemCreator {
 
     private fun fixLoreColors(components: List<Component>): List<Component> {
         return components.map {
-            it.colorIfAbsent(NamedTextColor.WHITE)
-            it.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+            it.colorIfAbsent(NamedTextColor.WHITE).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
         }
     }
 
@@ -188,6 +187,10 @@ class ItemCreator {
 
     fun itemFlag(vararg flags: ItemFlag) {
         meta.addItemFlags(*flags)
+    }
+
+    fun allItemFlags() {
+        this.itemFlag(*ItemFlag.values())
     }
 
     fun customModelData(data: Int) {
