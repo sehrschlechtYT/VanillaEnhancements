@@ -1,5 +1,6 @@
 package yt.sehrschlecht.vanillaenhancements.modules
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
 
@@ -7,7 +8,7 @@ import yt.sehrschlecht.vanillaenhancements.utils.ItemCreator
  * @author sehrschlechtYT | https://github.com/sehrschlechtYT
  * @since 1.0
  */
-class ModuleTag(displayName: String, key: String, description: String, displayItem: Material) : AbstractModuleCategorization(displayName, key, description, displayItem) {
+class ModuleTag(displayName: String, key: String, description: String, displayItem: Material) : AbstractModuleCategorization(Component.text(displayName), key, Component.text(description), displayItem) {
 
     companion object {
         @JvmField val APRIL_FOOLS_2023 = ModuleTag("April Fools 2023", "april_fools_2023", "Features from the april fools snapshot 23w13a_or_b", Material.CAKE)
@@ -28,8 +29,8 @@ class ModuleTag(displayName: String, key: String, description: String, displayIt
 
     fun buildIcon(modify: ItemCreator.() -> Unit): ItemCreator {
         val creator = ItemCreator(displayItem) {
-            displayName("§f$displayName")
-            lore("§f$description")
+            displayName(displayName)
+            appendLongLore(description)
         }
         modify(creator)
         return creator

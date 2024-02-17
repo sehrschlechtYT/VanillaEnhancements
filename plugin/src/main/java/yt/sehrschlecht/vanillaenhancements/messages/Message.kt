@@ -36,5 +36,9 @@ enum class Message(
     MENU_SETTINGS_DISABLE_ALL_DISPLAYNAME("menu.settings.disable_all.displayname", "<red><b>Disable all modules"),
     MENU_SETTINGS_DISABLE_ALL_LORE("menu.settings.disable_all.lore", "Disables every single module that is currently active. This cannot be undone."),
 
+    MENU_TAGS_TAG_ENABLED("menu.tags.tag_enabled", "{}/{} enabled"),
+    MENU_TAGS_NONE_DISPLAYNAME("menu.tags.none.displayname", "<red><b>No modules found"),
+    MENU_TAGS_NONE_LORE("menu.tags.none.lore", "This should not be the case. Please report this bug to the discord server (see SpigotMC page of the VanillaEnhancements plugin)!")
+
     ;
 }

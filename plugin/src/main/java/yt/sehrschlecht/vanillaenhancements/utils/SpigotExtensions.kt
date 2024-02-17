@@ -50,6 +50,7 @@ class SpigotExtensions {
             }
         }
 
+        @Deprecated(message = "Use the adventure API instead")
         fun String.removeColorCodes(): String {
             return this.replace("§[0-9a-fk-or]".toRegex(), "")
         }
